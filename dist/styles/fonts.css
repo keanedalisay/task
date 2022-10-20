@@ -24,7 +24,7 @@
 @font-face {
   font-family: "SF Pro Display";
   font-style: normal;
-  font-weight: 700;
+  font-weight: 800;
   src: url("../fonts/sf-pro-display/SF-Pro-Display-Heavy.eot");
   src: local(""), url("../fonts/sf-pro-display/SF-Pro-Display-Heavy.eot?#iefix"),
     url("../fonts/sf-pro-display/SF-Pro-Display-Heavy.woff"),
@@ -34,7 +34,7 @@
 @font-face {
   font-family: "SF Pro Display";
   font-style: italic;
-  font-weight: 700;
+  font-weight: 800;
   src: url("../fonts/sf-pro-display/SF-Pro-Display-HeavyItalic.eot");
   src: local(""),
     url("../fonts/sf-pro-display/SF-Pro-Display-HeavyItalic.eot?#iefix"),
