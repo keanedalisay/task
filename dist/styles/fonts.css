@@ -1,0 +1,109 @@
+/* Below is SF Pro Display font being imported */
+
+@font-face {
+  font-family: "SF Pro Display";
+  font-style: normal;
+  font-weight: 700;
+  src: url("../fonts/sf-pro-display/SF-Pro-Display-Bold.eot");
+  src: local(""), url("../fonts/sf-pro-display/SF-Pro-Display-Bold.eot?#iefix"),
+    url("../fonts/sf-pro-display/SF-Pro-Display-Bold.woff"),
+    url("../fonts/sf-pro-display/SF-Pro-Display-Bold.ttf");
+}
+
+@font-face {
+  font-family: "SF Pro Display";
+  font-style: italic;
+  font-weight: 700;
+  src: url("../fonts/sf-pro-display/SF-Pro-Display-BoldItalic.eot");
+  src: local(""),
+    url("../fonts/sf-pro-display/SF-Pro-Display-BoldItalic.eot?#iefix"),
+    url("../fonts/sf-pro-display/SF-Pro-Display-BoldItalic.woff"),
+    url("../fonts/sf-pro-display/SF-Pro-Display-BoldItalic.ttf");
+}
+
+@font-face {
+  font-family: "SF Pro Display";
+  font-style: normal;
+  font-weight: 700;
+  src: url("../fonts/sf-pro-display/SF-Pro-Display-Heavy.eot");
+  src: local(""), url("../fonts/sf-pro-display/SF-Pro-Display-Heavy.eot?#iefix"),
+    url("../fonts/sf-pro-display/SF-Pro-Display-Heavy.woff"),
+    url("../fonts/sf-pro-display/SF-Pro-Display-Heavy.ttf");
+}
+
+@font-face {
+  font-family: "SF Pro Display";
+  font-style: italic;
+  font-weight: 700;
+  src: url("../fonts/sf-pro-display/SF-Pro-Display-HeavyItalic.eot");
+  src: local(""),
+    url("../fonts/sf-pro-display/SF-Pro-Display-HeavyItalic.eot?#iefix"),
+    url("../fonts/sf-pro-display/SF-Pro-Display-HeavyItalic.woff"),
+    url("../fonts/sf-pro-display/SF-Pro-Display-HeavyItalic.ttf");
+}
+
+/* Below is SF Pro Text font being imported */
+
+@font-face {
+  font-family: "SF Pro Text";
+  font-style: normal;
+  font-weight: 300;
+  src: url("../fonts/sf-pro-text/sf-pro-text-light.eot");
+  src: local(""), url("../fonts/sf-pro-text/sf-pro-text-light.eot?#iefix"),
+    url("../fonts/sf-pro-text/sf-pro-text-light.woff"),
+    url("../fonts/sf-pro-text/sf-pro-text-light.ttf"),
+    url("../fonts/sf-pro-text/sf-pro-text-light.svg#SFProText");
+}
+
+@font-face {
+  font-family: "SF Pro Text";
+  font-style: italic;
+  font-weight: 300;
+  src: url("../fonts/sf-pro-text/sf-pro-text-LightItalic.eot");
+  src: local(""), url("../fonts/sf-pro-text/sf-pro-text-LightItalic.eot?#iefix"),
+    url("../fonts/sf-pro-text/sf-pro-text-LightItalic.woff"),
+    url("../fonts/sf-pro-text/sf-pro-text-LightItalic.ttf");
+}
+
+@font-face {
+  font-family: "SF Pro Text";
+  font-style: normal;
+  font-weight: 400;
+  src: url("../fonts/sf-pro-text/sf-pro-text-regular.eot");
+  src: local(""), url("../fonts/sf-pro-text/sf-pro-text-regular.eot?#iefix"),
+    url("../fonts/sf-pro-text/sf-pro-text-regular.woff"),
+    url("../fonts/sf-pro-text/sf-pro-text-regular.ttf"),
+    url("../fonts/sf-pro-text/sf-pro-text-regular.svg#SFProText");
+}
+
+@font-face {
+  font-family: "SF Pro Text";
+  font-style: italic;
+  font-weight: 400;
+  src: url("../fonts/sf-pro-text/SF-Pro-Text-RegularItalic.eot");
+  src: local(""),
+    url("../fonts/sf-pro-text/SF-Pro-Text-RegularItalic.eot?#iefix"),
+    url("../fonts/sf-pro-text/SF-Pro-Text-RegularItalic.woff"),
+    url("../fonts/sf-pro-text/SF-Pro-Text-RegularItalic.ttf");
+}
+
+@font-face {
+  font-family: "SF Pro Text";
+  font-style: normal;
+  font-weight: 700;
+  src: url("../fonts/sf-pro-text/sf-pro-text-bold.eot");
+  src: local(""), url("../fonts/sf-pro-text/sf-pro-text-bold.eot?#iefix"),
+    url("../fonts/sf-pro-text/sf-pro-text-bold.woff"),
+    url("../fonts/sf-pro-text/sf-pro-text-bold.ttf"),
+    url("../fonts/sf-pro-text/sf-pro-text-bold.svg#SFProText");
+}
+
+@font-face {
+  font-family: "SF Pro Text";
+  font-style: italic;
+  font-weight: 700;
+  src: url("../fonts/sf-pro-text/SF-Pro-Text-BoldItalic.eot");
+  src: local(""), url("../fonts/sf-pro-text/SF-Pro-Text-BoldItalic.eot?#iefix"),
+    url("../fonts/sf-pro-text/SF-Pro-Text-BoldItalic.woff"),
+    url("../fonts/sf-pro-text/SF-Pro-Text-BoldItalic.ttf");
+}
