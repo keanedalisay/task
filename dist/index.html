@@ -13,6 +13,104 @@
 </head>
 
 <body>
+    <nav class="navMenu">
+        <div class="navList">
+            <button class="navBtn" data-app="inboxBtn">
+                <div class="btnLblFrame">
+                    <object class="btnLblFrame-icon" data="../src/icons/inboxIcon.svg" type="text/svg+xml"
+                        tabindex="-1"></object>
+                    <span class="btnLblFrame-text">Inbox</span>
+                </div>
+                <div class="taskCntFrame">
+                    <div class="taskCntFrame-dueTasks hide-cnt" data-app="inboxDueTaskCnt">
+                        0
+                    </div>
+                    <div class="taskCntFrame-tasks hide-cnt" data-app="inboxTaskCnt">
+                        0
+                    </div>
+                </div>
+            </button>
+            <button class="navBtn" data-app="todayBtn" tabindex="0">
+                <div class="btnLblFrame">
+                    <object class="btnLblFrame-icon" data="../src/icons/starIcon.svg" type="text/svg+xml"
+                        tabindex="-1"></object>
+                    <span class="btnLblFrame-text">Today</span>
+                </div>
+                <div class="taskCntFrame">
+                    <div class="taskCntFrame-tasks hide-cnt" data-app="todayTaskCnt">
+                        0
+                    </div>
+                </div>
+            </button>
+            <button class="navBtn" data-app="upcomingBtn">
+                <div class="btnLblFrame btnLblFrame--upcoming">
+                    <object class="btnLblFrame-icon" data="../src/icons/upcomingIcon.svg" type="text/svg+xml"
+                        tabindex="-1"></object>
+                    <span class="btnLblFrame-text">Upcoming</span>
+                </div>
+                <div class="taskCntFrame">
+                    <div class="taskCntFrame-dueTasks hide-cnt" data-app="upcomingDueTaskCnt">
+                        0
+                    </div>
+                    <div class="taskCntFrame-tasks hide-cnt" data-app="upcomingTaskCnt">
+                        0
+                    </div>
+                </div>
+            </button>
+            <button class="navBtn" data-app="settingsBtn">
+                <div class="btnLblFrame btnLblFrame--settings">
+                    <object class="btnLblFrame-icon" data="../src/icons/settingsIcon.svg" type="text/svg+xml"
+                        tabindex="-1"></object>
+                    <span class="btnLblFrame-text">Settings</span>
+                </div>
+                <object class="accrdBtn-icon" data-app="accrdIcon-settings" data="../src/icons/arrowIcon.svg"
+                    tabindex="-1"></object>
+            </button>
+            <div class="accrdFrame accrdFrame--settings hide-accrd" data-app="accrdSettings">
+                <button class="accrdBtn" data-app="lightModeBtn">
+                    <div class="btnLblFrame btnLblFrame--lightMode">
+                        <span class="btnLblFrame-text">Light Mode</span>
+                    </div>
+                </button>
+                <button class="accrdBtn" data-app="darkModeBtn">
+                    <div class="btnLblFrame btnLblFrame--darkMode">
+                        <span class="btnLblFrame-text">Dark Mode</span>
+                    </div>
+                </button>
+                <a class="accrdBtn" data-app="githubBtn" href="https://github.com/keanedalisay/todo-list-TOP">
+                    <div class="btnLblFrame btnLblFrame--github">
+                        <object class="btnLblFrame-icon" data="../src/icons/githubIcon.svg" type="text/svg+xml"
+                            tabindex="-1"></object>
+                        <span class="btnLblFrame-text">Github</span>
+                    </div>
+                </a>
+            </div>
+            <button class="navBtn" data-app="newBtn">
+                <div class="btnLblFrame btnLblFrame--new">
+                    <object class="btnLblFrame-icon" data="../src/icons/plusIcon.svg" type="text/svg+xml"
+                        tabindex="-1"></object>
+                    <span class="btnLblFrame-text">New</span>
+                </div>
+                <object class="accrdBtn-icon" data-app="accrdIcon-new" data="../src/icons/arrowIcon.svg"
+                    tabindex="-1"></object>
+            </button>
+            <div class="accrdFrame accrdFrame--new hide-accrd" data-app="accrdNew">
+                <button class="accrdBtn" data-app="newGoalBtn">
+                    <div class="btnLblFrame btnLblFrame--newGoal">
+                        <span class="btnLblFrame-text">New Goal</span>
+                    </div>
+                </button>
+                <button class="accrdBtn" data-app="newTaskBtn">
+                    <div class="btnLblFrame btnLblFrame--newTask">
+                        <span class="btnLblFrame-text">New Task</span>
+                    </div>
+                </button>
+            </div>
+        </div>
+        <hr class="navMenu-separator">
+        <div class="goalList" data-app="goalList">
+        </div>
+    </nav>
 </body>
 
 </html>

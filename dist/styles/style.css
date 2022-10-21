@@ -1,0 +1,253 @@
+:root {
+  --white: #ffffff;
+  --wild-sand: #f5f5f5;
+  --silver: #c7c7c7;
+  --mercury: #e8e8e8;
+  --dusty-gray: #949494;
+  --mineshaft: #333333;
+  --dodger-blue: #3bb4ff;
+  --sunset-orange: #ff4a4a;
+
+  --on-hover: #3bb4ff43;
+
+  --hdng-family: "SF Pro Display", "SF Pro Text", Helvetica, sans-serif;
+  --bdy-text-family: "SF Pro Text", Helvetica, sans-serif;
+  --fs-small: 1.6rem;
+}
+
+*,
+::before,
+::after {
+  margin: 0rem;
+  padding: 0rem;
+  border: 0rem;
+  background: none;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 10px;
+}
+
+.navMenu {
+  padding: 1rem;
+  width: 27.5rem;
+  height: 100vh;
+  background: var(--wild-sand);
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  left: 0;
+  overflow: auto;
+}
+.navMenu::-webkit-scrollbar {
+  width: 0.5rem;
+}
+.navMenu::-webkit-scrollbar-thumb {
+  background: var(--mercury);
+}
+.navMenu::-webkit-scrollbar-thumb:hover {
+  background: var(--on-hover);
+}
+.navList,
+.goalList {
+  width: min(90%, 27.5rem);
+  display: flex;
+  flex-flow: column wrap;
+}
+.navBtn,
+.accrdBtn {
+  margin: 0.5rem 0rem;
+  width: 100%;
+  height: 4rem;
+  border-radius: 1rem;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--mineshaft);
+}
+.accrdBtn {
+  border: 0.1rem solid var(--on-hover);
+  text-decoration: none;
+}
+.accrdBtn-icon {
+  margin-right: 2rem;
+  width: 2rem;
+  height: 2rem;
+  transform: rotate(90deg);
+  pointer-events: none;
+}
+.accrdFrame {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  transition: height 275ms ease-in-out;
+}
+.accrdFrame--settings {
+  height: 15rem;
+}
+.accrdFrame--new {
+  height: 10rem;
+}
+.navBtn:hover,
+.navBtn:focus,
+.navBtn:active,
+.accrdBtn:hover,
+.accrdBtn:focus,
+.accrdBtn:active {
+  background: var(--on-hover);
+}
+.btnLblFrame {
+  width: 10rem;
+  height: 100%;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.btnLblFrame--upcoming {
+  width: 13.4rem;
+}
+.btnLblFrame--settings {
+  width: 12.2rem;
+}
+.btnLblFrame--new {
+  width: 9.4rem;
+}
+.btnLblFrame--github {
+  width: 11.5rem;
+}
+.btnLblFrame--lightMode,
+.btnLblFrame--darkMode {
+  width: 12rem;
+}
+.btnLblFrame--newGoal,
+.btnLblFrame--newTask {
+  width: 11rem;
+}
+.btnLblFrame-icon {
+  pointer-events: none;
+}
+.btnLblFrame--upcoming > .btnLblFrame-icon,
+.btnLblFrame--settings > .btnLblFrame-icon {
+  width: 2.7rem;
+  height: 2.7rem;
+}
+.btnLblFrame--new > .btnLblFrame-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+.btnLblFrame--github > .btnLblFrame-icon {
+  width: 1.75rem;
+  height: 1.75rem;
+}
+.btnLblFrame-text {
+  font-family: var(--hdng-family);
+  font-weight: 700;
+  font-size: var(--fs-small);
+}
+.taskCntFrame {
+  width: 6rem;
+  height: 100%;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.taskCntFrame-dueTasks,
+.taskCntFrame-tasks {
+  width: 2rem;
+  font-family: var(--hdng-family);
+  font-weight: 700;
+  font-size: var(--fs-small);
+  color: var(--dusty-gray);
+}
+.taskCntFrame-dueTasks {
+  background: var(--mercury);
+  border-radius: 5rem;
+  color: var(--sunset-orange);
+}
+.navMenu-separator {
+  margin: 0.5rem 0rem;
+  width: min(95%, 29rem);
+  border: 0.1rem solid var(--silver);
+}
+.goalBtn {
+  margin: 0.5rem 0rem;
+  width: 100%;
+  height: 4rem;
+  border-radius: 1rem;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-evenly;
+  align-items: center;
+  font-family: var(--hdng-family);
+  font-weight: 700;
+  font-size: var(--fs-small);
+  color: var(--mineshaft);
+}
+.goalBtn:hover,
+.goalBtn:focus,
+.goalBtn:active {
+  background: var(--on-hover);
+}
+.progressBar {
+  width: 2rem;
+  height: 2rem;
+  background: var(--dodger-blue);
+  border: 0.25rem solid var(--dusty-gray);
+  border-radius: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+.progressBar-interval {
+  width: 1.4rem;
+  height: 1.4rem;
+  background: var(--wild-sand);
+  border-radius: 2rem;
+}
+.goalInput {
+  width: 16.8rem;
+  height: 100%;
+  padding: 0.5rem 0rem;
+  font-family: var(--hdng-family);
+  font-size: var(--fs-small);
+  color: var(--mineshaft);
+  display: none;
+}
+.goalInput:hover,
+.goalInput:focus,
+.goalInput:active {
+  background: var(--mercury);
+  outline: none;
+}
+.goalTitle {
+  width: 16.8rem;
+  padding: 0.5rem 0rem;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+@media screen and (max-width: 640px) {
+  .navMenu {
+    width: 100%;
+    background: var(--white);
+  }
+}
+
+.hide-accrd {
+  height: 0;
+  transition: height 275ms ease-in-out;
+}
+.hide-cnt {
+  display: none;
+}
