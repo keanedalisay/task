@@ -9,10 +9,15 @@
   --sunset-orange: #ff4a4a;
 
   --on-hover: #3bb4ff43;
+  --on-select: 0rem 0rem 0.5rem #3333334f;
 
   --hdng-family: "SF Pro Display", "SF Pro Text", Helvetica, sans-serif;
   --bdy-text-family: "SF Pro Text", Helvetica, sans-serif;
-  --fs-small: 1.6rem;
+
+  --fs-12px: 1.2rem;
+  --fs-14px: 1.4rem;
+  --fs-16px: 1.6rem;
+  --fs-40px: 4rem;
 }
 
 *,
@@ -28,10 +33,14 @@
 html {
   font-size: 10px;
 }
+.container {
+  display: grid;
+  grid-auto-flow: column;
+}
 
 .navMenu {
   padding: 1rem;
-  width: 27.5rem;
+  width: min(100%, 32rem);
   height: 100vh;
   background: var(--wild-sand);
   display: flex;
@@ -150,7 +159,7 @@ html {
 .btnLblFrame-text {
   font-family: var(--hdng-family);
   font-weight: 700;
-  font-size: var(--fs-small);
+  font-size: var(--fs-16px);
 }
 .taskCntFrame {
   width: 6rem;
@@ -165,7 +174,7 @@ html {
   width: 2rem;
   font-family: var(--hdng-family);
   font-weight: 700;
-  font-size: var(--fs-small);
+  font-size: var(--fs-16px);
   color: var(--dusty-gray);
 }
 .taskCntFrame-dueTasks {
@@ -189,7 +198,7 @@ html {
   align-items: center;
   font-family: var(--hdng-family);
   font-weight: 700;
-  font-size: var(--fs-small);
+  font-size: var(--fs-16px);
   color: var(--mineshaft);
 }
 .goalBtn:hover,
@@ -219,7 +228,7 @@ html {
   height: 100%;
   padding: 0.5rem 0rem;
   font-family: var(--hdng-family);
-  font-size: var(--fs-small);
+  font-size: var(--fs-16px);
   color: var(--mineshaft);
 }
 .goalInput:focus {
@@ -234,10 +243,280 @@ html {
   overflow: hidden;
 }
 
+.main {
+  padding: 1rem;
+  width: min(60vw, 85rem);
+  min-height: 100vh;
+  background: var(--white);
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+}
+.header {
+  padding: 1rem;
+  width: min(100%, 65rem);
+  height: 20rem;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-between;
+  border-radius: 1rem;
+  box-shadow: var(--on-select);
+  overflow: auto;
+  transition: height 275ms ease-in-out, box-shadow 275ms ease-in-out;
+}
+.header::-webkit-scrollbar {
+  width: 0.5rem;
+}
+.header::-webkit-scrollbar-thumb {
+  background: var(--mercury);
+}
+.header::-webkit-scrollbar-thumb:hover {
+  background: var(--on-hover);
+}
+.headerInfo {
+  display: grid;
+  align-content: center;
+  grid-template-columns: 4.5rem auto 4rem;
+  grid-template-rows: auto auto;
+  gap: 1rem 1rem;
+}
+.headerInfo-icon {
+  width: 4.5rem;
+  height: 4.5rem;
+  pointer-events: none;
+}
+.headerInfo-title {
+  font-family: var(--hdng-family);
+  font-size: var(--fs-40px);
+}
+.headerInfo-text {
+  width: min(100%, 50rem);
+  grid-column: 1 / span 4;
+  font-family: var(--bdy-text-family);
+  font-size: var(--fs-16px);
+}
+.headerInfo-settingsBtn {
+  width: 4.5rem;
+  height: 4.5rem;
+  border-radius: 5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.headerInfo-settingsBtn:hover,
+.headerInfo-settingsBtn:focus,
+.headerInfo-settingsBtn:active {
+  background: var(--on-hover);
+}
+.headerBtn:hover,
+.headerBtn:focus,
+.headerBtn:active {
+  background: var(--on-hover);
+}
+.headerBtnFrame {
+  margin-top: 3rem;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+}
+.headerBtnHolder {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.headerBtnHolder--mblOnlyBtns {
+  margin-bottom: 1rem;
+  width: 15rem;
+  display: none;
+}
+.headerBtn {
+  margin: 0.5rem;
+  padding: 0.5rem;
+  height: 4.5rem;
+  border-radius: 1rem;
+}
+.headerBtn--closeTabBtn,
+.headerBtn--settingsMblBtn {
+  width: 4.5rem;
+  height: 4.5rem;
+  background: var(--mercury);
+  border-radius: 5rem;
+  display: flex;
+  justify-content: center;
+}
+.btnLblFrame--header {
+  width: 7rem;
+}
+.btnLblFrame--header > .btnLblFrame-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+.btnLblFrame--header > .btnLblFrame-text {
+  font-family: var(--bdy-text-family);
+  font-size: var(--fs-12px);
+  font-weight: normal;
+  color: var(--dusty-gray);
+}
+.taskList {
+  margin: 2rem 0rem;
+  width: min(100%, 65rem);
+  height: auto;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+}
+.taskList::-webkit-scrollbar {
+  width: 0.5rem;
+}
+.taskList::-webkit-scrollbar-thumb {
+  background: var(--mercury);
+}
+.taskList::-webkit-scrollbar-thumb:hover {
+  background: var(--on-hover);
+}
+.task {
+  margin: 0.5rem 0;
+  width: 100%;
+  height: 12rem;
+  border-radius: 1rem;
+  box-shadow: var(--on-select);
+  transition: height 275ms ease-in-out, box-shadow 275ms ease-in-out;
+  overflow: auto;
+}
+.task::-webkit-scrollbar {
+  width: 0.5rem;
+}
+.task::-webkit-scrollbar-thumb {
+  background: var(--mercury);
+}
+.task::-webkit-scrollbar-thumb:hover {
+  background: var(--on-hover);
+}
+.task-infoFrame {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+}
+.task-noteFrame {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.task-btnFrame {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.checkbox {
+  margin: 0 0.3rem;
+  width: 4rem;
+  height: 4rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.checkbox:hover,
+.checkbox-focus,
+.checkbox:active {
+  cursor: pointer;
+}
+.checkbox-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 0.4rem solid var(--dusty-gray);
+  border-radius: 0.8rem;
+  pointer-events: none;
+}
+.task-today,
+.task-pastDue,
+.task-dueDate,
+.task-nameInput,
+.task-name {
+  margin: 0 0.3rem;
+}
+.task-dueDate {
+  padding: 0.5rem 1rem;
+  height: 2.5rem;
+  background: var(--mercury);
+  border-radius: 0.3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: var(--hdng-family);
+  font-size: var(--fs-12px);
+  color: var(--dusty-gray);
+}
+.task-nameInput,
+.task-name {
+  width: min(100%, 30rem);
+  height: 3rem;
+  font-family: var(--bdy-text-family);
+  font-size: var(--fs-16px);
+  overflow-x: hidden;
+}
+.task-nameInput:focus,
+.task-noteInput:focus {
+  background: var(--mercury);
+  outline: none;
+}
+.task-noteInput,
+.task-note {
+  padding: 0.5rem 0;
+  width: 90%;
+  font-family: var(--bdy-text-family);
+  font-size: var(--fs-14px);
+}
+.task-note {
+  color: var(--dusty-gray);
+}
+.task-btn {
+  margin: 0.5rem;
+  padding: 0.5rem;
+  height: 4rem;
+  border-radius: 1rem;
+}
+.task-btn:hover,
+.task-btn:focus,
+.task-btn:active {
+  background: var(--on-hover);
+}
+.btnLblFrame--task {
+  width: 7rem;
+}
+.btnLblFrame--task > .btnLblFrame-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+.btnLblFrame--task > .btnLblFrame-text {
+  font-family: var(--bdy-text-family);
+  font-size: var(--fs-12px);
+  font-weight: normal;
+  color: var(--dusty-gray);
+}
+
 @media screen and (max-width: 640px) {
   .navMenu {
-    width: 100%;
+    width: 100vw;
     background: var(--white);
+  }
+  .main {
+    width: 100vw;
+    position: absolute;
+    transform: translate(100vw, 0);
+  }
+  .header {
+    height: 27rem;
+  }
+  .header.hide-headerSettings {
+    height: 20rem;
+  }
+  .headerInfo-settingsBtn {
+    display: none;
+  }
+  .headerBtnHolder--mblOnlyBtns {
+    display: flex;
   }
 }
 
@@ -245,7 +524,28 @@ html {
   height: 0;
   transition: height 275ms ease-in-out;
 }
+.hide-headerSettings {
+  height: 14rem;
+  box-shadow: 0rem 0rem 0rem var(--white);
+  overflow: hidden;
+}
+.hide-taskSettings {
+  height: 4rem;
+  box-shadow: 0rem 0rem 0rem var(--white);
+  overflow: hidden;
+}
 .hide-cnt,
 .hide-elem {
   display: none;
+}
+
+.completed-task {
+  background: var(--wild-sand);
+}
+.checkbox.check-checkbox > .checkbox-icon {
+  background: var(--dodger-blue);
+  border: none;
+}
+.selected-btn {
+  background: var(--mercury);
 }
