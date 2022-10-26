@@ -40,7 +40,7 @@ html {
 
 .navMenu {
   padding: 1rem;
-  width: min(100%, 32rem);
+  width: min(40vw, 27.5rem);
   height: 100vh;
   background: var(--wild-sand);
   display: flex;
