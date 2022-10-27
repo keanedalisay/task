@@ -103,7 +103,7 @@
                             <span class="btnLblFrame-text">New Goal</span>
                         </div>
                     </button>
-                    <button class="accrdBtn" data-app="newTaskBtn" tabindex="-1">
+                    <button class="accrdBtn accrdBtn--newTask" data-app="newTaskBtn" tabindex="-1">
                         <div class="btnLblFrame btnLblFrame--newTask">
                             <span class="btnLblFrame-text">New Task</span>
                         </div>
@@ -114,7 +114,10 @@
             <div class="goalList" data-app="goalList">
             </div>
         </nav>
-        <main class="main" data-content="inbox">
+        <main class="main" data-tab="inbox">
+            <div class="addTaskToTabBtn" data-app="newTaskBtn">
+                <object data="../src/icons/plusIcon.svg" type="text/svg+xml" tabindex="-1"></object>
+            </div>
             <header class="header hide-headerSettings">
                 <div class="headerBtnHolder headerBtnHolder--mblOnlyBtns">
                     <div class="headerBtn headerBtn--closeTabBtn" data-app="closeTabBtn">

@@ -251,6 +251,28 @@ html {
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
+  overflow: auto;
+}
+.addTaskToTabBtn {
+  width: 6rem;
+  height: 6rem;
+  background: var(--mercury);
+  border-radius: 5rem;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  right: 3rem;
+  bottom: 3rem;
+}
+.addTaskToTabBtn:hover,
+.addTaskToTabBtn:focus,
+.addTaskToTabBtn:active {
+  background: var(--silver);
+}
+.addTaskToTabBtn > object {
+  width: 4rem;
+  height: 4rem;
 }
 .header {
   padding: 1rem;
@@ -497,6 +519,9 @@ html {
 }
 
 @media screen and (max-width: 640px) {
+  body {
+    overflow-x: hidden;
+  }
   .navMenu {
     width: 100vw;
     background: var(--white);
@@ -505,6 +530,15 @@ html {
     width: 100vw;
     position: absolute;
     transform: translate(100vw, 0);
+  }
+  .accrdFrame--new {
+    height: 5rem;
+  }
+  .accrdBtn--newTask {
+    display: none;
+  }
+  .addTaskToTabBtn {
+    display: flex;
   }
   .header {
     height: 27rem;
