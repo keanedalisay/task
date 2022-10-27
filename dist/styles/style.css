@@ -119,6 +119,7 @@ html {
   flex-flow: row nowrap;
   justify-content: space-evenly;
   align-items: center;
+  pointer-events: none;
 }
 .btnLblFrame--upcoming {
   width: 13.4rem;
@@ -168,6 +169,7 @@ html {
   flex-flow: row nowrap;
   justify-content: space-evenly;
   align-items: center;
+  pointer-events: none;
 }
 .taskCntFrame-dueTasks,
 .taskCntFrame-tasks {
@@ -406,6 +408,10 @@ html {
   box-shadow: var(--on-select);
   transition: height 275ms ease-in-out, box-shadow 275ms ease-in-out;
   overflow: auto;
+}
+.task:hover,
+.task:focus {
+  box-shadow: var(--on-select);
 }
 .task::-webkit-scrollbar {
   width: 0.5rem;

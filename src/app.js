@@ -1,6 +1,7 @@
 import {
   delegateEvent,
   insertHTML,
+  insertElem,
   setTabIndex,
   goalLabelHTML,
 } from "./helpers.js";
@@ -20,15 +21,58 @@ const App = {
     accrdNew: document.querySelector("[data-app=accrdNew]"),
     accrdNewBtns: document.querySelectorAll("[data-app=accrdNew] > .accrdBtn"),
 
-    newGoalBtn: document.querySelector("[data-app=newGoalBtn]"),
+    navBtnList: document.querySelector("[data-app=navBtnList]"),
     goalList: document.querySelector("[data-app=goalList]"),
+  },
+  changeTab(elem) {
+    const inboxBtn = document.querySelector("[data-app=inboxBtn]");
+    const todayBtn = document.querySelector("[data-app=todayBtn");
+    const upcomingBtn = document.querySelector("[data-app=upcomingBtn]");
+
+    const headerInfoIcon = document.querySelector("[data-app=headerInfoIcon]");
+    const headerInfoTitle = document.querySelector(
+      "[data-app=headerInfoTitle]"
+    );
+    const headerInfoText = document.querySelector("[data-app=headerInfoText]");
+
+    if (elem === inboxBtn) {
+      inboxBtn.classList.add("selected-btn");
+      todayBtn.classList.remove("selected-btn");
+      upcomingBtn.classList.remove("selected-btn");
+
+      headerInfoIcon.setAttribute("data", "../src/icons/inboxIcon.svg");
+      headerInfoTitle.textContent = "Inbox";
+      headerInfoText.textContent =
+        "This is where your independent tasks are stored. Feel free to add as many as you like!";
+      return;
+    } else if (elem === todayBtn) {
+      inboxBtn.classList.remove("selected-btn");
+      todayBtn.classList.add("selected-btn");
+      upcomingBtn.classList.remove("selected-btn");
+
+      headerInfoIcon.setAttribute("data", "../src/icons/starIcon.svg");
+      headerInfoTitle.textContent = "Today";
+      headerInfoText.textContent =
+        "All tasks for you to complete today, have a great day!";
+      return;
+    } else if (elem === upcomingBtn) {
+      inboxBtn.classList.remove("selected-btn");
+      todayBtn.classList.remove("selected-btn");
+      upcomingBtn.classList.add("selected-btn");
+
+      headerInfoIcon.setAttribute("data", "../src/icons/upcomingIcon.svg");
+      headerInfoTitle.textContent = "Upcoming";
+      headerInfoText.textContent =
+        "Upcoming tasks for you to do, including those that are overdue. You can do this!";
+      return;
+    }
   },
   createGoalBtn() {
     const goalBtn = document.createElement("button");
     goalBtn.classList.add("goalBtn");
-    goalBtn.id = TodoTemp.generateId();
+    goalBtn.id = TodoTemp.gnrtGoalId();
     insertHTML(goalBtn, goalLabelHTML());
-    App.slctr.goalList.insertAdjacentElement("afterbegin", goalBtn);
+    insertElem(App.slctr.goalList, goalBtn);
 
     const goalInput = goalBtn.querySelector(`.goalInput`);
     const goalLabel = goalBtn.querySelector(`.goalLabel`);
@@ -43,8 +87,12 @@ const App = {
         goalLabel.classList.remove("hide-elem");
         goalLabel.textContent = goalInput.value;
         return;
+      } else if (e.key === "Escape") {
+        App.slctr.goalList.removeChild(goalBtn);
+        return;
       }
     });
+    return;
   },
   renderGoalBtns(goals) {
     if (goals.length === 0) return;
@@ -57,9 +105,8 @@ const App = {
       goalBtn.querySelector(`.goalInput`).classList.add("hide-elem");
       goalBtn.querySelector(`.goalLabel`).classList.remove("hide-elem");
       goalBtn.querySelector(`.goalLabel`).textContent = goal.gName;
-      App.slctr.goalList.insertAdjacentElement("afterbegin", goalBtn);
+      insertElem(App.slctr.goalList, goalBtn);
     });
-    return;
   },
   toggleAccrd(e, elem) {
     if (e.target) {
@@ -71,6 +118,24 @@ const App = {
     App.renderGoalBtns(Todo.goals);
   },
   init() {
+    delegateEvent(
+      App.slctr.navBtnList,
+      "click",
+      "[data-app=inboxBtn]",
+      App.changeTab
+    );
+    delegateEvent(
+      App.slctr.navBtnList,
+      "click",
+      "[data-app=todayBtn]",
+      App.changeTab
+    );
+    delegateEvent(
+      App.slctr.navBtnList,
+      "click",
+      "[data-app=upcomingBtn]",
+      App.changeTab
+    );
     App.slctr.settingsBtn.addEventListener("click", (e) => {
       App.toggleAccrd(e, App.slctr.accrdSettings);
       setTabIndex(App.slctr.accrdSettingsBtns);
