@@ -4,6 +4,7 @@ import {
   insertElem,
   setTabIndex,
   goalLabelHTML,
+  taskLabelHTML,
 } from "./helpers.js";
 import { TodoTemp } from "./todo.js";
 
@@ -11,8 +12,12 @@ const Todo = new TodoTemp();
 
 const App = {
   slctr: {
+    main: document.querySelector("main"),
+
     settingsBtn: document.querySelector("[data-app=settingsBtn]"),
     newBtn: document.querySelector("[data-app=newBtn]"),
+    newGoalBtn: document.querySelector("[data-app=newGoalBtn]"),
+    newTaskBtns: document.querySelectorAll("[data-app=newTaskBtn]"),
 
     accrdSettings: document.querySelector("[data-app=accrdSettings]"),
     accrdSettingsBtns: document.querySelectorAll(
@@ -23,6 +28,7 @@ const App = {
 
     navBtnList: document.querySelector("[data-app=navBtnList]"),
     goalList: document.querySelector("[data-app=goalList]"),
+    taskList: document.querySelector(".taskList"),
   },
   changeTab(elem) {
     const inboxBtn = document.querySelector("[data-app=inboxBtn]");
@@ -40,6 +46,7 @@ const App = {
       todayBtn.classList.remove("selected-btn");
       upcomingBtn.classList.remove("selected-btn");
 
+      App.slctr.main.dataset.tab = "Inbox";
       headerInfoIcon.setAttribute("data", "../src/icons/inboxIcon.svg");
       headerInfoTitle.textContent = "Inbox";
       headerInfoText.textContent =
@@ -50,6 +57,7 @@ const App = {
       todayBtn.classList.add("selected-btn");
       upcomingBtn.classList.remove("selected-btn");
 
+      App.slctr.main.dataset.tab = "Today";
       headerInfoIcon.setAttribute("data", "../src/icons/starIcon.svg");
       headerInfoTitle.textContent = "Today";
       headerInfoText.textContent =
@@ -60,6 +68,7 @@ const App = {
       todayBtn.classList.remove("selected-btn");
       upcomingBtn.classList.add("selected-btn");
 
+      App.slctr.main.dataset.tab = "Upcoming";
       headerInfoIcon.setAttribute("data", "../src/icons/upcomingIcon.svg");
       headerInfoTitle.textContent = "Upcoming";
       headerInfoText.textContent =
@@ -92,6 +101,53 @@ const App = {
         return;
       }
     });
+    return;
+  },
+  createTaskBtn() {
+    const taskBtn = document.createElement("div");
+    taskBtn.id = TodoTemp.gnrtTaskId();
+    taskBtn.classList.add("task");
+    taskBtn.classList.add("hide-taskSettings");
+    taskBtn.setAttribute("tabindex", 0);
+    insertHTML(taskBtn, taskLabelHTML());
+    insertElem(App.slctr.taskList, taskBtn);
+
+    App.confgTaskEvents(taskBtn);
+    return;
+  },
+  confgTaskEvents(task) {
+    const taskInfoFrame = task.querySelector(".task-infoFrame");
+    const taskNameInput = task.querySelector(".task-nameInput");
+    const taskName = task.querySelector(".task-name");
+    const taskTabName = task.querySelector(".task-tabName");
+    const taskNoteInput = task.querySelector(".task-noteInput");
+    const taskNote = task.querySelector(".task-note");
+
+    taskInfoFrame.addEventListener("click", (e) => {
+      if (e.target === taskNameInput) return;
+      task.classList.toggle("hide-taskSettings");
+      return;
+    });
+    taskNameInput.addEventListener("keyup", (e) => {
+      if (e.key === "Enter") {
+        if (!taskNameInput.value.trim()) {
+          App.slctr.taskList.removeChild(task);
+          return;
+        }
+        Todo.createTask(
+          taskNameInput.value,
+          task.id,
+          App.slctr.main.dataset.tab,
+          App.slctr.main.dataset.goalId
+        );
+        taskNameInput.classList.add("hide-elem");
+        taskName.classList.remove("hide-elem");
+        taskName.textContent = taskNameInput.value;
+        taskTabName.textContent = App.slctr.main.dataset.tab;
+        return;
+      }
+    });
+
     return;
   },
   renderGoalBtns(goals) {
@@ -145,6 +201,9 @@ const App = {
       setTabIndex(App.slctr.accrdNewBtns);
     });
     App.slctr.newGoalBtn.addEventListener("click", App.createGoalBtn);
+    App.slctr.newTaskBtns.forEach((newTaskBtn) => {
+      newTaskBtn.addEventListener("click", App.createTaskBtn);
+    });
     App.render();
   },
 };

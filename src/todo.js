@@ -1,13 +1,18 @@
 export class TodoTemp {
-  static generateId() {
-    const id = `G-${(
-      "000000000" + Math.random().toString(36).substr(2, 9)
-    ).slice(-6)}`;
+  static gnrtGoalId() {
+    const id = `G-${("000000000" + Math.random().toString(36)).slice(-6)}`;
     return id;
   }
+  static gnrtTaskId() {
+    const id = `T${("000000000" + Math.random().toString(36)).slice(-6)}`;
+    return id;
+  }
+
   constructor() {
-    window.addEventListener("storage", this._readStorage);
-    this.goals = this._readStorage();
+    window.addEventListener("storage", this._readGoals);
+    window.addEventListener("storage", this._readInbox);
+    this.goals = this._readGoals();
+    this.inbox = this._readInbox();
   }
   createGoal(name, id) {
     const goal = {
@@ -17,13 +22,40 @@ export class TodoTemp {
     };
     this.goals.push(goal);
     this._save();
+    return;
   }
-  _readStorage() {
+  createTask(name, id, tabName, goalID) {
+    const task = {
+      tName: name,
+      tId: id,
+      tNote: "",
+      tDueDate: "",
+      completed: false,
+    };
+    if (tabName === "Inbox") {
+      this.inbox.push(task);
+      this._save();
+      return;
+    } else if (tabName === "Goal") {
+      const goal = this.goals.find((goal) => goal.gId === goalID);
+      const goalIndex = this.goals.findIndex((goal) => goal.gId === goalID);
+      task.gId = goal.gId;
+      goal.tasks.push(task);
+      this.goals.splice(goalIndex, 1, goal);
+      return;
+    }
+  }
+  _readGoals() {
     const goals = JSON.parse(localStorage.getItem("goals") || "[]");
     return goals;
   }
+  _readInbox() {
+    const inbox = JSON.parse(localStorage.getItem("inbox") || "[]");
+    return inbox;
+  }
   _save() {
     localStorage.setItem("goals", JSON.stringify(this.goals));
+    localStorage.setItem("inbox", JSON.stringify(this.inbox));
   }
 }
 

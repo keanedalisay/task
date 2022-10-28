@@ -481,7 +481,13 @@ html {
   display: flex;
   flex-flow: column nowrap;
 }
-.task-nameInput,
+.task-nameInput {
+  width: min(100%, 30rem);
+  height: 3rem;
+  font-family: var(--bdy-text-family);
+  font-size: var(--fs-16px);
+  overflow: hidden;
+}
 .task-name {
   width: min(100%, 30rem);
   height: 2rem;
