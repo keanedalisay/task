@@ -134,6 +134,7 @@ const App = {
     App.toggleTaskSettingsEvent(taskBtn);
     App.saveTaskNameEvent(taskBtn);
     App.saveTaskNoteEvent(taskBtn);
+    App.checkTaskEvent(taskBtn);
     return;
   },
   toggleTaskSettingsEvent(task) {
@@ -144,6 +145,30 @@ const App = {
     taskInfoFrame.addEventListener("click", (e) => {
       if (e.target === taskNameInput || e.target === taskCheckbox) return;
       task.classList.toggle("hide-taskSettings");
+      return;
+    });
+  },
+  checkTaskEvent(task) {
+    const main = document.querySelector("main");
+    const taskCheckbox = task.querySelector(".checkbox");
+    const taskCheckboxIcon = task.querySelector(".checkbox-icon");
+
+    taskCheckbox.addEventListener("click", (e) => {
+      const notDone = parseInt(taskCheckboxIcon.dataset.done);
+      taskCheckbox.classList.toggle("check-checkbox");
+      taskCheckboxIcon.setAttribute(
+        "data",
+        notDone ? "" : "../src/icons/checkIcon.svg"
+      );
+      taskCheckboxIcon.dataset.done = notDone ? 0 : 1;
+      task.classList.toggle("completed-task");
+
+      Todo.updateTaskCompletion(
+        parseInt(taskCheckboxIcon.dataset.done),
+        main.dataset.tab,
+        task.id,
+        main.dataset.goalId
+      );
       return;
     });
   },

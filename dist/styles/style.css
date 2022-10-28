@@ -275,6 +275,7 @@ html {
 .addTaskToTabBtn > object {
   width: 4rem;
   height: 4rem;
+  pointer-events: none;
 }
 .header {
   padding: 1rem;
@@ -314,7 +315,7 @@ html {
   font-size: var(--fs-40px);
 }
 .headerInfo-text {
-  width: min(100%, 50rem);
+  width: 100%;
   grid-column: 1 / span 4;
   font-family: var(--bdy-text-family);
   font-size: var(--fs-16px);
@@ -407,7 +408,7 @@ html {
   border-radius: 1rem;
   box-shadow: var(--on-select);
   transition: height 275ms ease-in-out, box-shadow 275ms ease-in-out;
-  overflow: auto;
+  overflow-x: hidden;
 }
 .task:hover,
 .task:focus {
@@ -478,22 +479,23 @@ html {
   color: var(--dusty-gray);
 }
 .task-nameFrame {
+  width: 90%;
   display: flex;
   flex-flow: column nowrap;
+  overflow: hidden;
 }
 .task-nameInput {
-  width: min(100%, 30rem);
+  width: 90%;
   height: 3rem;
   font-family: var(--bdy-text-family);
   font-size: var(--fs-16px);
-  overflow: hidden;
 }
 .task-name {
-  width: min(100%, 30rem);
+  width: 90%;
   height: 2rem;
   font-family: var(--bdy-text-family);
   font-size: var(--fs-16px);
-  overflow: hidden;
+  white-space: nowrap;
 }
 .task-tabName {
   font-family: var(--bdy-text-family);
@@ -512,8 +514,6 @@ html {
   width: 90%;
   font-family: var(--bdy-text-family);
   font-size: var(--fs-14px);
-}
-.task-note {
   color: var(--dusty-gray);
 }
 .task-btn {
@@ -582,7 +582,7 @@ html {
   transition: height 275ms ease-in-out;
 }
 .hide-headerSettings {
-  height: 14rem;
+  height: 12rem;
   box-shadow: 0rem 0rem 0rem var(--white);
   overflow: hidden;
 }
@@ -602,6 +602,7 @@ html {
 .checkbox.check-checkbox > .checkbox-icon {
   background: var(--dodger-blue);
   border: none;
+  opacity: 1;
 }
 .selected-btn {
   background: var(--mercury);
