@@ -11,8 +11,15 @@ export class TodoTemp {
   constructor() {
     window.addEventListener("storage", this._readGoals);
     window.addEventListener("storage", this._readInbox);
-    this.goals = this._readGoals();
-    this.inbox = this._readInbox();
+    this._readGoals();
+    this._readInbox();
+
+    this.getGoal = (goalId) => this.goals.find((goal) => goal.gId === goalId);
+    this.getGoalIndex = (goalId) =>
+      this.goals.findIndex((goal) => goal.gId === goalId);
+    this.getTask = (taskId, prop) => prop.find((task) => task.tId === taskId);
+    this.getTaskIndex = (taskId, prop) =>
+      prop.findIndex((task) => task.tId === taskId);
   }
   createGoal(name, id) {
     const goal = {
@@ -24,7 +31,7 @@ export class TodoTemp {
     this._save();
     return;
   }
-  createTask(name, id, tabName, goalID) {
+  createTask(name, id, tabName, goalId) {
     const task = {
       tName: name,
       tId: id,
@@ -37,27 +44,50 @@ export class TodoTemp {
       this._save();
       return;
     } else if (tabName === "Goal") {
-      const goal = this.goals.find((goal) => goal.gId === goalID);
-      const goalIndex = this.goals.findIndex((goal) => goal.gId === goalID);
-      task.gId = goal.gId;
+      const goal = this.getGoal(goalId);
+      const goalIndex = this.getGoalIndex(goalId);
       goal.tasks.push(task);
       this.goals.splice(goalIndex, 1, goal);
+      this._save();
       return;
     }
   }
   _readGoals() {
-    const goals = JSON.parse(localStorage.getItem("goals") || "[]");
-    return goals;
+    this.goals = JSON.parse(localStorage.getItem("goals") || "[]");
   }
   _readInbox() {
-    const inbox = JSON.parse(localStorage.getItem("inbox") || "[]");
-    return inbox;
+    this.inbox = JSON.parse(localStorage.getItem("inbox") || "[]");
+  }
+  updateTaskNote(note, tabName, taskId, goalId) {
+    if (tabName === "Inbox") {
+      const task = this.getTask(taskId, this.inbox);
+      const taskIndex = this.getTaskIndex(taskId, this.inbox);
+
+      task.tNote = note;
+      this.inbox.splice(taskIndex, 1, task);
+      this._save();
+      return;
+    } else if (tabName === "Goal") {
+      const goal = this.getGoal(goalId);
+      const goalIndex = this.getGoalIndex(goalId);
+      const task = this.getTask(taskId, goal.tasks);
+      const taskIndex = this.getTaskIndex(taskId, goal.tasks);
+
+      task.tNote = note;
+      goal.tasks.splice(taskIndex, 1, task);
+      this.goals.splice(goalIndex, 1, goal);
+      this._save();
+      return;
+    }
   }
   _save() {
     localStorage.setItem("goals", JSON.stringify(this.goals));
     localStorage.setItem("inbox", JSON.stringify(this.inbox));
   }
 }
+
+// update task does:
+//
 
 // createGoal, createTask, read,
 // updateGoal, updateTask,

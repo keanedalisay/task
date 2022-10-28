@@ -12,8 +12,6 @@ const Todo = new TodoTemp();
 
 const App = {
   slctr: {
-    main: document.querySelector("main"),
-
     settingsBtn: document.querySelector("[data-app=settingsBtn]"),
     newBtn: document.querySelector("[data-app=newBtn]"),
     newGoalBtn: document.querySelector("[data-app=newGoalBtn]"),
@@ -129,6 +127,7 @@ const App = {
       return;
     });
     taskNameInput.addEventListener("keyup", (e) => {
+      const main = document.querySelector("main");
       if (e.key === "Enter") {
         if (!taskNameInput.value.trim()) {
           App.slctr.taskList.removeChild(task);
@@ -137,17 +136,31 @@ const App = {
         Todo.createTask(
           taskNameInput.value,
           task.id,
-          App.slctr.main.dataset.tab,
-          App.slctr.main.dataset.goalId
+          main.dataset.tab,
+          main.dataset.goalId
         );
         taskNameInput.classList.add("hide-elem");
         taskName.classList.remove("hide-elem");
         taskName.textContent = taskNameInput.value;
-        taskTabName.textContent = App.slctr.main.dataset.tab;
+        taskTabName.textContent = main.dataset.tab;
         return;
       }
     });
-
+    taskNoteInput.addEventListener("keyup", (e) => {
+      const main = document.querySelector("main");
+      if (e.key === "Enter") {
+        if (!taskNoteInput.value.trim()) return;
+        Todo.updateTaskNote(
+          taskNoteInput.value,
+          main.dataset.tab,
+          task.id,
+          main.dataset.goalId
+        );
+        taskNoteInput.classList.add("hide-elem");
+        taskNote.classList.remove("hide-elem");
+        taskNote.textContent = taskNoteInput.value;
+      }
+    });
     return;
   },
   renderGoalBtns(goals) {
