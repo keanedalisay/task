@@ -110,6 +110,8 @@ const App = {
     return;
   },
   createTaskBtn() {
+    const main = document.querySelector("main");
+
     const taskBtn = document.createElement("div");
     taskBtn.id = TodoTemp.gnrtTaskId();
     taskBtn.classList.add("task");
@@ -118,44 +120,56 @@ const App = {
     insertHTML(taskBtn, taskLabelHTML());
     insertElem(App.slctr.taskList, taskBtn);
 
-    App.confgTaskEvents(taskBtn);
+    Todo.createTask("", taskBtn.id, main.dataset.tab, main.dataset.goalId);
+
+    App.toggleTaskSettingsEvent(taskBtn);
+    App.saveTaskNameEvent(taskBtn);
+    App.saveTaskNoteEvent(taskBtn);
     return;
   },
-  confgTaskEvents(task) {
+  toggleTaskSettingsEvent(task) {
+    const taskCheckbox = task.querySelector(".checkbox");
     const taskInfoFrame = task.querySelector(".task-infoFrame");
     const taskNameInput = task.querySelector(".task-nameInput");
-    const taskName = task.querySelector(".task-name");
-    const taskTabName = task.querySelector(".task-tabName");
-    const taskNoteInput = task.querySelector(".task-noteInput");
-    const taskNote = task.querySelector(".task-note");
 
     taskInfoFrame.addEventListener("click", (e) => {
-      if (e.target === taskNameInput) return;
+      if (e.target === taskNameInput || e.target === taskCheckbox) return;
       task.classList.toggle("hide-taskSettings");
       return;
     });
+  },
+  saveTaskNameEvent(task) {
+    const main = document.querySelector("main");
+
+    const taskNameInput = task.querySelector(".task-nameInput");
+    const taskName = task.querySelector(".task-name");
+
     taskNameInput.addEventListener("keyup", (e) => {
-      const main = document.querySelector("main");
       if (e.key === "Enter") {
         if (!taskNameInput.value.trim()) {
           App.slctr.taskList.removeChild(task);
           return;
         }
-        Todo.createTask(
+        Todo.updateTaskName(
           taskNameInput.value,
-          task.id,
           main.dataset.tab,
+          task.id,
           main.dataset.goalId
         );
         taskNameInput.classList.add("hide-elem");
         taskName.classList.remove("hide-elem");
         taskName.textContent = taskNameInput.value;
-        taskTabName.textContent = main.dataset.tab;
         return;
       }
     });
+  },
+  saveTaskNoteEvent(task) {
+    const main = document.querySelector("main");
+
+    const taskNoteInput = task.querySelector(".task-noteInput");
+    const taskNote = task.querySelector(".task-note");
+
     taskNoteInput.addEventListener("keyup", (e) => {
-      const main = document.querySelector("main");
       if (e.key === "Enter") {
         if (!taskNoteInput.value.trim()) return;
         Todo.updateTaskNote(
@@ -169,7 +183,6 @@ const App = {
         taskNote.textContent = taskNoteInput.value;
       }
     });
-    return;
   },
   renderGoalBtns(goals) {
     if (goals.length === 0) return;

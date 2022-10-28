@@ -48,8 +48,8 @@ export function taskLabelHTML() {
   </div>
 </div>
 <div class="task-noteFrame">
-  <input class="task-noteInput" type="text" placeholder="Notes..." tabindex="-1">
-  <span class="task-note hide-elem">These are my notes</span>
+  <input class="task-noteInput" type="text" placeholder="Edit note..."tabindex="-1">
+  <span class="task-note hide-elem">Edit note...</span>
 </div>
 <div class="task-btnFrame">
   <button class="task-btn" data-app="setTaskDateBtn" tabindex="-1">
