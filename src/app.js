@@ -49,6 +49,9 @@ const App = {
     App.slctr.headerInfoTitle.textContent = "Inbox";
     App.slctr.headerInfoText.textContent =
       "This is where your independent tasks are stored. Feel free to add as many as you like!";
+
+    App.slctr.taskList.innerHTML = "";
+    App.renderInboxTasks(Todo.inbox);
     return;
   },
   navToToday() {
@@ -63,6 +66,8 @@ const App = {
     App.slctr.headerInfoTitle.textContent = "Today";
     App.slctr.headerInfoText.textContent =
       "All tasks for you to complete today, have a great day!";
+
+    App.slctr.taskList.innerHTML = "";
     return;
   },
   navToUpcoming() {
@@ -80,6 +85,8 @@ const App = {
     App.slctr.headerInfoTitle.textContent = "Upcoming";
     App.slctr.headerInfoText.textContent =
       "Upcoming tasks for you to do, including those that are overdue. You can do this!";
+
+    App.slctr.taskList.innerHTML = "";
     return;
   },
   createGoalBtn() {
@@ -111,14 +118,16 @@ const App = {
   },
   createTaskBtn() {
     const main = document.querySelector("main");
-
     const taskBtn = document.createElement("div");
+
     taskBtn.id = TodoTemp.gnrtTaskId();
     taskBtn.classList.add("task");
     taskBtn.classList.add("hide-taskSettings");
-    taskBtn.setAttribute("tabindex", 0);
     insertHTML(taskBtn, taskLabelHTML());
     insertElem(App.slctr.taskList, taskBtn);
+
+    const taskInfoFrame = taskBtn.querySelector(".task-infoFrame");
+    taskInfoFrame.setAttribute("tabindex", 0);
 
     Todo.createTask("", taskBtn.id, main.dataset.tab, main.dataset.goalId);
 
@@ -196,6 +205,35 @@ const App = {
       goalBtn.querySelector(`.goalLabel`).classList.remove("hide-elem");
       goalBtn.querySelector(`.goalLabel`).textContent = goal.gName;
       insertElem(App.slctr.goalList, goalBtn);
+    });
+  },
+  renderInboxTasks(inbox) {
+    if (inbox.length === 0) return;
+    inbox.forEach((task) => {
+      const taskBtn = document.createElement("div");
+      taskBtn.classList.add("task");
+      taskBtn.classList.add("hide-taskSettings");
+      taskBtn.id = task.tId;
+      insertHTML(taskBtn, taskLabelHTML());
+      insertElem(App.slctr.taskList, taskBtn);
+
+      const taskInfoFrame = taskBtn.querySelector(".task-infoFrame");
+      const taskNameInput = taskBtn.querySelector(".task-nameInput");
+      const taskName = taskBtn.querySelector(".task-name");
+      const taskNoteInput = taskBtn.querySelector(".task-noteInput");
+      const taskNote = taskBtn.querySelector(".task-note");
+
+      taskInfoFrame.setAttribute("tabindex", 0);
+      taskNameInput.classList.add("hide-elem");
+      taskName.classList.remove("hide-elem");
+      taskNoteInput.classList.add("hide-elem");
+      taskNote.classList.remove("hide-elem");
+
+      taskName.textContent = task.tName;
+      taskNote.textContent = task.tNote;
+      App.toggleTaskSettingsEvent(taskBtn);
+
+      insertElem(App.slctr.taskList, taskBtn);
     });
   },
   toggleAccrd(e, elem) {
