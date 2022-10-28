@@ -6,12 +6,12 @@ export function delegateEvent(elem, event, slctr, func) {
 }
 
 export function insertHTML(elem, childHtml) {
-  elem.insertAdjacentHTML("afterbegin", childHtml);
+  elem.insertAdjacentHTML("beforeend", childHtml);
   return;
 }
 
 export function insertElem(elem, childElem) {
-  elem.insertAdjacentElement("afterbegin", childElem);
+  elem.insertAdjacentElement("beforeend", childElem);
   return;
 }
 

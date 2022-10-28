@@ -12,7 +12,12 @@ const Todo = new TodoTemp();
 
 const App = {
   slctr: {
+    inboxBtn: document.querySelector("[data-app=inboxBtn]"),
+    todayBtn: document.querySelector("[data-app=todayBtn]"),
+    upcomingBtn: document.querySelector("[data-app=upcomingBtn]"),
+
     settingsBtn: document.querySelector("[data-app=settingsBtn]"),
+
     newBtn: document.querySelector("[data-app=newBtn]"),
     newGoalBtn: document.querySelector("[data-app=newGoalBtn]"),
     newTaskBtns: document.querySelectorAll("[data-app=newTaskBtn]"),
@@ -27,52 +32,55 @@ const App = {
     navBtnList: document.querySelector("[data-app=navBtnList]"),
     goalList: document.querySelector("[data-app=goalList]"),
     taskList: document.querySelector(".taskList"),
+
+    headerInfoIcon: document.querySelector("[data-app=headerInfoIcon]"),
+    headerInfoTitle: document.querySelector("[data-app=headerInfoTitle]"),
+    headerInfoText: document.querySelector("[data-app=headerInfoText]"),
   },
-  changeTab(elem) {
-    const inboxBtn = document.querySelector("[data-app=inboxBtn]");
-    const todayBtn = document.querySelector("[data-app=todayBtn");
-    const upcomingBtn = document.querySelector("[data-app=upcomingBtn]");
+  navToInbox() {
+    const main = document.querySelector("main");
 
-    const headerInfoIcon = document.querySelector("[data-app=headerInfoIcon]");
-    const headerInfoTitle = document.querySelector(
-      "[data-app=headerInfoTitle]"
+    App.slctr.inboxBtn.classList.add("selected-btn");
+    App.slctr.todayBtn.classList.remove("selected-btn");
+    App.slctr.upcomingBtn.classList.remove("selected-btn");
+
+    main.dataset.tab = "Inbox";
+    App.slctr.headerInfoIcon.setAttribute("data", "../src/icons/inboxIcon.svg");
+    App.slctr.headerInfoTitle.textContent = "Inbox";
+    App.slctr.headerInfoText.textContent =
+      "This is where your independent tasks are stored. Feel free to add as many as you like!";
+    return;
+  },
+  navToToday() {
+    const main = document.querySelector("main");
+
+    App.slctr.inboxBtn.classList.remove("selected-btn");
+    App.slctr.todayBtn.classList.add("selected-btn");
+    App.slctr.upcomingBtn.classList.remove("selected-btn");
+
+    main.dataset.tab = "Today";
+    App.slctr.headerInfoIcon.setAttribute("data", "../src/icons/starIcon.svg");
+    App.slctr.headerInfoTitle.textContent = "Today";
+    App.slctr.headerInfoText.textContent =
+      "All tasks for you to complete today, have a great day!";
+    return;
+  },
+  navToUpcoming() {
+    const main = document.querySelector("main");
+
+    App.slctr.inboxBtn.classList.remove("selected-btn");
+    App.slctr.todayBtn.classList.remove("selected-btn");
+    App.slctr.upcomingBtn.classList.add("selected-btn");
+
+    main.dataset.tab = "Upcoming";
+    App.slctr.headerInfoIcon.setAttribute(
+      "data",
+      "../src/icons/upcomingIcon.svg"
     );
-    const headerInfoText = document.querySelector("[data-app=headerInfoText]");
-
-    if (elem === inboxBtn) {
-      inboxBtn.classList.add("selected-btn");
-      todayBtn.classList.remove("selected-btn");
-      upcomingBtn.classList.remove("selected-btn");
-
-      App.slctr.main.dataset.tab = "Inbox";
-      headerInfoIcon.setAttribute("data", "../src/icons/inboxIcon.svg");
-      headerInfoTitle.textContent = "Inbox";
-      headerInfoText.textContent =
-        "This is where your independent tasks are stored. Feel free to add as many as you like!";
-      return;
-    } else if (elem === todayBtn) {
-      inboxBtn.classList.remove("selected-btn");
-      todayBtn.classList.add("selected-btn");
-      upcomingBtn.classList.remove("selected-btn");
-
-      App.slctr.main.dataset.tab = "Today";
-      headerInfoIcon.setAttribute("data", "../src/icons/starIcon.svg");
-      headerInfoTitle.textContent = "Today";
-      headerInfoText.textContent =
-        "All tasks for you to complete today, have a great day!";
-      return;
-    } else if (elem === upcomingBtn) {
-      inboxBtn.classList.remove("selected-btn");
-      todayBtn.classList.remove("selected-btn");
-      upcomingBtn.classList.add("selected-btn");
-
-      App.slctr.main.dataset.tab = "Upcoming";
-      headerInfoIcon.setAttribute("data", "../src/icons/upcomingIcon.svg");
-      headerInfoTitle.textContent = "Upcoming";
-      headerInfoText.textContent =
-        "Upcoming tasks for you to do, including those that are overdue. You can do this!";
-      return;
-    }
+    App.slctr.headerInfoTitle.textContent = "Upcoming";
+    App.slctr.headerInfoText.textContent =
+      "Upcoming tasks for you to do, including those that are overdue. You can do this!";
+    return;
   },
   createGoalBtn() {
     const goalBtn = document.createElement("button");
@@ -187,24 +195,9 @@ const App = {
     App.renderGoalBtns(Todo.goals);
   },
   init() {
-    delegateEvent(
-      App.slctr.navBtnList,
-      "click",
-      "[data-app=inboxBtn]",
-      App.changeTab
-    );
-    delegateEvent(
-      App.slctr.navBtnList,
-      "click",
-      "[data-app=todayBtn]",
-      App.changeTab
-    );
-    delegateEvent(
-      App.slctr.navBtnList,
-      "click",
-      "[data-app=upcomingBtn]",
-      App.changeTab
-    );
+    App.slctr.inboxBtn.addEventListener("click", App.navToInbox);
+    App.slctr.todayBtn.addEventListener("click", App.navToToday);
+    App.slctr.upcomingBtn.addEventListener("click", App.navToUpcoming);
     App.slctr.settingsBtn.addEventListener("click", (e) => {
       App.toggleAccrd(e, App.slctr.accrdSettings);
       setTabIndex(App.slctr.accrdSettingsBtns);
