@@ -30,12 +30,12 @@ const App = {
     accrdNewBtns: document.querySelectorAll("[data-app=accrdNew] > .accrdBtn"),
 
     navBtnList: document.querySelector("[data-app=navBtnList]"),
-    goalList: document.querySelector("[data-app=goalList]"),
+    goalList: document.querySelector(".goalList"),
     taskList: document.querySelector(".taskList"),
 
     headerInfoIcon: document.querySelector("[data-app=headerInfoIcon]"),
     headerInfoTitle: document.querySelector("[data-app=headerInfoTitle]"),
-    headerInfoText: document.querySelector("[data-app=headerInfoText]"),
+    headerInfoText: document.querySelector("[data-app=headerNoteText]"),
     headerSettingsBtns: document.querySelectorAll(
       "[data-app=headerSettingsBtn]"
     ),
@@ -50,7 +50,7 @@ const App = {
 
     goalBtns.forEach((gBtn) => gBtn.classList.remove("selected-btn"));
 
-    main.dataset.tab = "Inbox";
+    main.dataset.content = "Inbox";
     App.slctr.headerInfoIcon.setAttribute("data", "../src/icons/inboxIcon.svg");
     App.slctr.headerInfoTitle.textContent = "Inbox";
     App.slctr.headerInfoText.textContent =
@@ -70,7 +70,7 @@ const App = {
 
     goalBtns.forEach((gBtn) => gBtn.classList.remove("selected-btn"));
 
-    main.dataset.tab = "Today";
+    main.dataset.content = "Today";
     App.slctr.headerInfoIcon.setAttribute("data", "../src/icons/starIcon.svg");
     App.slctr.headerInfoTitle.textContent = "Today";
     App.slctr.headerInfoText.textContent =
@@ -89,7 +89,7 @@ const App = {
 
     goalBtns.forEach((gBtn) => gBtn.classList.remove("selected-btn"));
 
-    main.dataset.tab = "Upcoming";
+    main.dataset.content = "Upcoming";
     App.slctr.headerInfoIcon.setAttribute(
       "data",
       "../src/icons/upcomingIcon.svg"
@@ -116,7 +116,7 @@ const App = {
       if (gBtn !== goalBtn) gBtn.classList.remove("selected-btn");
     });
 
-    main.dataset.tab = "Goal";
+    main.dataset.content = "Goal";
     main.dataset.goalid = goalBtn.id;
     App.slctr.headerInfoIcon.setAttribute("data", "../src/icons/checkIcon.svg");
     App.slctr.headerInfoTitle.textContent = goal.gName;
@@ -171,7 +171,7 @@ const App = {
 
     Todo.createTask(
       { name: "", id: taskBtn.id },
-      main.dataset.tab,
+      main.dataset.content,
       main.dataset.goalid
     );
     return;
@@ -194,7 +194,7 @@ const App = {
     const checkboxIcon = taskBtn.querySelector(".checkbox-icon");
 
     let origTask =
-      main.dataset.tab === "Inbox"
+      main.dataset.content === "Inbox"
         ? Todo.getInboxTask(taskBtn.id)
         : Todo.getGoalTask(main.dataset.goalid, taskBtn.id);
     let status = parseInt(checkboxIcon.dataset.status);
@@ -212,7 +212,7 @@ const App = {
         ...origTask,
         completed: Boolean(status),
       },
-      main.dataset.tab,
+      main.dataset.content,
       main.dataset.goalid
     );
     return;
@@ -225,7 +225,7 @@ const App = {
     const taskName = taskBtn.querySelector(".task-name");
 
     let origTask =
-      main.dataset.tab === "Inbox"
+      main.dataset.content === "Inbox"
         ? Todo.getInboxTask(taskBtn.id)
         : Todo.getGoalTask(main.dataset.goalid, taskBtn.id);
 
@@ -233,7 +233,7 @@ const App = {
       if (!taskNameInput.value.trim()) return;
       Todo.updateTask(
         { ...origTask, tName: taskNameInput.value },
-        main.dataset.tab,
+        main.dataset.content,
         main.dataset.goalid
       );
       taskNameInput.classList.add("hide-elem");
@@ -250,7 +250,7 @@ const App = {
     const taskNote = taskBtn.querySelector(".task-note");
 
     let origTask =
-      main.dataset.tab === "Inbox"
+      main.dataset.content === "Inbox"
         ? Todo.getInboxTask(taskBtn.id)
         : Todo.getGoalTask(main.dataset.goalid, taskBtn.id);
 
@@ -258,7 +258,7 @@ const App = {
       if (!taskNoteInput.value.trim()) return;
       Todo.updateTask(
         { ...origTask, tNote: taskNoteInput.value },
-        main.dataset.tab,
+        main.dataset.content,
         main.dataset.goalid
       );
       taskNoteInput.classList.add("hide-elem");

@@ -32,7 +32,7 @@ export class TodoTemp {
     this._save();
     return;
   }
-  createTask(obj, tabName, goalId) {
+  createTask(obj, content, goalId) {
     const task = {
       tName: obj.name,
       tId: obj.id,
@@ -40,11 +40,11 @@ export class TodoTemp {
       tDueDate: "",
       completed: false,
     };
-    if (tabName === "Inbox") {
+    if (content === "Inbox") {
       this.inbox.push(task);
       this._save();
       return;
-    } else if (tabName === "Goal") {
+    } else if (content === "Goal") {
       const newGoal = this.getGoal(goalId);
       newGoal.tasks.push(task);
       this.goals = this.goals.map((origGoal) =>
@@ -55,14 +55,14 @@ export class TodoTemp {
     }
   }
 
-  updateTask(newTask, tabName, goalId) {
-    if (tabName === "Inbox") {
+  updateTask(newTask, content, goalId) {
+    if (content === "Inbox") {
       this.inbox = this.inbox.map((origTask) =>
         origTask.tId === newTask.tId ? newTask : origTask
       );
       this._save();
       return;
-    } else if (tabName === "Goal") {
+    } else if (content === "Goal") {
       let newGoal = this.getGoal(goalId);
       newGoal.tasks = newGoal.tasks.map((origTask) =>
         origTask.tId === newTask.tId ? newTask : origTask
@@ -75,12 +75,12 @@ export class TodoTemp {
     }
   }
 
-  removeTask(origTaskId, tabName, goalId) {
-    if (tabName === "Inbox") {
+  removeTask(origTaskId, content, goalId) {
+    if (content === "Inbox") {
       this.inbox = this.inbox.filter((origTask) => origTask.tId !== origTaskId);
       this._save();
       return;
-    } else if (tabName === "Goal") {
+    } else if (content === "Goal") {
       let newGoal = this.getGoal(goalId);
       newGoal.tasks = newGoal.tasks.filter(
         (origTask) => origTask.tId !== origTaskId
@@ -103,11 +103,3 @@ export class TodoTemp {
     localStorage.setItem("inbox", JSON.stringify(this.inbox));
   }
 }
-
-// update task does:
-//
-
-// createGoal, createTask, read,
-// updateGoal, updateTask,
-// deleteGoal, deleteTask
-// store
