@@ -199,14 +199,13 @@ const App = {
         : Todo.getGoalTask(main.dataset.goalid, taskBtn.id);
     let status = parseInt(checkboxIcon.dataset.status);
 
+    taskBtn.classList.toggle("completed-task");
     checkbox.classList.toggle("check-checkbox");
     checkboxIcon.setAttribute(
       "data",
       status ? "" : "../src/icons/checkIcon.svg"
     );
-
     status = checkboxIcon.dataset.status = status ? 0 : 1;
-    taskBtn.classList.toggle("completed-task");
 
     Todo.updateTask(
       {
@@ -306,6 +305,8 @@ const App = {
       const taskName = taskBtn.querySelector(".task-name");
       const taskNoteInput = taskBtn.querySelector(".task-noteInput");
       const taskNote = taskBtn.querySelector(".task-note");
+      const checkbox = taskBtn.querySelector(".checkbox");
+      const checkboxIcon = taskBtn.querySelector(".checkbox-icon");
 
       taskInfoFrame.setAttribute("tabindex", 0);
       taskNameInput.classList.add("hide-elem");
@@ -320,6 +321,13 @@ const App = {
 
       taskName.textContent = task.tName;
       taskNote.textContent = task.tNote || "Edit Notes...";
+
+      if (task.completed) {
+        taskBtn.classList.toggle("completed-task");
+        checkbox.classList.toggle("check-checkbox");
+        checkboxIcon.setAttribute("data", "../src/icons/checkIcon.svg");
+        checkboxIcon.dataset.status = 1;
+      }
 
       insertElem(App.slctr.taskList, taskBtn);
     });
@@ -340,6 +348,8 @@ const App = {
       const taskName = taskBtn.querySelector(".task-name");
       const taskNoteInput = taskBtn.querySelector(".task-noteInput");
       const taskNote = taskBtn.querySelector(".task-note");
+      const checkbox = taskBtn.querySelector(".checkbox");
+      const checkboxIcon = taskBtn.querySelector(".checkbox-icon");
 
       taskInfoFrame.setAttribute("tabindex", 0);
       taskNameInput.classList.add("hide-elem");
@@ -354,6 +364,13 @@ const App = {
 
       taskName.textContent = task.tName;
       taskNote.textContent = task.tNote || "Edit Notes...";
+
+      if (task.completed) {
+        taskBtn.classList.toggle("completed-task");
+        checkbox.classList.toggle("check-checkbox");
+        checkboxIcon.setAttribute("data", "../src/icons/checkIcon.svg");
+        checkboxIcon.dataset.status = 1;
+      }
 
       insertElem(App.slctr.taskList, taskBtn);
     });
