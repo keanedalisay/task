@@ -36,6 +36,9 @@ const App = {
     headerInfoIcon: document.querySelector("[data-app=headerInfoIcon]"),
     headerInfoTitle: document.querySelector("[data-app=headerInfoTitle]"),
     headerInfoText: document.querySelector("[data-app=headerInfoText]"),
+    headerSettingsBtns: document.querySelectorAll(
+      "[data-app=headerSettingsBtn]"
+    ),
   },
   navToInbox() {
     const main = document.querySelector("main");
@@ -135,6 +138,11 @@ const App = {
       main.dataset.tab,
       main.dataset.goalId
     );
+    return;
+  },
+  toggleHeaderSettings() {
+    const header = document.querySelector(".header");
+    header.classList.toggle("hide-headerSettings");
     return;
   },
   toggleTaskSettingsEvent(e) {
@@ -314,6 +322,9 @@ const App = {
     App.slctr.newTaskBtns.forEach((newTaskBtn) => {
       newTaskBtn.addEventListener("click", App.createTaskBtn);
     });
+    App.slctr.headerSettingsBtns.forEach((btn) =>
+      btn.addEventListener("click", App.toggleHeaderSettings)
+    );
     App.bindTaskEvents();
     App.render();
   },

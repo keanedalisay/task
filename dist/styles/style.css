@@ -328,6 +328,9 @@ html {
   justify-content: center;
   align-items: center;
 }
+.headerInfo-settingsBtn > object {
+  pointer-events: none;
+}
 .headerInfo-settingsBtn:hover,
 .headerInfo-settingsBtn:focus,
 .headerInfo-settingsBtn:active {
@@ -370,6 +373,9 @@ html {
   border-radius: 5rem;
   display: flex;
   justify-content: center;
+}
+.headerBtn--settingsMblBtn > object {
+  pointer-events: none;
 }
 .btnLblFrame--header {
   width: 7rem;
