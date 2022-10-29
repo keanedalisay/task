@@ -21,24 +21,35 @@ export class TodoTemp {
       this.getGoal(goalId).tasks.find((task) => task.tId === taskId);
   }
 
-  createGoal(goal) {
-    this.goals.push({
-      gName: goal.name,
-      gId: goal.id,
+  createGoal(obj) {
+    const goal = {
+      gName: obj.name,
+      gId: obj.id,
+      gNote: "",
       tasks: [],
-    });
+    };
+    this.goals.push(goal);
     this._save();
     return;
   }
-  createTask(task, tabName, goalId) {
+  createTask(obj, tabName, goalId) {
+    const task = {
+      tName: obj.name,
+      tId: obj.id,
+      tNote: "",
+      tDueDate: "",
+      completed: false,
+    };
     if (tabName === "Inbox") {
-      this.inbox.push({
-        tName: task.name,
-        tId: task.id,
-        tNote: "",
-        tDueDate: "",
-        completed: false,
-      });
+      this.inbox.push(task);
+      this._save();
+      return;
+    } else if (tabName === "Goal") {
+      const newGoal = this.getGoal(goalId);
+      newGoal.tasks.push(task);
+      this.goals = this.goals.map((origGoal) =>
+        origGoal.gId === newGoal.gId ? newGoal : origGoal
+      );
       this._save();
       return;
     }
@@ -46,19 +57,38 @@ export class TodoTemp {
 
   updateTask(newTask, tabName, goalId) {
     if (tabName === "Inbox") {
-      this.inbox = this.inbox.map((task) =>
-        task.tId === newTask.tId ? newTask : task
+      this.inbox = this.inbox.map((origTask) =>
+        origTask.tId === newTask.tId ? newTask : origTask
+      );
+      this._save();
+      return;
+    } else if (tabName === "Goal") {
+      let newGoal = this.getGoal(goalId);
+      newGoal.tasks = newGoal.tasks.map((origTask) =>
+        origTask.tId === newTask.tId ? newTask : origTask
+      );
+      this.goals = this.goals.map((origGoal) =>
+        origGoal.gId === newGoal.gId ? newGoal : origGoal
       );
       this._save();
       return;
     }
   }
 
-  removeTask(taskId, tabName, goalId) {
+  removeTask(origTaskId, tabName, goalId) {
     if (tabName === "Inbox") {
-      this.inbox = this.inbox.filter((task) => task.tId !== taskId);
+      this.inbox = this.inbox.filter((origTask) => origTask.tId !== origTaskId);
       this._save();
       return;
+    } else if (tabName === "Goal") {
+      let newGoal = this.getGoal(goalId);
+      newGoal.tasks = newGoal.tasks.filter(
+        (origTask) => origTask.tId !== origTaskId
+      );
+      this.goals = this.goals.map((origGoal) =>
+        origGoal.gId === newGoal.gId ? newGoal : origGoal
+      );
+      this._save();
     }
   }
 
