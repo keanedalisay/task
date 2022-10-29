@@ -45,11 +45,18 @@ export class TodoTemp {
   }
 
   updateTask(newTask, tabName, goalId) {
-    console.log(newTask);
     if (tabName === "Inbox") {
       this.inbox = this.inbox.map((task) =>
         task.tId === newTask.tId ? newTask : task
       );
+      this._save();
+      return;
+    }
+  }
+
+  removeTask(taskId, tabName, goalId) {
+    if (tabName === "Inbox") {
+      this.inbox = this.inbox.filter((task) => task.tId !== taskId);
       this._save();
       return;
     }

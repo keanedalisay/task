@@ -215,6 +215,13 @@ const App = {
       taskNote.textContent = taskNoteInput.value;
     }
   },
+  removeTaskEvent(e) {
+    const task = e.target.closest(".task");
+    const main = document.querySelector("main");
+
+    Todo.removeTask(task.id, main.dataset.tab, main.dataset.goalId);
+    task.remove();
+  },
   renderGoalBtns(goals) {
     if (goals.length === 0) return;
     goals.forEach((goal) => {
@@ -301,6 +308,12 @@ const App = {
       "keyup",
       ".task-noteInput",
       App.saveTaskNoteEvent
+    );
+    delegateEvent(
+      App.slctr.taskList,
+      "click",
+      "[data-app=trashTaskBtn]",
+      App.removeTaskEvent
     );
   },
   render() {
