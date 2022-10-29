@@ -298,29 +298,59 @@ html {
 .header::-webkit-scrollbar-thumb:hover {
   background: var(--on-hover);
 }
+.headerInfoFrame {
+  display: flex;
+  flex-flow: column nowrap;
+}
 .headerInfo {
-  display: grid;
-  align-content: center;
-  grid-template-columns: 4.5rem auto 4rem;
-  grid-template-rows: auto auto;
-  gap: 1rem 1rem;
+  margin: 0.5rem 0;
+  display: flex;
+}
+.headerNote {
+  margin: 0.5rem 0;
+  display: flex;
+  align-items: center;
 }
 .headerInfo-icon {
+  margin: 0 0.5rem;
   width: 4.5rem;
   height: 4.5rem;
   pointer-events: none;
 }
-.headerInfo-title {
+.headerInfo-title,
+.headerInfo-titleInput {
+  margin: 0 0.5rem;
+  max-width: 50rem;
   font-family: var(--hdng-family);
   font-size: var(--fs-40px);
+  color: var(--mineshaft);
 }
-.headerInfo-text {
-  width: 100%;
-  grid-column: 1 / span 4;
+.headerInfo-title {
+  white-space: nowrap;
+  overflow: hidden;
+}
+.headerInfo-titleInput {
+  width: min(100%, 50rem);
+  color: var(--mineshaft);
+}
+.headerNote-text,
+.headerNote-textInput {
+  margin: 0 0.5rem;
+  width: min(100%, 62rem);
   font-family: var(--bdy-text-family);
   font-size: var(--fs-16px);
+  color: var(--mineshaft);
+}
+.headerNote-textInput {
+  padding: 0.5rem 0rem;
+}
+.headerInfo-titleInput:focus,
+.headerNote-textInput:focus {
+  background: var(--mercury);
+  outline: none;
 }
 .headerInfo-settingsBtn {
+  margin: 0 0.5rem;
   width: 4.5rem;
   height: 4.5rem;
   border-radius: 5rem;
