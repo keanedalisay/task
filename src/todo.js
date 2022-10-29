@@ -15,109 +15,46 @@ export class TodoTemp {
     this._readInbox();
 
     this.getGoal = (goalId) => this.goals.find((goal) => goal.gId === goalId);
-    this.getGoalIndex = (goalId) =>
-      this.goals.findIndex((goal) => goal.gId === goalId);
-    this.getTask = (taskId, prop) => prop.find((task) => task.tId === taskId);
-    this.getTaskIndex = (taskId, prop) =>
-      prop.findIndex((task) => task.tId === taskId);
+    this.getInboxTask = (taskId) =>
+      this.inbox.find((task) => task.tId === taskId);
+    this.getGoalTask = (goalId, taskId) =>
+      this.getGoal(goalId).tasks.find((task) => task.tId === taskId);
   }
-  createGoal(name, id) {
-    const goal = {
-      gName: name,
-      gId: id,
+
+  createGoal(goal) {
+    this.goals.push({
+      gName: goal.name,
+      gId: goal.id,
       tasks: [],
-    };
-    this.goals.push(goal);
+    });
     this._save();
     return;
   }
-  createTask(name, id, tabName, goalId) {
-    const task = {
-      tName: name,
-      tId: id,
-      tNote: "",
-      tDueDate: "",
-      completed: false,
-    };
+  createTask(task, tabName, goalId) {
     if (tabName === "Inbox") {
-      this.inbox.push(task);
-      this._save();
-      return;
-    } else if (tabName === "Goal") {
-      const goal = this.getGoal(goalId);
-      const goalIndex = this.getGoalIndex(goalId);
-      goal.tasks.push(task);
-      this.goals.splice(goalIndex, 1, goal);
+      this.inbox.push({
+        tName: task.name,
+        tId: task.id,
+        tNote: "",
+        tDueDate: "",
+        completed: false,
+      });
       this._save();
       return;
     }
   }
-  updateTaskName(name, tabName, taskId, goalId) {
+
+  updateTask(newTask, tabName, goalId) {
+    console.log(newTask);
     if (tabName === "Inbox") {
-      const task = this.getTask(taskId, this.inbox);
-      const taskIndex = this.getTaskIndex(taskId, this.inbox);
-
-      task.tName = name;
-      this.inbox.splice(taskIndex, 1, task);
-      this._save();
-      return;
-    } else if (tabName === "Goal") {
-      const goal = this.getGoal(goalId);
-      const goalIndex = this.getGoalIndex(goalId);
-      const task = this.getTask(taskId, goal.tasks);
-      const taskIndex = this.getTaskIndex(taskId, goal.tasks);
-
-      task.tName = name;
-      goal.tasks.splice(taskIndex, 1, task);
-      this.goals.splice(goalIndex, 1, goal);
+      this.inbox = this.inbox.map((task) =>
+        task.tId === newTask.tId ? newTask : task
+      );
       this._save();
       return;
     }
   }
-  updateTaskNote(note, tabName, taskId, goalId) {
-    if (tabName === "Inbox") {
-      const task = this.getTask(taskId, this.inbox);
-      const taskIndex = this.getTaskIndex(taskId, this.inbox);
 
-      task.tNote = note;
-      this.inbox.splice(taskIndex, 1, task);
-      this._save();
-      return;
-    } else if (tabName === "Goal") {
-      const goal = this.getGoal(goalId);
-      const goalIndex = this.getGoalIndex(goalId);
-      const task = this.getTask(taskId, goal.tasks);
-      const taskIndex = this.getTaskIndex(taskId, goal.tasks);
-
-      task.tNote = note;
-      goal.tasks.splice(taskIndex, 1, task);
-      this.goals.splice(goalIndex, 1, goal);
-      this._save();
-      return;
-    }
-  }
-  updateTaskCompletion(status, tabName, taskId, goalId) {
-    if (tabName === "Inbox") {
-      const task = this.getTask(taskId, this.inbox);
-      const taskIndex = this.getTaskIndex(taskId, this.inbox);
-
-      task.completed = Boolean(status);
-      this.inbox.splice(taskIndex, 1, task);
-      this._save();
-      return;
-    } else if (tabName === "Goal") {
-      const goal = this.getGoal(goalId);
-      const goalIndex = this.getGoalIndex(goalId);
-      const task = this.getTask(taskId, goal.tasks);
-      const taskIndex = this.getTaskIndex(taskId, goal.tasks);
-
-      task.completed = Boolean(status);
-      goal.tasks.splice(taskIndex, 1, task);
-      this.goals.splice(goalIndex, 1, goal);
-      this._save();
-      return;
-    }
-  }
   _readGoals() {
     this.goals = JSON.parse(localStorage.getItem("goals") || "[]");
   }

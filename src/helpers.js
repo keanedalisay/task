@@ -39,7 +39,7 @@ export function taskLabelHTML() {
   const taskLabel = `
   <div class="task-infoFrame">
   <div class="checkbox">
-      <object class="checkbox-icon" data-done="0" data="" type="text/svg+xml" tabindex="-1"></object>
+      <object class="checkbox-icon" data-status="0" data="" type="text/svg+xml" tabindex="-1"></object>
   </div>
   <div class="task-nameFrame">
       <input class="task-nameInput" type="text" placeholder="Name of your task...">

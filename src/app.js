@@ -96,15 +96,15 @@ const App = {
     insertHTML(goalBtn, goalLabelHTML());
     insertElem(App.slctr.goalList, goalBtn);
 
-    const goalInput = goalBtn.querySelector(`.goalInput`);
-    const goalLabel = goalBtn.querySelector(`.goalLabel`);
+    const goalInput = goalBtn.querySelector(".goalInput");
+    const goalLabel = goalBtn.querySelector(".goalLabel");
     goalInput.addEventListener("keyup", (e) => {
       if (e.key === "Enter") {
         if (!goalInput.value.trim()) {
           App.slctr.goalList.removeChild(goalBtn);
           return;
         }
-        Todo.createGoal(goalInput.value, goalBtn.id);
+        Todo.createGoal({ name: goalInput.value, id: goalBtn.id });
         goalInput.classList.add("hide-elem");
         goalLabel.classList.remove("hide-elem");
         goalLabel.textContent = goalInput.value;
@@ -129,7 +129,11 @@ const App = {
     const taskInfoFrame = taskBtn.querySelector(".task-infoFrame");
     taskInfoFrame.setAttribute("tabindex", 0);
 
-    Todo.createTask("", taskBtn.id, main.dataset.tab, main.dataset.goalId);
+    Todo.createTask(
+      { name: "", id: taskBtn.id },
+      main.dataset.tab,
+      main.dataset.goalId
+    );
 
     App.toggleTaskSettingsEvent(taskBtn);
     App.saveTaskNameEvent(taskBtn);
@@ -150,23 +154,26 @@ const App = {
   },
   checkTaskEvent(task) {
     const main = document.querySelector("main");
-    const taskCheckbox = task.querySelector(".checkbox");
-    const taskCheckboxIcon = task.querySelector(".checkbox-icon");
+    const checkbox = task.querySelector(".checkbox");
+    const checkboxIcon = task.querySelector(".checkbox-icon");
 
-    taskCheckbox.addEventListener("click", (e) => {
-      const notDone = parseInt(taskCheckboxIcon.dataset.done);
-      taskCheckbox.classList.toggle("check-checkbox");
-      taskCheckboxIcon.setAttribute(
+    checkbox.addEventListener("click", (e) => {
+      const status = parseInt(checkboxIcon.dataset.status);
+
+      checkbox.classList.toggle("check-checkbox");
+      checkboxIcon.setAttribute(
         "data",
-        notDone ? "" : "../src/icons/checkIcon.svg"
+        status ? "" : "../src/icons/checkIcon.svg"
       );
-      taskCheckboxIcon.dataset.done = notDone ? 0 : 1;
+      checkboxIcon.dataset.status = status ? 0 : 1;
       task.classList.toggle("completed-task");
 
-      Todo.updateTaskCompletion(
-        parseInt(taskCheckboxIcon.dataset.done),
+      Todo.updateTask(
+        {
+          ...Todo.getInboxTask(task.id),
+          completed: Boolean(checkboxIcon.dataset.status),
+        },
         main.dataset.tab,
-        task.id,
         main.dataset.goalId
       );
       return;
@@ -180,14 +187,10 @@ const App = {
 
     taskNameInput.addEventListener("keyup", (e) => {
       if (e.key === "Enter") {
-        if (!taskNameInput.value.trim()) {
-          App.slctr.taskList.removeChild(task);
-          return;
-        }
-        Todo.updateTaskName(
-          taskNameInput.value,
+        if (!taskNameInput.value.trim()) return;
+        Todo.updateTask(
+          { ...Todo.getInboxTask(task.id), tName: taskNameInput.value },
           main.dataset.tab,
-          task.id,
           main.dataset.goalId
         );
         taskNameInput.classList.add("hide-elem");
@@ -206,10 +209,9 @@ const App = {
     taskNoteInput.addEventListener("keyup", (e) => {
       if (e.key === "Enter") {
         if (!taskNoteInput.value.trim()) return;
-        Todo.updateTaskNote(
-          taskNoteInput.value,
+        Todo.updateTask(
+          { ...Todo.getInboxTask(task.id), tNote: taskNoteInput.value },
           main.dataset.tab,
-          task.id,
           main.dataset.goalId
         );
         taskNoteInput.classList.add("hide-elem");
