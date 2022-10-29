@@ -270,7 +270,7 @@ const App = {
     const taskBtn = e.target.closest(".task");
     const main = document.querySelector("main");
 
-    Todo.removeTask(taskBtn.id, main.dataset.tab, main.dataset.goalId);
+    Todo.removeTask(taskBtn.id, main.dataset.tab, main.dataset.goalid);
     taskBtn.remove();
   },
   renderGoalBtns(goals) {

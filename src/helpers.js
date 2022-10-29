@@ -1,6 +1,5 @@
 export function delegateEvent(elem, event, slctr, func) {
   elem.addEventListener(event, (e) => {
-    console.log(e.target);
     if (e.target.matches(slctr)) func(e);
   });
   return;
