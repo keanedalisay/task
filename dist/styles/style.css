@@ -327,7 +327,16 @@ html {
 }
 .headerInfo-title {
   white-space: nowrap;
-  overflow: hidden;
+  overflow-y: hidden;
+}
+.headerInfo-title::-webkit-scrollbar {
+  height: 0.5rem;
+}
+.headerInfo-title::-webkit-scrollbar-thumb {
+  background: var(--mercury);
+}
+.headerInfo-title::-webkit-scrollbar-thumb:hover {
+  background: var(--on-hover);
 }
 .headerInfo-titleInput {
   width: min(100%, 50rem);

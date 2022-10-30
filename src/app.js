@@ -51,6 +51,7 @@ const App = {
     goalBtns.forEach((gBtn) => gBtn.classList.remove("selected-btn"));
 
     main.dataset.content = "Inbox";
+    App.slctr.headerInfoIcon.classList.remove("hide-elem");
     App.slctr.headerInfoIcon.setAttribute("data", "../src/icons/inboxIcon.svg");
     App.slctr.headerInfoTitle.textContent = "Inbox";
     App.slctr.headerInfoText.textContent =
@@ -71,6 +72,7 @@ const App = {
     goalBtns.forEach((gBtn) => gBtn.classList.remove("selected-btn"));
 
     main.dataset.content = "Today";
+    App.slctr.headerInfoIcon.classList.remove("hide-elem");
     App.slctr.headerInfoIcon.setAttribute("data", "../src/icons/starIcon.svg");
     App.slctr.headerInfoTitle.textContent = "Today";
     App.slctr.headerInfoText.textContent =
@@ -90,6 +92,7 @@ const App = {
     goalBtns.forEach((gBtn) => gBtn.classList.remove("selected-btn"));
 
     main.dataset.content = "Upcoming";
+    App.slctr.headerInfoIcon.classList.remove("hide-elem");
     App.slctr.headerInfoIcon.setAttribute(
       "data",
       "../src/icons/upcomingIcon.svg"
@@ -118,7 +121,7 @@ const App = {
 
     main.dataset.content = "Goal";
     main.dataset.goalid = goalBtn.id;
-    App.slctr.headerInfoIcon.setAttribute("data", "../src/icons/checkIcon.svg");
+    App.slctr.headerInfoIcon.classList.add("hide-elem");
     App.slctr.headerInfoTitle.textContent = goal.gName;
     App.slctr.headerInfoText.textContent = "This is your goal, have fun!";
 
