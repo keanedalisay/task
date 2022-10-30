@@ -55,6 +55,14 @@ export class TodoTemp {
     }
   }
 
+  updateGoal(newGoal) {
+    console.log(newGoal);
+    this.goals = this.goals.map((origGoal) =>
+      origGoal.gId === newGoal.gId ? newGoal : origGoal
+    );
+    this._save();
+    return;
+  }
   updateTask(newTask, content, goalId) {
     if (content === "Inbox") {
       this.inbox = this.inbox.map((origTask) =>

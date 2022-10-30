@@ -34,11 +34,44 @@ const App = {
     taskList: document.querySelector(".taskList"),
 
     headerInfoIcon: document.querySelector("[data-app=headerInfoIcon]"),
+
     headerInfoTitle: document.querySelector("[data-app=headerInfoTitle]"),
+    headerInfoTitleInput: document.querySelector(
+      "[data-app=headerInfoTitleInput]"
+    ),
+
     headerInfoText: document.querySelector("[data-app=headerNoteText]"),
+    headerInfoTextInput: document.querySelector(
+      "[data-app=headerNoteTextInput]"
+    ),
     headerSettingsBtns: document.querySelectorAll(
       "[data-app=headerSettingsBtn]"
     ),
+  },
+  toggleAccrd(e, elem) {
+    if (e.target) {
+      elem.classList.toggle("hide-accrd");
+      return;
+    }
+  },
+  toggleHeaderSettings() {
+    const main = document.querySelector("main");
+    const header = document.querySelector(".header");
+    header.classList.toggle("hide-headerSettings");
+
+    if (main.dataset.content === "Goal") {
+      App.slctr.headerInfoTitle.classList.toggle("hide-elem");
+      App.slctr.headerInfoText.classList.toggle("hide-elem");
+
+      App.slctr.headerInfoTitleInput.classList.toggle("hide-elem");
+      App.slctr.headerInfoTextInput.classList.toggle("hide-elem");
+    }
+    return;
+  },
+  toggleTaskSettingsEvent(e) {
+    const task = e.target.closest(".task");
+    task.classList.toggle("hide-taskSettings");
+    return;
   },
   navToInbox() {
     const main = document.querySelector("main");
@@ -123,7 +156,10 @@ const App = {
     main.dataset.goalid = goalBtn.id;
     App.slctr.headerInfoIcon.classList.add("hide-elem");
     App.slctr.headerInfoTitle.textContent = goal.gName;
-    App.slctr.headerInfoText.textContent = "This is your goal, have fun!";
+    App.slctr.headerInfoTitleInput.value = goal.gName;
+    App.slctr.headerInfoText.textContent =
+      goal.gNote || "What is your goal all about?";
+    App.slctr.headerInfoTextInput.value = goal.gNote;
 
     App.slctr.taskList.innerHTML = "";
     App.renderGoalTasks(goal);
@@ -159,6 +195,40 @@ const App = {
     });
     return;
   },
+  saveGoalNameEvent(e) {
+    const main = document.querySelector("main");
+    const goalBtn = document.getElementById(main.dataset.goalid);
+
+    let origGoal = Todo.getGoal(main.dataset.goalid);
+    const headerTitleInput = App.slctr.headerInfoTitleInput.value;
+
+    if (e.key === "Enter") {
+      if (!headerTitleInput.trim()) return;
+
+      Todo.updateGoal({ ...origGoal, gName: headerTitleInput });
+      App.slctr.headerInfoTitleInput.blur();
+      App.slctr.headerInfoTitle.textContent = headerTitleInput;
+      goalBtn.querySelector(".goalLabel").textContent = headerTitleInput;
+
+      return;
+    }
+  },
+  saveGoalNoteEvent(e) {
+    const main = document.querySelector("main");
+
+    let origGoal = Todo.getGoal(main.dataset.goalid);
+    const headerNoteInput = App.slctr.headerInfoTextInput.value;
+
+    if (e.key === "Enter") {
+      if (!headerNoteInput.trim()) return;
+
+      Todo.updateGoal({ ...origGoal, gNote: headerNoteInput });
+      App.slctr.headerInfoTextInput.blur();
+      App.slctr.headerInfoText.textContent = headerNoteInput;
+
+      return;
+    }
+  },
   createTaskBtn() {
     const main = document.querySelector("main");
     const taskBtn = document.createElement("div");
@@ -177,16 +247,6 @@ const App = {
       main.dataset.content,
       main.dataset.goalid
     );
-    return;
-  },
-  toggleHeaderSettings() {
-    const header = document.querySelector(".header");
-    header.classList.toggle("hide-headerSettings");
-    return;
-  },
-  toggleTaskSettingsEvent(e) {
-    const task = e.target.closest(".task");
-    task.classList.toggle("hide-taskSettings");
     return;
   },
   checkTaskEvent(e) {
@@ -301,7 +361,6 @@ const App = {
       taskBtn.classList.add("hide-taskSettings");
       taskBtn.id = task.tId;
       insertHTML(taskBtn, taskLabelHTML());
-      insertElem(App.slctr.taskList, taskBtn);
 
       const taskInfoFrame = taskBtn.querySelector(".task-infoFrame");
       const taskNameInput = taskBtn.querySelector(".task-nameInput");
@@ -312,8 +371,13 @@ const App = {
       const checkboxIcon = taskBtn.querySelector(".checkbox-icon");
 
       taskInfoFrame.setAttribute("tabindex", 0);
-      taskNameInput.classList.add("hide-elem");
-      taskName.classList.remove("hide-elem");
+
+      task.tName
+        ? taskNameInput.classList.add("hide-elem")
+        : taskNameInput.classList.remove("hide-elem");
+      task.tName
+        ? taskName.classList.remove("hide-elem")
+        : taskName.classList.add("hide-elem");
 
       task.tNote
         ? taskNoteInput.classList.add("hide-elem")
@@ -322,8 +386,8 @@ const App = {
         ? taskNote.classList.remove("hide-elem")
         : taskNote.classList.add("hide-elem");
 
-      taskName.textContent = task.tName;
-      taskNote.textContent = task.tNote || "Edit Notes...";
+      taskName.textContent = task.tName || "Your task does not have a name :c";
+      taskNote.textContent = task.tNote || "Your task does not have a note :c";
 
       if (task.completed) {
         taskBtn.classList.toggle("completed-task");
@@ -355,8 +419,13 @@ const App = {
       const checkboxIcon = taskBtn.querySelector(".checkbox-icon");
 
       taskInfoFrame.setAttribute("tabindex", 0);
-      taskNameInput.classList.add("hide-elem");
-      taskName.classList.remove("hide-elem");
+
+      task.tName
+        ? taskNameInput.classList.add("hide-elem")
+        : taskNameInput.classList.remove("hide-elem");
+      task.tName
+        ? taskName.classList.remove("hide-elem")
+        : taskName.classList.add("hide-elem");
 
       task.tNote
         ? taskNoteInput.classList.add("hide-elem")
@@ -365,8 +434,8 @@ const App = {
         ? taskNote.classList.remove("hide-elem")
         : taskNote.classList.add("hide-elem");
 
-      taskName.textContent = task.tName;
-      taskNote.textContent = task.tNote || "Edit Notes...";
+      taskName.textContent = task.tName || "Your task does not have a name :c";
+      taskNote.textContent = task.tNote || "Your task does not have a note :c";
 
       if (task.completed) {
         taskBtn.classList.toggle("completed-task");
@@ -378,11 +447,19 @@ const App = {
       insertElem(App.slctr.taskList, taskBtn);
     });
   },
-  toggleAccrd(e, elem) {
-    if (e.target) {
-      elem.classList.toggle("hide-accrd");
-      return;
-    }
+  bindGoalEvents() {
+    delegateEvent(
+      document.querySelector(".header"),
+      "keyup",
+      "[data-app=headerInfoTitleInput]",
+      App.saveGoalNameEvent
+    );
+    delegateEvent(
+      document.querySelector(".header"),
+      "keyup",
+      "[data-app=headerNoteTextInput]",
+      App.saveGoalNoteEvent
+    );
   },
   bindTaskEvents() {
     delegateEvent(
@@ -448,6 +525,7 @@ const App = {
       btn.addEventListener("click", App.toggleHeaderSettings)
     );
 
+    App.bindGoalEvents();
     App.bindTaskEvents();
     App.render();
   },
