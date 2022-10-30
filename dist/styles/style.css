@@ -320,7 +320,7 @@ html {
 .headerInfo-title,
 .headerInfo-titleInput {
   margin: 0 0.5rem;
-  max-width: 50rem;
+  max-width: 58rem;
   font-family: var(--hdng-family);
   font-size: var(--fs-40px);
   color: var(--mineshaft);
@@ -339,7 +339,7 @@ html {
   background: var(--on-hover);
 }
 .headerInfo-titleInput {
-  width: min(100%, 50rem);
+  width: min(100%, 58rem);
   color: var(--mineshaft);
 }
 .headerNote-text,
@@ -449,7 +449,7 @@ html {
 .task {
   margin: 0.5rem 0;
   width: 100%;
-  height: 12rem;
+  height: 13rem;
   border-radius: 1rem;
   box-shadow: var(--on-select);
   transition: height 275ms ease-in-out, box-shadow 275ms ease-in-out;
@@ -469,6 +469,7 @@ html {
   background: var(--on-hover);
 }
 .task-infoFrame {
+  height: 5rem;
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
@@ -527,11 +528,20 @@ html {
   width: 90%;
   display: flex;
   flex-flow: column nowrap;
-  overflow: hidden;
+  overflow-y: hidden;
+}
+.task-nameFrame::-webkit-scrollbar {
+  height: 0.2rem;
+}
+.task-nameFrame::-webkit-scrollbar-thumb {
+  background: var(--mercury);
+}
+.task-nameFrame::-webkit-scrollbar-thumb:hover {
+  background: var(--on-hover);
 }
 .task-nameInput {
-  width: 90%;
-  height: 3rem;
+  max-width: 60rem;
+  height: 4rem;
   font-family: var(--bdy-text-family);
   font-size: var(--fs-16px);
 }
@@ -632,7 +642,7 @@ html {
   overflow: hidden;
 }
 .hide-taskSettings {
-  height: 4rem;
+  height: 5rem;
   box-shadow: 0rem 0rem 0rem var(--white);
   overflow: hidden;
 }
