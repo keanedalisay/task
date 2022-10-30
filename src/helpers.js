@@ -23,33 +23,53 @@ export function setTabIndex(elements) {
   return;
 }
 
-export function goalLabelHTML() {
-  const goalLabel = `
+export function goalBtnHTML(goalId, goalName) {
+  const goalBtn = `
+  <button class="goalBtn" id="${goalId ? goalId : ""}" title="${
+    goalName ? goalName : ""
+  }">
     <div class="progressBar">
         <div class="progressBar-interval">
         </div>
     </div>
-    <input class="goalInput" type="text" placeholder="Goal Name...">
-    <label class="goalLabel hide-elem"></label>
-    `;
-  return goalLabel;
+    <input class="goalInput ${
+      goalName ? "hide-elem" : ""
+    }" type="text" placeholder="Goal Name...">
+    <label class="goalLabel ${goalName ? "" : "hide-elem"}">${
+    goalName ? goalName : ""
+  }</label>
+  </button>`;
+  return goalBtn;
 }
 
-export function taskLabelHTML() {
-  const taskLabel = `
-  <div class="task-infoFrame">
-  <div class="checkbox">
-      <object class="checkbox-icon" data-status="0" data="" type="text/svg+xml" tabindex="-1"></object>
+export function taskBtnHTML(taskId, taskName, taskNote, isDone) {
+  const taskBtn = `
+<div class="task hide-taskSettings ${isDone ? "completed-task" : ""}" id=${
+    taskId ? taskId : ""
+  } title="${taskName ? taskName : ""}">
+  <div class="task-infoFrame" tabindex="0">
+  <div class="checkbox ${isDone ? "check-checkbox" : ""}">
+      <object class="checkbox-icon" data-status="${isDone ? "1" : "0"}" data="${
+    isDone ? "../src/icons/checkIcon.svg" : ""
+  }" type="text/svg+xml" tabindex="-1"></object>
   </div>
   <div class="task-nameFrame">
-      <input class="task-nameInput" type="text" placeholder="Name of your task...">
-      <span class="task-name hide-elem">This is my task</span>
+      <input class="task-nameInput ${
+        taskName ? "hide-elem" : ""
+      }" type="text" placeholder="What would you like to do?">
+      <span class="task-name ${taskName ? "" : "hide-elem"}">${
+    taskName || "What would you like to do?"
+  }</span>
       <span class="task-tabName hide-elem">Inbox</span>
   </div>
 </div>
 <div class="task-noteFrame">
-  <input class="task-noteInput" type="text" placeholder="Edit note..."tabindex="-1">
-  <span class="task-note hide-elem">Edit note...</span>
+  <input class="task-noteInput ${
+    taskNote ? "hide-elem" : ""
+  }" type="text" placeholder="What would you like to keep in mind?"tabindex="-1">
+  <span class="task-note ${taskNote ? "" : "hide-elem"}">${
+    taskNote || "What would you like to keep in mind?"
+  }</span>
 </div>
 <div class="task-btnFrame">
   <button class="task-btn" data-app="setTaskDateBtn" tabindex="-1">
@@ -67,7 +87,8 @@ export function taskLabelHTML() {
       </div>
   </button>
 </div>
+</div>
   `;
 
-  return taskLabel;
+  return taskBtn;
 }

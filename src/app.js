@@ -3,8 +3,8 @@ import {
   insertHTML,
   insertElem,
   setTabIndex,
-  goalLabelHTML,
-  taskLabelHTML,
+  goalBtnHTML,
+  taskBtnHTML,
 } from "./helpers.js";
 import { TodoTemp } from "./todo.js";
 
@@ -166,30 +166,29 @@ const App = {
     return;
   },
   createGoalBtn() {
-    const goalBtn = document.createElement("button");
+    const goalId = TodoTemp.gnrtGoalId();
+    const goalBtn = goalBtnHTML(goalId, "");
 
-    goalBtn.id = TodoTemp.gnrtGoalId();
-    goalBtn.classList.add("goalBtn");
-    insertHTML(goalBtn, goalLabelHTML());
-    insertElem(App.slctr.goalList, goalBtn);
+    insertHTML(App.slctr.goalList, goalBtn);
 
-    const goalInput = goalBtn.querySelector(".goalInput");
-    const goalLabel = goalBtn.querySelector(".goalLabel");
+    const goal = document.getElementById(goalId);
+    const goalInput = goal.querySelector(".goalInput");
+    const goalLabel = goal.querySelector(".goalLabel");
     goalInput.addEventListener("keyup", (e) => {
       if (e.key === "Enter") {
         if (!goalInput.value.trim()) {
-          App.slctr.goalList.removeChild(goalBtn);
+          App.slctr.goalList.removeChild(goal);
           return;
         }
-        Todo.createGoal({ name: goalInput.value, id: goalBtn.id });
+        Todo.createGoal({ name: goalInput.value, id: goalId });
 
-        goalBtn.addEventListener("click", App.navToGoal);
+        goal.addEventListener("click", App.navToGoal);
         goalInput.classList.add("hide-elem");
         goalLabel.classList.remove("hide-elem");
         goalLabel.textContent = goalInput.value;
         return;
       } else if (e.key === "Escape") {
-        App.slctr.goalList.removeChild(goalBtn);
+        App.slctr.goalList.removeChild(goal);
         return;
       }
     });
@@ -231,19 +230,13 @@ const App = {
   },
   createTaskBtn() {
     const main = document.querySelector("main");
-    const taskBtn = document.createElement("div");
 
-    taskBtn.id = TodoTemp.gnrtTaskId();
-    taskBtn.classList.add("task");
-    taskBtn.classList.add("hide-taskSettings");
-    insertHTML(taskBtn, taskLabelHTML());
-    insertElem(App.slctr.taskList, taskBtn);
-
-    const taskInfoFrame = taskBtn.querySelector(".task-infoFrame");
-    taskInfoFrame.setAttribute("tabindex", 0);
+    const taskId = TodoTemp.gnrtTaskId();
+    const taskBtn = taskBtnHTML(taskId, "", "", "");
+    insertHTML(App.slctr.taskList, taskBtn);
 
     Todo.createTask(
-      { name: "", id: taskBtn.id },
+      { name: "", id: taskId },
       main.dataset.content,
       main.dataset.goalid
     );
@@ -331,120 +324,48 @@ const App = {
   },
   removeTaskEvent(e) {
     const taskBtn = e.target.closest(".task");
+    console.log(taskBtn);
     const main = document.querySelector("main");
 
-    Todo.removeTask(taskBtn.id, main.dataset.tab, main.dataset.goalid);
+    Todo.removeTask(taskBtn.id, main.dataset.content, main.dataset.goalid);
     taskBtn.remove();
   },
+
   renderGoalBtns(goals) {
     if (goals.length === 0) return;
     goals.forEach((goal) => {
-      const goalBtn = document.createElement("button");
+      const goalBtn = goalBtnHTML(goal.gId, goal.gName);
 
-      goalBtn.classList.add("goalBtn");
-      goalBtn.id = goal.gId;
-      insertHTML(goalBtn, goalLabelHTML());
-
-      goalBtn.addEventListener("click", App.navToGoal);
-      goalBtn.querySelector(`.goalInput`).classList.add("hide-elem");
-      goalBtn.querySelector(`.goalLabel`).classList.remove("hide-elem");
-      goalBtn.querySelector(`.goalLabel`).textContent = goal.gName;
-      insertElem(App.slctr.goalList, goalBtn);
+      insertHTML(App.slctr.goalList, goalBtn);
     });
+    document
+      .querySelectorAll(".goalBtn")
+      .forEach((goalBtn) => goalBtn.addEventListener("click", App.navToGoal));
   },
   renderInboxTasks(inbox) {
     if (inbox.length === 0) return;
     inbox.forEach((task) => {
-      const taskBtn = document.createElement("div");
+      const taskBtn = taskBtnHTML(
+        task.tId,
+        task.tName,
+        task.tNote,
+        task.completed
+      );
 
-      taskBtn.classList.add("task");
-      taskBtn.classList.add("hide-taskSettings");
-      taskBtn.id = task.tId;
-      insertHTML(taskBtn, taskLabelHTML());
-
-      const taskInfoFrame = taskBtn.querySelector(".task-infoFrame");
-      const taskNameInput = taskBtn.querySelector(".task-nameInput");
-      const taskName = taskBtn.querySelector(".task-name");
-      const taskNoteInput = taskBtn.querySelector(".task-noteInput");
-      const taskNote = taskBtn.querySelector(".task-note");
-      const checkbox = taskBtn.querySelector(".checkbox");
-      const checkboxIcon = taskBtn.querySelector(".checkbox-icon");
-
-      taskInfoFrame.setAttribute("tabindex", 0);
-
-      task.tName
-        ? taskNameInput.classList.add("hide-elem")
-        : taskNameInput.classList.remove("hide-elem");
-      task.tName
-        ? taskName.classList.remove("hide-elem")
-        : taskName.classList.add("hide-elem");
-
-      task.tNote
-        ? taskNoteInput.classList.add("hide-elem")
-        : taskNoteInput.classList.remove("hide-elem");
-      task.tNote
-        ? taskNote.classList.remove("hide-elem")
-        : taskNote.classList.add("hide-elem");
-
-      taskName.textContent = task.tName || "Your task does not have a name :c";
-      taskNote.textContent = task.tNote || "Your task does not have a note :c";
-
-      if (task.completed) {
-        taskBtn.classList.toggle("completed-task");
-        checkbox.classList.toggle("check-checkbox");
-        checkboxIcon.setAttribute("data", "../src/icons/checkIcon.svg");
-        checkboxIcon.dataset.status = 1;
-      }
-
-      insertElem(App.slctr.taskList, taskBtn);
+      insertHTML(App.slctr.taskList, taskBtn);
     });
   },
   renderGoalTasks(goal) {
     if (goal.tasks.length === 0) return;
     goal.tasks.forEach((task) => {
-      const taskBtn = document.createElement("div");
+      const taskBtn = taskBtnHTML(
+        task.tId,
+        task.tName,
+        task.tNote,
+        task.completed
+      );
 
-      taskBtn.classList.add("task");
-      taskBtn.classList.add("hide-taskSettings");
-      taskBtn.id = task.tId;
-      insertHTML(taskBtn, taskLabelHTML());
-      insertElem(App.slctr.taskList, taskBtn);
-
-      const taskInfoFrame = taskBtn.querySelector(".task-infoFrame");
-      const taskNameInput = taskBtn.querySelector(".task-nameInput");
-      const taskName = taskBtn.querySelector(".task-name");
-      const taskNoteInput = taskBtn.querySelector(".task-noteInput");
-      const taskNote = taskBtn.querySelector(".task-note");
-      const checkbox = taskBtn.querySelector(".checkbox");
-      const checkboxIcon = taskBtn.querySelector(".checkbox-icon");
-
-      taskInfoFrame.setAttribute("tabindex", 0);
-
-      task.tName
-        ? taskNameInput.classList.add("hide-elem")
-        : taskNameInput.classList.remove("hide-elem");
-      task.tName
-        ? taskName.classList.remove("hide-elem")
-        : taskName.classList.add("hide-elem");
-
-      task.tNote
-        ? taskNoteInput.classList.add("hide-elem")
-        : taskNoteInput.classList.remove("hide-elem");
-      task.tNote
-        ? taskNote.classList.remove("hide-elem")
-        : taskNote.classList.add("hide-elem");
-
-      taskName.textContent = task.tName || "Your task does not have a name :c";
-      taskNote.textContent = task.tNote || "Your task does not have a note :c";
-
-      if (task.completed) {
-        taskBtn.classList.toggle("completed-task");
-        checkbox.classList.toggle("check-checkbox");
-        checkboxIcon.setAttribute("data", "../src/icons/checkIcon.svg");
-        checkboxIcon.dataset.status = 1;
-      }
-
-      insertElem(App.slctr.taskList, taskBtn);
+      insertHTML(App.slctr.taskList, taskBtn);
     });
   },
   bindGoalEvents() {
