@@ -8,6 +8,8 @@
   --dodger-blue: #3bb4ff;
   --sunset-orange: #ff4a4a;
 
+  --bkgrnd-shadow: 0rem 0rem 0.5rem #3333334f;
+
   --on-hover: #3bb4ff43;
   --on-select: 0rem 0rem 0.5rem #3333334f;
 
@@ -255,6 +257,111 @@ html {
   align-items: center;
   overflow: auto;
 }
+.overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: var(--wild-sand);
+  opacity: 25%;
+  transition: opacity 275ms ease-in-out;
+}
+
+.modal {
+  margin: 0 auto;
+  padding: 1rem;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--white);
+  border-radius: 1rem;
+  box-shadow: var(--bkgrnd-shadow);
+}
+.modal--dateModal {
+  width: min(max-content, max(min-content, 32rem));
+  max-height: 25rem;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  opacity: 1;
+  transition: opacity 275ms ease-in-out;
+}
+.timeFrame {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-items: center;
+}
+.timeFrame-month,
+.timeFrame-day,
+.timeFrame-year {
+  margin: 0.5rem;
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-items: center;
+}
+.timeFrame-month > label,
+.timeFrame-day > label,
+.timeFrame-year > label {
+  margin: 0.5rem 0rem;
+  font-family: var(--hdng-family);
+  font-size: var(--fs-16px);
+  color: var(--mineshaft);
+}
+.timeFrame-month > input,
+.timeFrame-day > input,
+.timeFrame-year > input {
+  margin: 0.5rem 0rem;
+  padding: 0.25rem;
+  height: 4rem;
+  font-family: var(--bdy-text-family);
+  font-size: var(--fs-16px);
+  text-align: center;
+  color: var(--mineshaft);
+}
+.timeFrame-month > input,
+.timeFrame-year > input {
+  width: 10rem;
+}
+.timeFrame-day > input {
+  width: 5rem;
+}
+.timeFrame-month > input:focus,
+.timeFrame-day > input:focus,
+.timeFrame-year > input:focus {
+  box-shadow: var(--bkgrnd-shadow);
+  outline: none;
+}
+.timeBtnFrame {
+  width: 20rem;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.timeBtn {
+  width: 8rem;
+  height: 4rem;
+  border-radius: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.timeBtn:hover,
+.timeBtn:focus {
+  background: var(--on-hover);
+}
+.btnLblFrame--time > .btnLblFrame-text {
+  font-family: var(--bdy-text-family);
+  font-weight: 400;
+  font-size: var(--fs-14px);
+  color: var(--dusty-gray);
+}
+
 .addTaskToTabBtn {
   width: 6rem;
   height: 6rem;
@@ -272,6 +379,7 @@ html {
 .addTaskToTabBtn:active {
   background: var(--silver);
 }
+
 .addTaskToTabBtn > object {
   width: 4rem;
   height: 4rem;
@@ -607,7 +715,7 @@ html {
   .main {
     width: 100vw;
     position: absolute;
-    transform: translate(100vw, 0);
+    transform: translate(0vw, 0);
   }
   .accrdFrame--new {
     height: 5rem;
@@ -632,6 +740,16 @@ html {
   }
 }
 
+.display-none {
+  display: none;
+}
+
+.hide-overlay {
+  opacity: 0;
+}
+.hide-modal {
+  opacity: 0;
+}
 .hide-accrd {
   height: 0;
   transition: height 275ms ease-in-out;

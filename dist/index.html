@@ -115,6 +115,35 @@
             </div>
         </nav>
         <main class="main" data-content="Inbox" data-goalid="">
+            <div class="overlay hide-overlay display-none" data-app="overlay"></div>
+            <div class="modal modal--dateModal hide-modal" data-app="dateModal">
+                <div class="timeFrame">
+                    <div class="timeFrame-month">
+                        <label for="month">Month</label>
+                        <input id="month" type="text" placeholder="January" data-app="monthInput">
+                    </div>
+                    <div class="timeFrame-day">
+                        <label for="day">Day</label>
+                        <input id="day" type="text" placeholder="1" data-app="dayInput">
+                    </div>
+                    <div class="timeFrame-year">
+                        <label for="year">Year</label>
+                        <input id="year" type="text" placeholder="2000" data-app="yearInput">
+                    </div>
+                </div>
+                <div class="timeBtnFrame">
+                    <button class="timeBtn" data-app="saveDateBtn">
+                        <div class="btnLblFrame btnLblFrame--time">
+                            <span class="btnLblFrame-text">Save</span>
+                        </div>
+                    </button>
+                    <button class="timeBtn" data-app="cancelDateBtn">
+                        <div class="btnLblFrame btnLblFrame--time">
+                            <span class="btnLblFrame-text">Cancel</span>
+                        </div>
+                    </button>
+                </div>
+            </div>
             <div class="addTaskToTabBtn" data-app="newTaskBtn">
                 <object data="../src/icons/plusIcon.svg" type="text/svg+xml" tabindex="-1"></object>
             </div>
