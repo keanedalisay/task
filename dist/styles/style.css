@@ -35,6 +35,9 @@
 html {
   font-size: 10px;
 }
+body {
+  overflow-x: hidden;
+}
 .container {
   display: grid;
   grid-auto-flow: column;
@@ -187,8 +190,7 @@ html {
   color: var(--sunset-orange);
 }
 .navMenu-separator {
-  margin: 0.5rem 0rem;
-  width: min(95%, 29rem);
+  width: min(90%, 29rem);
   border: 0.1rem solid var(--silver);
 }
 .goalBtn {
@@ -249,13 +251,12 @@ html {
 
 .main {
   padding: 1rem;
-  width: min(60vw, 85rem);
+  width: min(100%, 85rem);
   min-height: 100vh;
   background: var(--white);
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
-  overflow: auto;
 }
 .overlay {
   position: fixed;
