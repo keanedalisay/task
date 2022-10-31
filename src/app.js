@@ -6,12 +6,18 @@ import {
   goalBtnHTML,
   taskBtnHTML,
 } from "./helpers.js";
+
 import { TodoTemp } from "./todo.js";
+import { DateTemp } from "./date.js";
 
 const Todo = new TodoTemp();
+const D = new DateTemp();
 
 const App = {
   slctr: {
+    overlay: document.querySelector("[data-app=overlay]"),
+    dateModal: document.querySelector("[data-app=dateModal]"),
+
     inboxBtn: document.querySelector("[data-app=inboxBtn]"),
     todayBtn: document.querySelector("[data-app=todayBtn]"),
     upcomingBtn: document.querySelector("[data-app=upcomingBtn]"),
@@ -47,6 +53,13 @@ const App = {
     headerSettingsBtns: document.querySelectorAll(
       "[data-app=headerSettingsBtn]"
     ),
+
+    monthInput: document.querySelector("[data-app=monthInput]"),
+    dayInput: document.querySelector("[data-app=dayInput]"),
+    yearInput: document.querySelector("[data-app=yearInput]"),
+
+    saveDateBtn: document.querySelector("[data-app=saveDateBtn]"),
+    cancelDateBtn: document.querySelector("[data-app=cancelDateBtn]"),
   },
   toggleAccrd(e, elem) {
     if (e.target) {
@@ -72,6 +85,31 @@ const App = {
     const task = e.target.closest(".task");
     task.classList.toggle("hide-taskSettings");
     return;
+  },
+  showOverlay() {
+    App.slctr.overlay.classList.toggle("display-none");
+    setTimeout((e) => App.slctr.overlay.classList.toggle("hide-overlay"), 1);
+  },
+  hideOverlay() {
+    App.slctr.overlay.classList.toggle("hide-overlay");
+    setTimeout((e) => App.slctr.overlay.classList.toggle("display-none"), 276);
+  },
+  showDateModal(e) {
+    const task = e.target.closest(".task");
+    console.log(task);
+    App.slctr.dateModal.dataset.taskid = task.id;
+    App.showOverlay();
+    App.slctr.dateModal.classList.toggle("display-none");
+    setTimeout((e) => App.slctr.dateModal.classList.toggle("hide-modal"), 1);
+  },
+  hideDateModal(e) {
+    App.hideOverlay();
+    App.slctr.dateModal.dataset.taskid = "";
+    App.slctr.dateModal.classList.toggle("hide-modal");
+    setTimeout(
+      (e) => App.slctr.dateModal.classList.toggle("display-none"),
+      276
+    );
   },
   navToInbox() {
     const main = document.querySelector("main");
@@ -322,6 +360,38 @@ const App = {
       taskNote.textContent = taskNoteInput.value;
     }
   },
+  saveTaskDate() {
+    const main = document.querySelector("main");
+    const taskId = App.slctr.dateModal.dataset.taskid;
+    const taskBtn = document.getElementById(taskId);
+    const taskInfoFrame = taskBtn.querySelector(".task-infoFrame");
+    const taskNameFrame = taskBtn.querySelector(".task-nameFrame");
+
+    console.log(taskId);
+    const year = parseInt(App.slctr.yearInput.value);
+    const month = D.parseMonthInt(App.slctr.monthInput.value);
+    const day = parseInt(App.slctr.dayInput.value);
+
+    console.log(month);
+
+    let origTask =
+      main.dataset.content === "Inbox"
+        ? Todo.getInboxTask(taskBtn.id)
+        : Todo.getGoalTask(main.dataset.goalid, taskBtn.id);
+
+    const date = D.formatDate(year, month, day);
+    const span = document.createElement("span");
+    span.classList.add("task-dueDate");
+    span.textContent = date;
+    console.log(span);
+    Todo.updateTask(
+      { ...origTask, tDueDate: date },
+      main.dataset.content,
+      main.dataset.goalid
+    );
+    taskInfoFrame.insertBefore(span, taskNameFrame);
+    App.hideDateModal();
+  },
   removeTaskEvent(e) {
     const taskBtn = e.target.closest(".task");
     console.log(taskBtn);
@@ -420,6 +490,12 @@ const App = {
       "[data-app=trashTaskBtn]",
       App.removeTaskEvent
     );
+    delegateEvent(
+      App.slctr.taskList,
+      "click",
+      "[data-app=setTaskDateBtn]",
+      App.showDateModal
+    );
   },
   render() {
     App.renderGoalBtns(Todo.goals);
@@ -445,6 +521,10 @@ const App = {
     App.slctr.headerSettingsBtns.forEach((btn) =>
       btn.addEventListener("click", App.toggleHeaderSettings)
     );
+
+    App.slctr.overlay.addEventListener("click", App.hideDateModal);
+    App.slctr.saveDateBtn.addEventListener("click", App.saveTaskDate);
+    App.slctr.cancelDateBtn.addEventListener("click", App.hideDateModal);
 
     App.bindGoalEvents();
     App.bindTaskEvents();
