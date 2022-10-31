@@ -42,7 +42,7 @@ export function goalBtnHTML(goalId, goalName) {
   return goalBtn;
 }
 
-export function taskBtnHTML(taskId, taskName, taskNote, isDone) {
+export function taskBtnHTML(taskId, taskName, taskNote, taskDueDate, isDone) {
   const taskBtn = `
 <div class="task hide-taskSettings ${isDone ? "completed-task" : ""}" id=${
     taskId ? taskId : ""
@@ -53,6 +53,9 @@ export function taskBtnHTML(taskId, taskName, taskNote, isDone) {
     isDone ? "../src/icons/checkIcon.svg" : ""
   }" type="text/svg+xml" tabindex="-1"></object>
   </div>
+  <span class="task-dueDate ${taskDueDate ? "" : "hide-elem"}">${
+    taskDueDate ? taskDueDate : ""
+  }</span>
   <div class="task-nameFrame">
       <input class="task-nameInput ${
         taskName ? "hide-elem" : ""

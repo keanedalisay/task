@@ -96,7 +96,6 @@ const App = {
   },
   showDateModal(e) {
     const task = e.target.closest(".task");
-    console.log(task);
     App.slctr.dateModal.dataset.taskid = task.id;
     App.showOverlay();
     App.slctr.dateModal.classList.toggle("display-none");
@@ -364,15 +363,11 @@ const App = {
     const main = document.querySelector("main");
     const taskId = App.slctr.dateModal.dataset.taskid;
     const taskBtn = document.getElementById(taskId);
-    const taskInfoFrame = taskBtn.querySelector(".task-infoFrame");
-    const taskNameFrame = taskBtn.querySelector(".task-nameFrame");
+    const taskDueDateLbl = taskBtn.querySelector(".task-dueDate");
 
-    console.log(taskId);
     const year = parseInt(App.slctr.yearInput.value);
     const month = D.parseMonthInt(App.slctr.monthInput.value);
     const day = parseInt(App.slctr.dayInput.value);
-
-    console.log(month);
 
     let origTask =
       main.dataset.content === "Inbox"
@@ -380,21 +375,19 @@ const App = {
         : Todo.getGoalTask(main.dataset.goalid, taskBtn.id);
 
     const date = D.formatDate(year, month, day);
-    const span = document.createElement("span");
-    span.classList.add("task-dueDate");
-    span.textContent = date;
-    console.log(span);
+    taskDueDateLbl.textContent = date;
+    taskDueDateLbl.classList.remove("hide-elem");
+
     Todo.updateTask(
       { ...origTask, tDueDate: date },
       main.dataset.content,
       main.dataset.goalid
     );
-    taskInfoFrame.insertBefore(span, taskNameFrame);
+
     App.hideDateModal();
   },
   removeTaskEvent(e) {
     const taskBtn = e.target.closest(".task");
-    console.log(taskBtn);
     const main = document.querySelector("main");
 
     Todo.removeTask(taskBtn.id, main.dataset.content, main.dataset.goalid);
@@ -419,6 +412,7 @@ const App = {
         task.tId,
         task.tName,
         task.tNote,
+        task.tDueDate,
         task.completed
       );
 
@@ -432,6 +426,7 @@ const App = {
         task.tId,
         task.tName,
         task.tNote,
+        task.tDueDate,
         task.completed
       );
 
