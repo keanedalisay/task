@@ -629,7 +629,7 @@ body::-webkit-scrollbar-thumb:hover {
   white-space: nowrap;
 }
 .task-nameFrame {
-  width: 90%;
+  width: min(50%, 30rem);
   display: flex;
   flex-flow: column nowrap;
   overflow-y: hidden;
@@ -644,7 +644,7 @@ body::-webkit-scrollbar-thumb:hover {
   font-size: var(--fs-16px);
 }
 .task-name {
-  width: 90%;
+  width: auto;
   height: 2rem;
   font-family: var(--bdy-text-family);
   font-size: var(--fs-16px);
