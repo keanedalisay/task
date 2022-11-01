@@ -8,8 +8,6 @@
   --dodger-blue: #3bb4ff;
   --sunset-orange: #ff4a4a;
 
-  --bkgrnd-shadow: 0rem 0rem 0.5rem #3333334f;
-
   --on-hover: #3bb4ff43;
   --on-select: 0rem 0rem 0.5rem #3333334f;
 
@@ -74,8 +72,7 @@ body::-webkit-scrollbar-thumb:hover {
 .navMenu::-webkit-scrollbar-thumb:hover {
   background: var(--on-hover);
 }
-.navList,
-.goalList {
+.navList {
   padding: 1rem 0rem;
   width: min(90%, 27.5rem);
   display: flex;
@@ -93,31 +90,6 @@ body::-webkit-scrollbar-thumb:hover {
   align-items: center;
   color: var(--mineshaft);
 }
-.accrdBtn {
-  border: 0.1rem solid var(--on-hover);
-  text-decoration: none;
-}
-.accrdBtn-icon {
-  margin-right: 2rem;
-  width: 2rem;
-  height: 2rem;
-  transform: rotate(90deg);
-  pointer-events: none;
-}
-.accrdFrame {
-  display: flex;
-  flex-flow: column nowrap;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-  transition: height 275ms ease-in-out;
-}
-.accrdFrame--settings {
-  height: 15rem;
-}
-.accrdFrame--new {
-  height: 10rem;
-}
 .navBtn:hover,
 .navBtn:focus,
 .navBtn:active,
@@ -126,7 +98,8 @@ body::-webkit-scrollbar-thumb:hover {
 .accrdBtn:active {
   background: var(--on-hover);
 }
-.btnLblFrame {
+.navBtn-label,
+.accrdBtn-label {
   width: 10rem;
   height: 100%;
   display: flex;
@@ -135,48 +108,60 @@ body::-webkit-scrollbar-thumb:hover {
   align-items: center;
   pointer-events: none;
 }
-.btnLblFrame--upcoming {
-  width: 13.4rem;
-}
-.btnLblFrame--settings {
-  width: 12.2rem;
-}
-.btnLblFrame--new {
-  width: 9.4rem;
-}
-.btnLblFrame--github {
-  width: 11.5rem;
-}
-.btnLblFrame--lightMode,
-.btnLblFrame--darkMode {
-  width: 12rem;
-}
-.btnLblFrame--newGoal,
-.btnLblFrame--newTask {
-  width: 11rem;
-}
-.btnLblFrame-icon {
-  pointer-events: none;
-}
-.btnLblFrame--upcoming > .btnLblFrame-icon,
-.btnLblFrame--settings > .btnLblFrame-icon {
-  width: 2.7rem;
-  height: 2.7rem;
-}
-.btnLblFrame--new > .btnLblFrame-icon {
-  width: 2.5rem;
-  height: 2.5rem;
-}
-.btnLblFrame--github > .btnLblFrame-icon {
-  width: 1.75rem;
-  height: 1.75rem;
-}
-.btnLblFrame-text {
+.navBtn-text,
+.accrdBtn-text {
   font-family: var(--hdng-family);
   font-weight: 700;
   font-size: var(--fs-16px);
 }
-.taskCntFrame {
+.navBtn-label--upcoming {
+  width: 13.4rem;
+}
+.navBtn-label--settings {
+  width: 12.2rem;
+}
+.navBtn-icon--settings,
+.navBtn-icon--new {
+  width: 2.7rem;
+  height: 2.7rem;
+}
+.accrdArrow {
+  margin-right: 2rem;
+  width: 2rem;
+  height: 2rem;
+  transform: rotate(90deg);
+  pointer-events: none;
+}
+.accrd {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  transition: height 275ms ease-in-out;
+}
+.accrd--settings {
+  height: 15rem;
+}
+.accrd--new {
+  height: 10rem;
+}
+.accrdBtn {
+  border: 0.1rem solid var(--on-hover);
+  text-decoration: none;
+}
+.accrdBtn > .accrdBtn-text {
+  margin-left: 2rem;
+}
+.accrdBtn-label--github {
+  width: 11.5rem;
+}
+.accrdBtn-icon--github {
+  width: 1.75rem;
+  height: 1.75rem;
+}
+
+.taskCnt {
   width: 6rem;
   height: 100%;
   display: flex;
@@ -185,22 +170,30 @@ body::-webkit-scrollbar-thumb:hover {
   align-items: center;
   pointer-events: none;
 }
-.taskCntFrame-dueTasks,
-.taskCntFrame-tasks {
+.taskCnt-dueTasks,
+.taskCnt-tasks {
   width: 2rem;
   font-family: var(--hdng-family);
   font-weight: 700;
   font-size: var(--fs-16px);
   color: var(--dusty-gray);
 }
-.taskCntFrame-dueTasks {
+.taskCnt-dueTasks {
   background: var(--mercury);
   border-radius: 5rem;
   color: var(--sunset-orange);
 }
+
 .navMenu-separator {
   width: min(90%, 29rem);
   border: 0.1rem solid var(--silver);
+}
+
+.goalList {
+  padding: 1rem 0rem;
+  width: min(90%, 27.5rem);
+  display: flex;
+  flex-flow: column wrap;
 }
 .goalBtn {
   margin: 0.5rem 0rem;
@@ -221,7 +214,26 @@ body::-webkit-scrollbar-thumb:hover {
 .goalBtn:active {
   background: var(--on-hover);
 }
-.progressBar {
+.goalBtn-input {
+  width: 16.8rem;
+  height: 100%;
+  padding: 0.5rem 0rem;
+  font-family: var(--hdng-family);
+  font-size: var(--fs-16px);
+  color: var(--mineshaft);
+}
+.goalBtn-input:focus {
+  background: var(--mercury);
+  outline: none;
+}
+.goalBtn-label {
+  width: 16.8rem;
+  padding: 0.5rem 0rem;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.goalProgressBar {
   width: 2rem;
   height: 2rem;
   background: var(--dodger-blue);
@@ -232,30 +244,11 @@ body::-webkit-scrollbar-thumb:hover {
   align-items: center;
   overflow: hidden;
 }
-.progressBar-interval {
+.goalProgressBar-interval {
   width: 1.4rem;
   height: 1.4rem;
   background: var(--wild-sand);
   border-radius: 2rem;
-}
-.goalInput {
-  width: 16.8rem;
-  height: 100%;
-  padding: 0.5rem 0rem;
-  font-family: var(--hdng-family);
-  font-size: var(--fs-16px);
-  color: var(--mineshaft);
-}
-.goalInput:focus {
-  background: var(--mercury);
-  outline: none;
-}
-.goalLabel {
-  width: 16.8rem;
-  padding: 0.5rem 0rem;
-  text-align: left;
-  white-space: nowrap;
-  overflow: hidden;
 }
 
 .main {
@@ -707,7 +700,7 @@ body::-webkit-scrollbar-thumb:hover {
     position: absolute;
     transform: translate(0vw, 0);
   }
-  .accrdFrame--new {
+  .accrd--new {
     height: 5rem;
   }
   .accrdBtn--newTask {

@@ -25,19 +25,17 @@ export function setTabIndex(elements) {
 
 export function goalBtnHTML(goalId, goalName) {
   const goalBtn = `
-  <button class="goalBtn" id="${goalId ? goalId : ""}" title="${
-    goalName ? goalName : ""
-  }">
-    <div class="progressBar">
-        <div class="progressBar-interval">
+  <button class="goalBtn" id="${goalId ? goalId : ""}" data-app="goalBtn">
+    <div class="goalProgressBar">
+        <div class="goalProgressBar-interval">
         </div>
     </div>
-    <input class="goalInput ${
+    <input class="goalBtnInput ${
       goalName ? "hide-elem" : ""
-    }" type="text" placeholder="Goal Name...">
-    <label class="goalLabel ${goalName ? "" : "hide-elem"}">${
-    goalName ? goalName : ""
-  }</label>
+    }" data-app="goalBtnInput" type="text" placeholder="Goal Name...">
+    <label class="goalBtn-label ${
+      goalName ? "" : "hide-elem"
+    }" data-app="goalBtnLabel">${goalName ? goalName : ""}</label>
   </button>`;
   return goalBtn;
 }
