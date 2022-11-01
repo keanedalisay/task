@@ -260,6 +260,30 @@ body::-webkit-scrollbar-thumb:hover {
   flex-flow: column nowrap;
   align-items: center;
 }
+
+.addTaskBtn {
+  width: 6rem;
+  height: 6rem;
+  background: var(--mercury);
+  border-radius: 5rem;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  right: 3rem;
+  bottom: 3rem;
+}
+.addTaskBtn:hover,
+.addTaskBtn:focus,
+.addTaskBtn:active {
+  background: var(--silver);
+}
+.addTaskBtn > object {
+  width: 4rem;
+  height: 4rem;
+  pointer-events: none;
+}
+
 .overlay {
   position: fixed;
   top: 0;
@@ -365,29 +389,6 @@ body::-webkit-scrollbar-thumb:hover {
   color: var(--dusty-gray);
 }
 
-.addTaskToTabBtn {
-  width: 6rem;
-  height: 6rem;
-  background: var(--mercury);
-  border-radius: 5rem;
-  display: none;
-  justify-content: center;
-  align-items: center;
-  position: fixed;
-  right: 3rem;
-  bottom: 3rem;
-}
-.addTaskToTabBtn:hover,
-.addTaskToTabBtn:focus,
-.addTaskToTabBtn:active {
-  background: var(--silver);
-}
-
-.addTaskToTabBtn > object {
-  width: 4rem;
-  height: 4rem;
-  pointer-events: none;
-}
 .header {
   padding: 1rem;
   width: min(100%, 65rem);
@@ -703,6 +704,10 @@ body::-webkit-scrollbar-thumb:hover {
     transform: translate(0vw, 0);
   }
 
+  .addTaskBtn {
+    display: flex;
+  }
+
   .accrd--new {
     height: 5rem;
   }
@@ -710,9 +715,6 @@ body::-webkit-scrollbar-thumb:hover {
     display: none;
   }
 
-  .addTaskToTabBtn {
-    display: flex;
-  }
   .header {
     height: 27rem;
   }
