@@ -1,7 +1,7 @@
 import { format } from "date-fns";
 import { isThisYear } from "date-fns";
 
-export class DateTemp {
+export class DateFnsTemp {
   parseMonthInt(string) {
     const monthNames = [
       "january",

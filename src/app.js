@@ -7,10 +7,10 @@ import {
 } from "./helpers.js";
 
 import { TodoTemp } from "./todo.js";
-import { DateTemp } from "./date.js";
+import { DateFnsTemp } from "./date.js";
 
 const Todo = new TodoTemp();
-const D = new DateTemp();
+const DateFns = new DateFnsTemp();
 
 const App = {
   slctr: {
@@ -35,8 +35,8 @@ const App = {
     accrdNewBtns: document.querySelectorAll("[data-app=accrdNew] > .accrdBtn"),
 
     navBtnList: document.querySelector("[data-app=navBtnList]"),
-    goalList: document.querySelector("[data-app=goalBtnList]"),
-    taskList: document.querySelector("[data-app=taskBtnList]"),
+    goalBtnList: document.querySelector("[data-app=goalBtnList]"),
+    taskBtnList: document.querySelector("[data-app=taskBtnList]"),
 
     monthInput: document.querySelector("[data-app=monthInput]"),
     dayInput: document.querySelector("[data-app=dayInput]"),
@@ -144,7 +144,7 @@ const App = {
     main.dataset.content = content;
     App.createHeaderContent(content);
 
-    App.slctr.taskList.innerHTML = "";
+    App.slctr.taskBtnList.innerHTML = "";
     if (content === "Inbox") App.renderInboxTasks(Todo.inbox);
   },
   renderGoalContent(e) {
@@ -167,31 +167,26 @@ const App = {
     const goal = Todo.getGoal(goalBtn.id);
     App.createHeaderContent("Goal", goal.gName, goal.gNote);
 
-    App.slctr.taskList.innerHTML = "";
+    App.slctr.taskBtnList.innerHTML = "";
     App.renderGoalTasks(goal);
     return;
   },
   createGoalBtn() {
     const goalId = TodoTemp.gnrtGoalId();
-    const goalBtn = goalBtnHTML(goalId, "");
+    let goalBtn = goalBtnHTML(goalId, "");
 
-    insertHTML(App.slctr.goalList, goalBtn);
+    insertHTML(App.slctr.goalBtnList, goalBtn);
 
-    const goal = document.getElementById(goalId);
-    const goalInput = goal.querySelector(".goalInput");
-    const goalLabel = goal.querySelector(".goalLabel");
-    goalInput.addEventListener("keyup", (e) => {
+    goalBtn = document.getElementById(goalId);
+    const goalBtnInput = goalBtn.querySelector("[data-app=goalBtnInput]");
+    goalBtnInput.addEventListener("keyup", (e) => {
       if (e.key === "Enter") {
-        if (!goalInput.value.trim()) {
-          App.slctr.goalList.removeChild(goal);
+        if (!goalBtnInput.value.trim()) {
+          App.slctr.goalBtnList.removeChild(goal);
           return;
         }
-        Todo.createGoal({ name: goalInput.value, id: goalId });
-
-        goal.addEventListener("click", App.navToGoal);
-        goalInput.classList.add("hide-elem");
-        goalLabel.classList.remove("hide-elem");
-        goalLabel.textContent = goalInput.value;
+        Todo.createGoal({ name: goalBtnInput.value, id: goalId });
+        App.renderGoalBtns(Todo.goals);
         return;
       } else if (e.key === "Escape") {
         App.slctr.goalList.removeChild(goal);
@@ -236,127 +231,132 @@ const App = {
   },
   createTaskBtn() {
     const main = document.querySelector("main");
+    const content = main.dataset.content;
+    const goalId = main.dataset.goalid;
 
     const taskId = TodoTemp.gnrtTaskId();
     const taskBtn = taskBtnHTML(taskId, "", "", "");
-    insertHTML(App.slctr.taskList, taskBtn);
+    insertHTML(App.slctr.taskBtnList, taskBtn);
 
-    Todo.createTask(
-      { name: "", id: taskId },
-      main.dataset.content,
-      main.dataset.goalid
-    );
+    Todo.createTask({ name: "", id: taskId }, content, goalId);
+
     return;
   },
   checkTaskEvent(e) {
-    const taskBtn = e.target.closest(".task");
-    const main = document.querySelector("main");
-
-    const checkbox = taskBtn.querySelector(".checkbox");
+    const taskBtn = e.target.closest("[data-app=task]");
     const checkboxIcon = taskBtn.querySelector(".checkbox-icon");
 
-    let origTask =
-      main.dataset.content === "Inbox"
-        ? Todo.getInboxTask(taskBtn.id)
-        : Todo.getGoalTask(main.dataset.goalid, taskBtn.id);
-    let status = parseInt(checkboxIcon.dataset.status);
+    const main = document.querySelector("main");
+    const content = main.dataset.content;
+    const goalId = main.dataset.goalid;
 
-    taskBtn.classList.toggle("completed-task");
-    checkbox.classList.toggle("check-checkbox");
-    checkboxIcon.setAttribute(
-      "data",
-      status ? "" : "../src/icons/checkIcon.svg"
-    );
-    status = checkboxIcon.dataset.status = status ? 0 : 1;
+    let origTask =
+      content === "Inbox"
+        ? Todo.getInboxTask(taskBtn.id)
+        : Todo.getGoalTask(goalId, taskBtn.id);
+
+    let status = parseInt(checkboxIcon.dataset.status) ? 0 : 1;
 
     Todo.updateTask(
       {
         ...origTask,
         completed: Boolean(status),
       },
-      main.dataset.content,
-      main.dataset.goalid
+      content,
+      goalId
     );
+
+    content === "Inbox"
+      ? App.renderInboxTasks(Todo.inbox)
+      : App.renderGoalTasks(Todo.getGoal(goalId));
+
     return;
   },
   saveTaskNameEvent(e) {
-    const taskBtn = e.target.closest(".task");
-    const main = document.querySelector("main");
+    const taskBtn = e.target.closest("[data-app=task]");
+    const taskNameInput = taskBtn.querySelector("[data-app=taskNameInput]");
 
-    const taskNameInput = taskBtn.querySelector(".task-nameInput");
-    const taskName = taskBtn.querySelector(".task-name");
+    const main = document.querySelector("main");
+    const content = main.dataset.content;
+    const goalId = main.dataset.goalid;
 
     let origTask =
-      main.dataset.content === "Inbox"
+      content === "Inbox"
         ? Todo.getInboxTask(taskBtn.id)
-        : Todo.getGoalTask(main.dataset.goalid, taskBtn.id);
+        : Todo.getGoalTask(goalId, taskBtn.id);
 
     if (e.key === "Enter") {
       if (!taskNameInput.value.trim()) return;
       Todo.updateTask(
         { ...origTask, tName: taskNameInput.value },
-        main.dataset.content,
-        main.dataset.goalid
+        content,
+        goalId
       );
-      taskNameInput.classList.add("hide-elem");
-      taskName.classList.remove("hide-elem");
-      taskName.textContent = taskNameInput.value;
+
+      content === "Inbox"
+        ? App.renderInboxTasks(Todo.inbox)
+        : App.renderGoalTasks(Todo.getGoal(goalId));
+
       return;
     }
   },
   saveTaskNoteEvent(e) {
-    const taskBtn = e.target.closest(".task");
-    const main = document.querySelector("main");
+    const taskBtn = e.target.closest("[data-app=task]");
+    const taskNoteInput = taskBtn.querySelector("[data-app=taskTextInput]");
 
-    const taskNoteInput = taskBtn.querySelector(".task-noteInput");
-    const taskNote = taskBtn.querySelector(".task-note");
+    const main = document.querySelector("main");
+    const content = main.dataset.content;
+    const goalId = main.dataset.goalid;
 
     let origTask =
-      main.dataset.content === "Inbox"
+      content === "Inbox"
         ? Todo.getInboxTask(taskBtn.id)
-        : Todo.getGoalTask(main.dataset.goalid, taskBtn.id);
+        : Todo.getGoalTask(goalId, taskBtn.id);
 
     if (e.key === "Enter") {
       if (!taskNoteInput.value.trim()) return;
       Todo.updateTask(
         { ...origTask, tNote: taskNoteInput.value },
-        main.dataset.content,
-        main.dataset.goalid
+        content,
+        goalId
       );
-      taskNoteInput.classList.add("hide-elem");
-      taskNote.classList.remove("hide-elem");
-      taskNote.textContent = taskNoteInput.value;
+
+      content === "Inbox"
+        ? App.renderInboxTasks(Todo.inbox)
+        : App.renderGoalTasks(Todo.getGoal(goalId));
+
+      return;
     }
   },
   saveTaskDate() {
-    const main = document.querySelector("main");
     const taskId = App.slctr.dateModal.dataset.taskid;
     const taskBtn = document.getElementById(taskId);
-    const taskDueDateLbl = taskBtn.querySelector(".task-dueDate");
 
     const year = parseInt(App.slctr.yearInput.value);
-    const month = D.parseMonthInt(App.slctr.monthInput.value);
+    const month = DateFns.parseMonthInt(App.slctr.monthInput.value);
     const day = parseInt(App.slctr.dayInput.value);
 
+    const main = document.querySelector("main");
+    const content = main.dataset.content;
+    const goalId = main.dataset.goalid;
+
     let origTask =
-      main.dataset.content === "Inbox"
+      content === "Inbox"
         ? Todo.getInboxTask(taskBtn.id)
         : Todo.getGoalTask(main.dataset.goalid, taskBtn.id);
 
-    const date = D.formatDate(year, month, day);
-    taskDueDateLbl.textContent = date;
-    taskDueDateLbl.classList.remove("hide-elem");
+    const date = DateFns.formatDate(year, month, day);
 
-    Todo.updateTask(
-      { ...origTask, tDueDate: date },
-      main.dataset.content,
-      main.dataset.goalid
-    );
+    Todo.updateTask({ ...origTask, tDueDate: date }, content, goalId);
+
+    content === "Inbox"
+      ? App.renderInboxTasks(Todo.inbox)
+      : App.renderGoalTasks(Todo.getGoal(goalId));
 
     App.hideDateModal();
   },
   removeTaskEvent(e) {
-    const taskBtn = e.target.closest(".task");
+    const taskBtn = e.target.closest("[data-app=task]");
     const main = document.querySelector("main");
 
     Todo.removeTask(taskBtn.id, main.dataset.content, main.dataset.goalid);
@@ -364,10 +364,11 @@ const App = {
   },
 
   renderGoalBtns(goals) {
+    App.slctr.goalBtnList.innerHTML = "";
     if (goals.length === 0) return;
     goals.forEach((goal) => {
       const goalBtn = goalBtnHTML(goal.gId, goal.gName);
-      insertHTML(App.slctr.goalList, goalBtn);
+      insertHTML(App.slctr.goalBtnList, goalBtn);
     });
     document
       .querySelectorAll(".goalBtn")
@@ -376,6 +377,7 @@ const App = {
       );
   },
   renderInboxTasks(inbox) {
+    App.slctr.taskBtnList.innerHTML = "";
     if (inbox.length === 0) return;
     inbox.forEach((task) => {
       const taskBtn = taskBtnHTML(
@@ -385,10 +387,11 @@ const App = {
         task.tDueDate,
         task.completed
       );
-      insertHTML(App.slctr.taskList, taskBtn);
+      insertHTML(App.slctr.taskBtnList, taskBtn);
     });
   },
   renderGoalTasks(goal) {
+    App.slctr.taskBtnList.innerHTML = "";
     if (goal.tasks.length === 0) return;
     goal.tasks.forEach((task) => {
       const taskBtn = taskBtnHTML(
@@ -398,7 +401,7 @@ const App = {
         task.tDueDate,
         task.completed
       );
-      insertHTML(App.slctr.taskList, taskBtn);
+      insertHTML(App.slctr.taskBtnList, taskBtn);
     });
   },
   bindGoalEvents() {
@@ -417,44 +420,55 @@ const App = {
   },
   bindTaskEvents() {
     delegateEvent(
-      App.slctr.taskList,
+      App.slctr.taskBtnList,
       "click",
-      ".task-infoFrame",
+      "[data-app=taskInfo]",
       App.toggleTaskSettingsEvent
     );
     delegateEvent(
-      App.slctr.taskList,
+      App.slctr.taskBtnList,
       "click",
-      ".task-name",
+      "[data-app=taskDueDate]",
       App.toggleTaskSettingsEvent
     );
     delegateEvent(
-      App.slctr.taskList,
+      App.slctr.taskBtnList,
       "click",
-      ".task-tabName",
+      "[data-app=taskName]",
       App.toggleTaskSettingsEvent
     );
-    delegateEvent(App.slctr.taskList, "click", ".checkbox", App.checkTaskEvent);
     delegateEvent(
-      App.slctr.taskList,
+      App.slctr.taskBtnList,
+      "click",
+      "[data-app=taskContent]",
+      App.toggleTaskSettingsEvent
+    );
+    delegateEvent(
+      App.slctr.taskBtnList,
+      "click",
+      "[data-app=taskCheckbox]",
+      App.checkTaskEvent
+    );
+    delegateEvent(
+      App.slctr.taskBtnList,
       "keyup",
-      ".task-nameInput",
+      "[data-app=taskNameInput]",
       App.saveTaskNameEvent
     );
     delegateEvent(
-      App.slctr.taskList,
+      App.slctr.taskBtnList,
       "keyup",
-      ".task-noteInput",
+      "[data-app=taskTextInput]",
       App.saveTaskNoteEvent
     );
     delegateEvent(
-      App.slctr.taskList,
+      App.slctr.taskBtnList,
       "click",
       "[data-app=trashTaskBtn]",
       App.removeTaskEvent
     );
     delegateEvent(
-      App.slctr.taskList,
+      App.slctr.taskBtnList,
       "click",
       "[data-app=setTaskDateBtn]",
       App.showDateModal

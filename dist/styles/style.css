@@ -575,22 +575,6 @@ body::-webkit-scrollbar-thumb:hover {
 .task::-webkit-scrollbar-thumb:hover {
   background: var(--on-hover);
 }
-.task-infoFrame {
-  height: 5rem;
-  display: flex;
-  flex-flow: row nowrap;
-  align-items: center;
-}
-.task-noteFrame {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.task-btnFrame {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-}
 .checkbox {
   margin: 0 0.3rem;
   width: 4rem;
@@ -611,14 +595,6 @@ body::-webkit-scrollbar-thumb:hover {
   border-radius: 0.8rem;
   pointer-events: none;
 }
-.task-today,
-.task-pastDue,
-.task-dueDate,
-.task-nameInput,
-.task-name,
-.task-tabName {
-  margin: 0 0.3rem;
-}
 .task-dueDate {
   padding: 0.5rem 1rem;
   height: 2.5rem;
@@ -632,13 +608,27 @@ body::-webkit-scrollbar-thumb:hover {
   color: var(--dusty-gray);
   white-space: nowrap;
 }
-.task-nameFrame {
+.task-today,
+.task-pastDue,
+.task-dueDate,
+.task-nameInput,
+.task-name,
+.task-content {
+  margin: 0 0.3rem;
+}
+.task-info {
+  height: 5rem;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+}
+.task-label {
   width: min(50%, 30rem);
   display: flex;
   flex-flow: column nowrap;
   overflow-y: hidden;
 }
-.task-nameFrame::-webkit-scrollbar {
+.task-label::-webkit-scrollbar {
   height: 0rem;
 }
 .task-nameInput {
@@ -654,44 +644,59 @@ body::-webkit-scrollbar-thumb:hover {
   font-size: var(--fs-16px);
   white-space: nowrap;
 }
-.task-tabName {
+.task-content {
   font-family: var(--bdy-text-family);
   font-weight: 700;
   font-size: var(--fs-12px);
   color: var(--silver);
 }
+.task-note {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .task-nameInput:focus,
-.task-noteInput:focus {
+.task-textInput:focus {
   background: var(--mercury);
   outline: none;
 }
-.task-noteInput,
-.task-note {
+.task-textInput,
+.task-text {
   padding: 0.5rem 0;
   width: 90%;
   font-family: var(--bdy-text-family);
   font-size: var(--fs-14px);
   color: var(--dusty-gray);
 }
-.task-btn {
+.task-btnFrame {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.taskBtn {
+  width: 8rem;
   margin: 0.5rem;
   padding: 0.5rem;
   height: 4rem;
   border-radius: 1rem;
 }
-.task-btn:hover,
-.task-btn:focus,
-.task-btn:active {
+.taskBtn:hover,
+.taskBtn:focus,
+.taskBtn:active {
   background: var(--on-hover);
 }
-.btnLblFrame--task {
-  width: 7rem;
+.taskBtn-label {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-evenly;
+  align-items: center;
+  pointer-events: none;
 }
-.btnLblFrame--task > .btnLblFrame-icon {
+.taskBtn-icon {
   width: 2.5rem;
   height: 2.5rem;
 }
-.btnLblFrame--task > .btnLblFrame-text {
+.taskBtn-text {
   font-family: var(--bdy-text-family);
   font-size: var(--fs-12px);
   font-weight: normal;
