@@ -1,10 +1,9 @@
+import { delegateEvent, insertHTML, insertElem } from "./helpers.js";
+import { setTabIndex, goalBtnHTML, taskBtnHTML } from "./helpers.js";
 import {
-  delegateEvent,
-  insertHTML,
-  insertElem,
-  setTabIndex,
-  goalBtnHTML,
-  taskBtnHTML,
+  upperHeaderBtnListHTML,
+  headerInfoHTML,
+  bottomHeaderBtnListHTML,
 } from "./helpers.js";
 
 import { TodoTemp } from "./todo.js";
@@ -36,23 +35,8 @@ const App = {
     accrdNewBtns: document.querySelectorAll("[data-app=accrdNew] > .accrdBtn"),
 
     navBtnList: document.querySelector("[data-app=navBtnList]"),
-    goalList: document.querySelector(".goalList"),
-    taskList: document.querySelector(".taskList"),
-
-    headerInfoIcon: document.querySelector("[data-app=headerInfoIcon]"),
-
-    headerInfoTitle: document.querySelector("[data-app=headerInfoTitle]"),
-    headerInfoTitleInput: document.querySelector(
-      "[data-app=headerInfoTitleInput]"
-    ),
-
-    headerInfoText: document.querySelector("[data-app=headerNoteText]"),
-    headerInfoTextInput: document.querySelector(
-      "[data-app=headerNoteTextInput]"
-    ),
-    headerSettingsBtns: document.querySelectorAll(
-      "[data-app=headerSettingsBtn]"
-    ),
+    goalList: document.querySelector("[data-app=goalBtnList]"),
+    taskList: document.querySelector("[data-app=taskBtnList]"),
 
     monthInput: document.querySelector("[data-app=monthInput]"),
     dayInput: document.querySelector("[data-app=dayInput]"),
@@ -110,75 +94,62 @@ const App = {
       276
     );
   },
-  navToInbox() {
-    const main = document.querySelector("main");
-    const goalBtns = document.querySelectorAll(".goalBtn");
+  createHeaderContent(content, goalTitle, goalText) {
+    const header = document.querySelector("[data-app=header]");
+    header.innerHTML = "";
+    let headerTitle = content;
+    let headerText = "";
+    let headerIcon = "";
 
-    App.slctr.inboxBtn.classList.add("selected-btn");
-    App.slctr.todayBtn.classList.remove("selected-btn");
-    App.slctr.upcomingBtn.classList.remove("selected-btn");
+    switch (headerTitle) {
+      case "Inbox":
+        headerText =
+          "This is where your independent tasks are stored. Feel free to add as many as you like!";
+        headerIcon = "../src/icons/inboxIcon.svg";
+        break;
+      case "Today":
+        headerText = "All tasks for you to complete today, have a great day!";
+        headerIcon = "../src/icons/starIcon.svg";
+        break;
+      case "Upcoming":
+        headerText =
+          "Upcoming tasks for you to do, including those that are overdue. You can do this!";
+        headerIcon = "../src/icons/upcomingIcon.svg";
+        break;
+      case "Goal":
+        headerTitle = goalTitle;
+        headerText = goalText;
+    }
 
-    goalBtns.forEach((gBtn) => gBtn.classList.remove("selected-btn"));
-
-    main.dataset.content = "Inbox";
-    App.slctr.headerInfoIcon.classList.remove("hide-elem");
-    App.slctr.headerInfoIcon.setAttribute("data", "../src/icons/inboxIcon.svg");
-    App.slctr.headerInfoTitle.textContent = "Inbox";
-    App.slctr.headerInfoText.textContent =
-      "This is where your independent tasks are stored. Feel free to add as many as you like!";
-
-    App.slctr.taskList.innerHTML = "";
-    App.renderInboxTasks(Todo.inbox);
+    insertHTML(header, upperHeaderBtnListHTML());
+    insertHTML(header, headerInfoHTML(headerTitle, headerText, headerIcon));
+    insertHTML(header, bottomHeaderBtnListHTML());
     return;
   },
-  navToToday() {
-    const main = document.querySelector("main");
+  renderContent(content) {
+    content === "Inbox"
+      ? App.slctr.inboxBtn.classList.add("selected-btn")
+      : App.slctr.inboxBtn.classList.remove("selected-btn");
+    content === "Today"
+      ? App.slctr.todayBtn.classList.add("selected-btn")
+      : App.slctr.todayBtn.classList.remove("selected-btn");
+    content === "Upcoming"
+      ? App.slctr.upcomingBtn.classList.add("selected-btn")
+      : App.slctr.upcomingBtn.classList.remove("selected-btn");
+
     const goalBtns = document.querySelectorAll(".goalBtn");
+    goalBtns.forEach((goalBtn) => goalBtn.classList.remove("selected-btn"));
 
-    App.slctr.inboxBtn.classList.remove("selected-btn");
-    App.slctr.todayBtn.classList.add("selected-btn");
-    App.slctr.upcomingBtn.classList.remove("selected-btn");
-
-    goalBtns.forEach((gBtn) => gBtn.classList.remove("selected-btn"));
-
-    main.dataset.content = "Today";
-    App.slctr.headerInfoIcon.classList.remove("hide-elem");
-    App.slctr.headerInfoIcon.setAttribute("data", "../src/icons/starIcon.svg");
-    App.slctr.headerInfoTitle.textContent = "Today";
-    App.slctr.headerInfoText.textContent =
-      "All tasks for you to complete today, have a great day!";
+    const main = document.querySelector("main");
+    main.dataset.content = content;
+    App.createHeaderContent(content);
 
     App.slctr.taskList.innerHTML = "";
-    return;
+    if (content === "Inbox") App.renderInboxTasks(Todo.inbox);
   },
-  navToUpcoming() {
-    const main = document.querySelector("main");
-    const goalBtns = document.querySelectorAll(".goalBtn");
-
-    App.slctr.inboxBtn.classList.remove("selected-btn");
-    App.slctr.todayBtn.classList.remove("selected-btn");
-    App.slctr.upcomingBtn.classList.add("selected-btn");
-
-    goalBtns.forEach((gBtn) => gBtn.classList.remove("selected-btn"));
-
-    main.dataset.content = "Upcoming";
-    App.slctr.headerInfoIcon.classList.remove("hide-elem");
-    App.slctr.headerInfoIcon.setAttribute(
-      "data",
-      "../src/icons/upcomingIcon.svg"
-    );
-    App.slctr.headerInfoTitle.textContent = "Upcoming";
-    App.slctr.headerInfoText.textContent =
-      "Upcoming tasks for you to do, including those that are overdue. You can do this!";
-
-    App.slctr.taskList.innerHTML = "";
-    return;
-  },
-  navToGoal(e) {
+  renderGoalContent(e) {
     const goalBtn = e.target.closest(".goalBtn");
     const goalBtns = document.querySelectorAll(".goalBtn");
-    const goal = Todo.getGoal(goalBtn.id);
-    const main = document.querySelector("main");
 
     App.slctr.inboxBtn.classList.remove("selected-btn");
     App.slctr.todayBtn.classList.remove("selected-btn");
@@ -189,14 +160,12 @@ const App = {
       if (gBtn !== goalBtn) gBtn.classList.remove("selected-btn");
     });
 
+    const main = document.querySelector("main");
     main.dataset.content = "Goal";
     main.dataset.goalid = goalBtn.id;
-    App.slctr.headerInfoIcon.classList.add("hide-elem");
-    App.slctr.headerInfoTitle.textContent = goal.gName;
-    App.slctr.headerInfoTitleInput.value = goal.gName;
-    App.slctr.headerInfoText.textContent =
-      goal.gNote || "What is your goal all about?";
-    App.slctr.headerInfoTextInput.value = goal.gNote;
+
+    const goal = Todo.getGoal(goalBtn.id);
+    App.createHeaderContent("Goal", goal.gName, goal.gNote);
 
     App.slctr.taskList.innerHTML = "";
     App.renderGoalTasks(goal);
@@ -398,12 +367,13 @@ const App = {
     if (goals.length === 0) return;
     goals.forEach((goal) => {
       const goalBtn = goalBtnHTML(goal.gId, goal.gName);
-
       insertHTML(App.slctr.goalList, goalBtn);
     });
     document
       .querySelectorAll(".goalBtn")
-      .forEach((goalBtn) => goalBtn.addEventListener("click", App.navToGoal));
+      .forEach((goalBtn) =>
+        goalBtn.addEventListener("click", App.renderGoalContent)
+      );
   },
   renderInboxTasks(inbox) {
     if (inbox.length === 0) return;
@@ -415,7 +385,6 @@ const App = {
         task.tDueDate,
         task.completed
       );
-
       insertHTML(App.slctr.taskList, taskBtn);
     });
   },
@@ -429,7 +398,6 @@ const App = {
         task.tDueDate,
         task.completed
       );
-
       insertHTML(App.slctr.taskList, taskBtn);
     });
   },
@@ -496,9 +464,15 @@ const App = {
     App.renderGoalBtns(Todo.goals);
   },
   init() {
-    App.slctr.inboxBtn.addEventListener("click", App.navToInbox);
-    App.slctr.todayBtn.addEventListener("click", App.navToToday);
-    App.slctr.upcomingBtn.addEventListener("click", App.navToUpcoming);
+    App.slctr.inboxBtn.addEventListener("click", (e) =>
+      App.renderContent("Inbox")
+    );
+    App.slctr.todayBtn.addEventListener("click", (e) =>
+      App.renderContent("Today")
+    );
+    App.slctr.upcomingBtn.addEventListener("click", (e) =>
+      App.renderContent("Upcoming")
+    );
 
     App.slctr.settingsBtn.addEventListener("click", (e) => {
       App.toggleAccrd(e, App.slctr.accrdSettings);
@@ -513,9 +487,6 @@ const App = {
     App.slctr.newTaskBtns.forEach((newTaskBtn) => {
       newTaskBtn.addEventListener("click", App.createTaskBtn);
     });
-    App.slctr.headerSettingsBtns.forEach((btn) =>
-      btn.addEventListener("click", App.toggleHeaderSettings)
-    );
 
     App.slctr.overlay.addEventListener("click", App.hideDateModal);
     App.slctr.saveDateBtn.addEventListener("click", App.saveTaskDate);

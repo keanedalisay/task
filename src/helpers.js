@@ -93,3 +93,69 @@ export function taskBtnHTML(taskId, taskName, taskNote, taskDueDate, isDone) {
 
   return taskBtn;
 }
+
+export function upperHeaderBtnListHTML() {
+  const headerBtnListMobile = `<div class="headerBtnList headerBtnList--mobile">
+  <div class="headerBtn headerBtn--closeMainBtn" data-app="closeMainBtn">
+      <object data="../src/icons/arrowIcon.svg" type="text/svg+xml" tabindex="-1"></object>
+  </div>
+  <div class="headerBtn headerBtn--settingsBtn" data-app="headerSettingsBtn">
+      <object data="../src/icons/threeDotIcon.svg" type="text/svg+xml" tabindex="-1"></object>
+  </div>
+</div>`;
+  return headerBtnListMobile;
+}
+
+export function headerInfoHTML(headerTitle, headerText, headerIcon) {
+  const headerInfo = `<div class="header-info">
+  <div class="header-label">
+      <object class="header-icon ${headerIcon ? "" : "hide-elem"}" data="${
+    headerIcon ? headerIcon : ""
+  }"
+          type="text/svg+xml" tabindex="-1"></object>
+      <span class="header-title">
+        ${headerTitle}
+      </span>
+      <input class="header-titleInput hide-elem" type="text" placeholder="What is your goal in life?"
+          data-app="headerTitleInput">
+      <div class="header-settingsBtn" data-app="headerSettingsBtn">
+          <object data="../src/icons/threeDotIcon.svg" type="text/svg+xml" tabindex="-1"></object>
+      </div>
+  </div>
+  <div class="header-note">
+      <span class="header-text ${headerText ? "" : "hide-elem"}">
+          ${headerText ? headerText : ""}
+      </span>
+      <input class="header-textInput ${
+        headerText ? "hide-elem" : ""
+      }" type="text" placeholder="What is your goal all about?"
+          data-app="headerTextInput">
+  </div>
+</div>`;
+  return headerInfo;
+}
+
+export function bottomHeaderBtnListHTML() {
+  const headerBtnList = `<div class="headerBtnList">
+  <div class="headerBtnFrame">
+      <button class="headerBtn" data-app="trashAllTasksBtn">
+          <div class="headerBtn-label">
+              <object class="headerBtn-icon" data="../src/icons/trashIcon.svg" type="text/svg+xml"
+                  tabindex="-1"></object>
+              <span class="headerBtn-text">Trash All</span>
+          </div>
+      </button>
+      <button class="headerBtn" data-app="mrk/unmrkAllTasksBtn">
+          <div class="headerBtn-label">
+              <span class="headerBtn-text">Mark / Unmark All</span>
+          </div>
+      </button>
+      <button class="headerBtn" data-app="clrCmpltdTasksBtn">
+          <div class="headerBtn-label">
+              <span class="headerBtn-text">Clear Complete</span>
+          </div>
+      </button>
+  </div>
+</div>`;
+  return headerBtnList;
+}
