@@ -410,61 +410,61 @@ body::-webkit-scrollbar-thumb:hover {
 .header::-webkit-scrollbar-thumb:hover {
   background: var(--on-hover);
 }
-.headerInfoFrame {
+.header-info {
   display: flex;
   flex-flow: column nowrap;
 }
-.headerInfo {
+.header-label {
   margin: 0.5rem 0;
   display: flex;
 }
-.headerNote {
-  margin: 0.5rem 0;
-  display: flex;
-  align-items: center;
-}
-.headerInfo-icon {
+.header-icon {
   margin: 0 0.5rem;
   width: 4.5rem;
   height: 4.5rem;
   pointer-events: none;
 }
-.headerInfo-title,
-.headerInfo-titleInput {
+.header-title {
+  white-space: nowrap;
+  overflow-y: hidden;
+}
+.header-title::-webkit-scrollbar {
+  height: 0rem;
+}
+.header-titleInput {
+  width: min(100%, 58rem);
+  color: var(--mineshaft);
+}
+.header-title,
+.header-titleInput {
   margin: 0 0.5rem;
   max-width: 58rem;
   font-family: var(--hdng-family);
   font-size: var(--fs-40px);
   color: var(--mineshaft);
 }
-.headerInfo-title {
-  white-space: nowrap;
-  overflow-y: hidden;
+.header-textInput {
+  padding: 0.5rem 0rem;
 }
-.headerInfo-title::-webkit-scrollbar {
-  height: 0rem;
-}
-.headerInfo-titleInput {
-  width: min(100%, 58rem);
-  color: var(--mineshaft);
-}
-.headerNote-text,
-.headerNote-textInput {
+.header-text,
+.header-textInput {
   margin: 0 0.5rem;
   width: min(100%, 62rem);
   font-family: var(--bdy-text-family);
   font-size: var(--fs-16px);
   color: var(--mineshaft);
 }
-.headerNote-textInput {
-  padding: 0.5rem 0rem;
-}
-.headerInfo-titleInput:focus,
-.headerNote-textInput:focus {
+.header-titleInput:focus,
+.header-textInput:focus {
   background: var(--mercury);
   outline: none;
 }
-.headerInfo-settingsBtn {
+.header-note {
+  margin: 0.5rem 0;
+  display: flex;
+  align-items: center;
+}
+.header-settingsBtn {
   margin: 0 0.5rem;
   width: 4.5rem;
   height: 4.5rem;
@@ -473,36 +473,34 @@ body::-webkit-scrollbar-thumb:hover {
   justify-content: center;
   align-items: center;
 }
-.headerInfo-settingsBtn > object {
+.header-settingsBtn > object {
   pointer-events: none;
 }
-.headerInfo-settingsBtn:hover,
-.headerInfo-settingsBtn:focus,
-.headerInfo-settingsBtn:active {
+.header-settingsBtn:hover,
+.header-settingsBtn:focus,
+.header-settingsBtn:active {
   background: var(--on-hover);
 }
-.headerBtn:hover,
-.headerBtn:focus,
-.headerBtn:active {
-  background: var(--on-hover);
-}
-.headerBtnFrame {
+
+.headerBtnList {
   margin-top: 3rem;
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
   align-items: center;
 }
-.headerBtnHolder {
+.headerBtnList--mobile {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  width: 15rem;
+  display: none;
+  justify-content: space-evenly;
+}
+.headerBtnFrame {
   display: flex;
   flex-flow: row wrap;
   justify-content: space-evenly;
   align-items: center;
-}
-.headerBtnHolder--mblOnlyBtns {
-  margin-bottom: 1rem;
-  width: 15rem;
-  display: none;
 }
 .headerBtn {
   margin: 0.5rem;
@@ -510,8 +508,8 @@ body::-webkit-scrollbar-thumb:hover {
   height: 4.5rem;
   border-radius: 1rem;
 }
-.headerBtn--closeTabBtn,
-.headerBtn--settingsMblBtn {
+.headerBtn--closeMainBtn,
+.headerBtn--settingsBtn {
   width: 4.5rem;
   height: 4.5rem;
   background: var(--mercury);
@@ -519,22 +517,34 @@ body::-webkit-scrollbar-thumb:hover {
   display: flex;
   justify-content: center;
 }
-.headerBtn--settingsMblBtn > object {
+.headerBtn--settingsBtn > object,
+.headerBtn--closeMainBtn > object {
   pointer-events: none;
 }
-.btnLblFrame--header {
-  width: 7rem;
+.headerBtn:hover,
+.headerBtn:focus,
+.headerBtn:active {
+  background: var(--on-hover);
 }
-.btnLblFrame--header > .btnLblFrame-icon {
+.headerBtn-label {
+  width: 7rem;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-evenly;
+  align-items: center;
+  pointer-events: none;
+}
+.headerBtn-icon {
   width: 2.5rem;
   height: 2.5rem;
 }
-.btnLblFrame--header > .btnLblFrame-text {
+.headerBtn-text {
   font-family: var(--bdy-text-family);
   font-size: var(--fs-12px);
   font-weight: normal;
   color: var(--dusty-gray);
 }
+
 .taskList {
   margin: 2rem 0rem;
   width: min(100%, 65rem);
@@ -721,10 +731,10 @@ body::-webkit-scrollbar-thumb:hover {
   .header.hide-headerSettings {
     height: 20rem;
   }
-  .headerInfo-settingsBtn {
+  .header-settingsBtn {
     display: none;
   }
-  .headerBtnHolder--mblOnlyBtns {
+  .headerBtnList--mobile {
     display: flex;
   }
 }
