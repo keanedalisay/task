@@ -267,7 +267,7 @@ body::-webkit-scrollbar-thumb:hover {
   bottom: 0;
   left: 0;
   background: var(--wild-sand);
-  opacity: 25%;
+  opacity: 50%;
   transition: opacity 275ms ease-in-out;
 }
 
@@ -281,43 +281,43 @@ body::-webkit-scrollbar-thumb:hover {
   background: var(--white);
   border-radius: 1rem;
   box-shadow: var(--bkgrnd-shadow);
+  opacity: 1;
+  transition: opacity 275ms ease-in-out;
 }
 .modal--dateModal {
-  width: min(max-content, max(min-content, 32rem));
-  max-height: 25rem;
+  width: min(100%, 30rem);
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
   align-items: center;
-  opacity: 1;
-  transition: opacity 275ms ease-in-out;
 }
-.timeFrame {
+
+.dateInput {
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
   align-items: center;
 }
-.timeFrame-month,
-.timeFrame-day,
-.timeFrame-year {
+.dateInput-month,
+.dateInput-day,
+.dateInput-year {
   margin: 0.5rem;
   display: flex;
   flex-flow: column wrap;
   justify-content: center;
   align-items: center;
 }
-.timeFrame-month > label,
-.timeFrame-day > label,
-.timeFrame-year > label {
+.dateInput-month > label,
+.dateInput-day > label,
+.dateInput-year > label {
   margin: 0.5rem 0rem;
   font-family: var(--hdng-family);
   font-size: var(--fs-16px);
   color: var(--mineshaft);
 }
-.timeFrame-month > input,
-.timeFrame-day > input,
-.timeFrame-year > input {
+.dateInput-month > input,
+.dateInput-day > input,
+.dateInput-year > input {
   margin: 0.5rem 0rem;
   padding: 0.25rem;
   height: 4rem;
@@ -326,27 +326,27 @@ body::-webkit-scrollbar-thumb:hover {
   text-align: center;
   color: var(--mineshaft);
 }
-.timeFrame-month > input,
-.timeFrame-year > input {
+.dateInput-month > input,
+.dateInput-year > input {
   width: 10rem;
 }
-.timeFrame-day > input {
+.dateInput-day > input {
   width: 5rem;
 }
-.timeFrame-month > input:focus,
-.timeFrame-day > input:focus,
-.timeFrame-year > input:focus {
+.dateInput-month > input:focus,
+.dateInput-day > input:focus,
+.dateInput-year > input:focus {
   box-shadow: var(--bkgrnd-shadow);
   outline: none;
 }
-.timeBtnFrame {
+.dateBtnList {
   width: 20rem;
   display: flex;
   flex-flow: row wrap;
   justify-content: space-evenly;
   align-items: center;
 }
-.timeBtn {
+.dateBtn {
   width: 8rem;
   height: 4rem;
   border-radius: 1rem;
@@ -354,11 +354,11 @@ body::-webkit-scrollbar-thumb:hover {
   justify-content: center;
   align-items: center;
 }
-.timeBtn:hover,
-.timeBtn:focus {
+.dateBtn:hover,
+.dateBtn:focus {
   background: var(--on-hover);
 }
-.btnLblFrame--time > .btnLblFrame-text {
+.dateBtn-text {
   font-family: var(--bdy-text-family);
   font-weight: 400;
   font-size: var(--fs-14px);
@@ -691,21 +691,25 @@ body::-webkit-scrollbar-thumb:hover {
   body {
     overflow-x: hidden;
   }
+
   .navMenu {
     width: 100%;
     background: var(--white);
   }
+
   .main {
     width: 100%;
     position: absolute;
     transform: translate(0vw, 0);
   }
+
   .accrd--new {
     height: 5rem;
   }
   .accrdBtn--newTask {
     display: none;
   }
+
   .addTaskToTabBtn {
     display: flex;
   }
