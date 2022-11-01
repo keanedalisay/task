@@ -125,7 +125,9 @@ export function headerInfoHTML(headerTitle, headerText, headerIcon) {
       </div>
   </div>
   <div class="header-note">
-      <span class="header-text ${headerText ? "" : "hide-elem"}">
+      <span class="header-text ${
+        headerText ? "" : "hide-elem"
+      }" data-app="headerText">
           ${headerText ? headerText : ""}
       </span>
       <input class="header-textInput ${

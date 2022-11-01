@@ -52,17 +52,8 @@ const App = {
     }
   },
   toggleHeaderSettings() {
-    const main = document.querySelector("main");
-    const header = document.querySelector(".header");
+    const header = document.querySelector("[data-app=header]");
     header.classList.toggle("hide-headerSettings");
-
-    if (main.dataset.content === "Goal") {
-      App.slctr.headerInfoTitle.classList.toggle("hide-elem");
-      App.slctr.headerInfoText.classList.toggle("hide-elem");
-
-      App.slctr.headerInfoTitleInput.classList.toggle("hide-elem");
-      App.slctr.headerInfoTextInput.classList.toggle("hide-elem");
-    }
     return;
   },
   toggleTaskSettingsEvent(e) {
@@ -96,6 +87,7 @@ const App = {
   },
   createHeaderContent(content, goalTitle, goalText) {
     const header = document.querySelector("[data-app=header]");
+    header.classList.add("hide-headerSettings");
     header.innerHTML = "";
     let headerTitle = content;
     let headerText = "";
@@ -195,36 +187,23 @@ const App = {
     });
     return;
   },
-  saveGoalNameEvent(e) {
-    const main = document.querySelector("main");
-    const goalBtn = document.getElementById(main.dataset.goalid);
-
-    let origGoal = Todo.getGoal(main.dataset.goalid);
-    const headerTitleInput = App.slctr.headerInfoTitleInput.value;
-
-    if (e.key === "Enter") {
-      if (!headerTitleInput.trim()) return;
-
-      Todo.updateGoal({ ...origGoal, gName: headerTitleInput });
-      App.slctr.headerInfoTitleInput.blur();
-      App.slctr.headerInfoTitle.textContent = headerTitleInput;
-      goalBtn.querySelector(".goalLabel").textContent = headerTitleInput;
-
-      return;
-    }
-  },
   saveGoalNoteEvent(e) {
     const main = document.querySelector("main");
+    const headerNote = document.querySelector("[data-app=headerText]");
+    const headerNoteInput = document.querySelector(
+      "[data-app=headerTextInput]"
+    );
+    const headerNoteValue = headerNoteInput.value;
 
     let origGoal = Todo.getGoal(main.dataset.goalid);
-    const headerNoteInput = App.slctr.headerInfoTextInput.value;
 
     if (e.key === "Enter") {
-      if (!headerNoteInput.trim()) return;
+      if (!headerNoteValue.trim()) return;
 
-      Todo.updateGoal({ ...origGoal, gNote: headerNoteInput });
-      App.slctr.headerInfoTextInput.blur();
-      App.slctr.headerInfoText.textContent = headerNoteInput;
+      Todo.updateGoal({ ...origGoal, gNote: headerNoteValue });
+      headerNoteInput.classList.add("hide-elem");
+      headerNote.classList.remove("hide-elem");
+      headerNote.textContent = headerNoteValue;
 
       return;
     }
@@ -404,20 +383,6 @@ const App = {
       insertHTML(App.slctr.taskBtnList, taskBtn);
     });
   },
-  bindGoalEvents() {
-    delegateEvent(
-      document.querySelector(".header"),
-      "keyup",
-      "[data-app=headerInfoTitleInput]",
-      App.saveGoalNameEvent
-    );
-    delegateEvent(
-      document.querySelector(".header"),
-      "keyup",
-      "[data-app=headerNoteTextInput]",
-      App.saveGoalNoteEvent
-    );
-  },
   bindTaskEvents() {
     delegateEvent(
       App.slctr.taskBtnList,
@@ -506,7 +471,19 @@ const App = {
     App.slctr.saveDateBtn.addEventListener("click", App.saveTaskDate);
     App.slctr.cancelDateBtn.addEventListener("click", App.hideDateModal);
 
-    App.bindGoalEvents();
+    delegateEvent(
+      document.querySelector("[data-app=header]"),
+      "click",
+      "[data-app=headerSettingsBtn]",
+      App.toggleHeaderSettings
+    );
+    delegateEvent(
+      document.querySelector("[data-app=header]"),
+      "keyup",
+      "[data-app=headerTextInput]",
+      App.saveGoalNoteEvent
+    );
+
     App.bindTaskEvents();
     App.render();
   },

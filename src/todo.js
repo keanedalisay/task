@@ -56,7 +56,6 @@ export class TodoTemp {
   }
 
   updateGoal(newGoal) {
-    console.log(newGoal);
     this.goals = this.goals.map((origGoal) =>
       origGoal.gId === newGoal.gId ? newGoal : origGoal
     );
