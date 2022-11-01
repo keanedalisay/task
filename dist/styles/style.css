@@ -38,13 +38,21 @@ html {
 body {
   overflow-x: hidden;
 }
+body::-webkit-scrollbar {
+  width: 1rem;
+}
+body::-webkit-scrollbar-thumb {
+  background: var(--mercury);
+}
+body::-webkit-scrollbar-thumb:hover {
+  background: var(--on-hover);
+}
 .container {
   display: grid;
   grid-auto-flow: column;
 }
 
 .navMenu {
-  padding: 1rem;
   width: min(40vw, 27.5rem);
   height: 100vh;
   background: var(--wild-sand);
@@ -68,6 +76,7 @@ body {
 }
 .navList,
 .goalList {
+  padding: 1rem 0rem;
   width: min(90%, 27.5rem);
   display: flex;
   flex-flow: column wrap;
@@ -251,7 +260,7 @@ body {
 
 .main {
   padding: 1rem;
-  width: min(100%, 85rem);
+  width: min(60vw, 85rem);
   min-height: 100vh;
   background: var(--white);
   display: flex;
@@ -706,7 +715,7 @@ body {
   color: var(--dusty-gray);
 }
 
-@media screen and (max-width: 640px) {
+@media screen and (max-width: 700px) {
   body {
     overflow-x: hidden;
   }
