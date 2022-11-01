@@ -448,13 +448,7 @@ body::-webkit-scrollbar-thumb:hover {
   overflow-y: hidden;
 }
 .headerInfo-title::-webkit-scrollbar {
-  height: 0.5rem;
-}
-.headerInfo-title::-webkit-scrollbar-thumb {
-  background: var(--mercury);
-}
-.headerInfo-title::-webkit-scrollbar-thumb:hover {
-  background: var(--on-hover);
+  height: 0rem;
 }
 .headerInfo-titleInput {
   width: min(100%, 58rem);
@@ -555,15 +549,6 @@ body::-webkit-scrollbar-thumb:hover {
   flex-flow: column nowrap;
   align-items: center;
 }
-.taskList::-webkit-scrollbar {
-  width: 0.5rem;
-}
-.taskList::-webkit-scrollbar-thumb {
-  background: var(--mercury);
-}
-.taskList::-webkit-scrollbar-thumb:hover {
-  background: var(--on-hover);
-}
 .task {
   margin: 0.5rem 0;
   width: 100%;
@@ -650,13 +635,7 @@ body::-webkit-scrollbar-thumb:hover {
   overflow-y: hidden;
 }
 .task-nameFrame::-webkit-scrollbar {
-  height: 0.2rem;
-}
-.task-nameFrame::-webkit-scrollbar-thumb {
-  background: var(--mercury);
-}
-.task-nameFrame::-webkit-scrollbar-thumb:hover {
-  background: var(--on-hover);
+  height: 0rem;
 }
 .task-nameInput {
   max-width: 60rem;
@@ -720,11 +699,11 @@ body::-webkit-scrollbar-thumb:hover {
     overflow-x: hidden;
   }
   .navMenu {
-    width: 100vw;
+    width: 100%;
     background: var(--white);
   }
   .main {
-    width: 100vw;
+    width: 100%;
     position: absolute;
     transform: translate(0vw, 0);
   }
