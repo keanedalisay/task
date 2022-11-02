@@ -47,47 +47,44 @@ const App = {
   },
   toggleAccrd(e, elem) {
     if (e.target) {
-      elem.classList.toggle("hide-accrd");
+      elem.classList.toggle("accrd-collapse");
       return;
     }
   },
   toggleHeaderSettings() {
     const header = document.querySelector("[data-app=header]");
-    header.classList.toggle("hide-headerSettings");
+    header.classList.toggle("header-collapse");
     return;
   },
   toggleTaskSettingsEvent(e) {
     const task = e.target.closest(".task");
-    task.classList.toggle("hide-taskSettings");
+    task.classList.toggle("task-collapse");
     return;
   },
   showOverlay() {
-    App.slctr.overlay.classList.toggle("display-none");
-    setTimeout((e) => App.slctr.overlay.classList.toggle("hide-overlay"), 1);
+    App.slctr.overlay.classList.toggle("elem-hide");
+    setTimeout((e) => App.slctr.overlay.classList.toggle("overlay-fade"), 1);
   },
   hideOverlay() {
-    App.slctr.overlay.classList.toggle("hide-overlay");
-    setTimeout((e) => App.slctr.overlay.classList.toggle("display-none"), 276);
+    App.slctr.overlay.classList.toggle("overlay-fade");
+    setTimeout((e) => App.slctr.overlay.classList.toggle("elem-hide"), 276);
   },
   showDateModal(e) {
     const task = e.target.closest(".task");
     App.slctr.dateModal.dataset.taskid = task.id;
     App.showOverlay();
-    App.slctr.dateModal.classList.toggle("display-none");
-    setTimeout((e) => App.slctr.dateModal.classList.toggle("hide-modal"), 1);
+    App.slctr.dateModal.classList.toggle("elem-hide");
+    setTimeout((e) => App.slctr.dateModal.classList.toggle("modal-fade"), 1);
   },
   hideDateModal(e) {
     App.hideOverlay();
     App.slctr.dateModal.dataset.taskid = "";
-    App.slctr.dateModal.classList.toggle("hide-modal");
-    setTimeout(
-      (e) => App.slctr.dateModal.classList.toggle("display-none"),
-      276
-    );
+    App.slctr.dateModal.classList.toggle("modal-fade");
+    setTimeout((e) => App.slctr.dateModal.classList.toggle("elem-hide"), 276);
   },
   createHeaderContent(content, goalTitle, goalText) {
     const header = document.querySelector("[data-app=header]");
-    header.classList.add("hide-headerSettings");
+    header.classList.add("header-collapse");
     header.innerHTML = "";
     let headerTitle = content;
     let headerText = "";
@@ -120,17 +117,17 @@ const App = {
   },
   renderContent(content) {
     content === "Inbox"
-      ? App.slctr.inboxBtn.classList.add("selected-btn")
-      : App.slctr.inboxBtn.classList.remove("selected-btn");
+      ? App.slctr.inboxBtn.classList.add("button-select")
+      : App.slctr.inboxBtn.classList.remove("button-select");
     content === "Today"
-      ? App.slctr.todayBtn.classList.add("selected-btn")
-      : App.slctr.todayBtn.classList.remove("selected-btn");
+      ? App.slctr.todayBtn.classList.add("button-select")
+      : App.slctr.todayBtn.classList.remove("button-select");
     content === "Upcoming"
-      ? App.slctr.upcomingBtn.classList.add("selected-btn")
-      : App.slctr.upcomingBtn.classList.remove("selected-btn");
+      ? App.slctr.upcomingBtn.classList.add("button-select")
+      : App.slctr.upcomingBtn.classList.remove("button-select");
 
     const goalBtns = document.querySelectorAll(".goalBtn");
-    goalBtns.forEach((goalBtn) => goalBtn.classList.remove("selected-btn"));
+    goalBtns.forEach((goalBtn) => goalBtn.classList.remove("button-select"));
 
     const main = document.querySelector("main");
     main.dataset.content = content;
@@ -143,13 +140,13 @@ const App = {
     const goalBtn = e.target.closest(".goalBtn");
     const goalBtns = document.querySelectorAll(".goalBtn");
 
-    App.slctr.inboxBtn.classList.remove("selected-btn");
-    App.slctr.todayBtn.classList.remove("selected-btn");
-    App.slctr.upcomingBtn.classList.remove("selected-btn");
+    App.slctr.inboxBtn.classList.remove("button-select");
+    App.slctr.todayBtn.classList.remove("button-select");
+    App.slctr.upcomingBtn.classList.remove("button-select");
 
-    goalBtn.classList.add("selected-btn");
+    goalBtn.classList.add("button-select");
     goalBtns.forEach((gBtn) => {
-      if (gBtn !== goalBtn) gBtn.classList.remove("selected-btn");
+      if (gBtn !== goalBtn) gBtn.classList.remove("button-select");
     });
 
     const main = document.querySelector("main");
@@ -201,8 +198,8 @@ const App = {
       if (!headerNoteValue.trim()) return;
 
       Todo.updateGoal({ ...origGoal, gNote: headerNoteValue });
-      headerNoteInput.classList.add("hide-elem");
-      headerNote.classList.remove("hide-elem");
+      headerNoteInput.classList.add("elem-hide");
+      headerNote.classList.remove("elem-hide");
       headerNote.textContent = headerNoteValue;
 
       return;
@@ -234,12 +231,12 @@ const App = {
         ? Todo.getInboxTask(taskBtn.id)
         : Todo.getGoalTask(goalId, taskBtn.id);
 
-    let status = parseInt(checkboxIcon.dataset.status) ? 0 : 1;
+    let status = parseInt(checkboxIcon.dataset.status) ? false : true;
 
     Todo.updateTask(
       {
         ...origTask,
-        completed: Boolean(status),
+        completed: status,
       },
       content,
       goalId

@@ -360,7 +360,7 @@ body::-webkit-scrollbar-thumb:hover {
 .dateInput-month > input:focus,
 .dateInput-day > input:focus,
 .dateInput-year > input:focus {
-  box-shadow: var(--bkgrnd-shadow);
+  box-shadow: var(--on-select);
   outline: none;
 }
 .dateBtnList {
@@ -379,6 +379,7 @@ body::-webkit-scrollbar-thumb:hover {
   align-items: center;
 }
 .dateBtn:hover,
+.dateBtn:active,
 .dateBtn:focus {
   background: var(--on-hover);
 }
@@ -431,12 +432,7 @@ body::-webkit-scrollbar-thumb:hover {
 .header-title::-webkit-scrollbar {
   height: 0rem;
 }
-.header-titleInput {
-  width: min(100%, 58rem);
-  color: var(--mineshaft);
-}
-.header-title,
-.header-titleInput {
+.header-title {
   margin: 0 0.5rem;
   max-width: 58rem;
   font-family: var(--hdng-family);
@@ -454,9 +450,8 @@ body::-webkit-scrollbar-thumb:hover {
   font-size: var(--fs-16px);
   color: var(--mineshaft);
 }
-.header-titleInput:focus,
 .header-textInput:focus {
-  background: var(--mercury);
+  box-shadow: var(--on-select);
   outline: none;
 }
 .header-note {
@@ -744,43 +739,42 @@ body::-webkit-scrollbar-thumb:hover {
   }
 }
 
-.display-none {
-  display: none;
-}
-
-.hide-overlay {
+.overlay-fade {
   opacity: 0;
 }
-.hide-modal {
+.modal-fade {
   opacity: 0;
 }
-.hide-accrd {
+.accrd-collapse {
   height: 0;
   transition: height 275ms ease-in-out;
 }
-.hide-headerSettings {
+
+.header-collapse {
   height: 12rem;
   box-shadow: 0rem 0rem 0rem var(--white);
   overflow: hidden;
 }
-.hide-taskSettings {
+.task-collapse {
   height: 5rem;
   box-shadow: 0rem 0rem 0rem var(--white);
   overflow: hidden;
 }
-.hide-cnt,
-.hide-elem {
+
+.taskCnt-hide,
+.elem-hide {
   display: none;
 }
 
-.completed-task {
+.task-complete {
   background: var(--wild-sand);
 }
-.checkbox.check-checkbox > .checkbox-icon {
+.checkbox.check > .checkbox-icon {
   background: var(--dodger-blue);
   border: none;
   opacity: 1;
 }
-.selected-btn {
+
+.button-select {
   background: var(--mercury);
 }

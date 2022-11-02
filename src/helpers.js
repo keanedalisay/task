@@ -31,10 +31,10 @@ export function goalBtnHTML(goalId, goalName) {
         </div>
     </div>
     <input class="goalBtn-input ${
-      goalName ? "hide-elem" : ""
+      goalName ? "elem-hide" : ""
     }" data-app="goalBtnInput" type="text" placeholder="Goal Name...">
     <label class="goalBtn-label ${
-      goalName ? "" : "hide-elem"
+      goalName ? "" : "elem-hide"
     }" data-app="goalBtnLabel">${goalName ? goalName : ""}</label>
   </button>`;
   return goalBtn;
@@ -42,35 +42,33 @@ export function goalBtnHTML(goalId, goalName) {
 
 export function taskBtnHTML(taskId, taskName, taskNote, taskDueDate, isDone) {
   const taskBtn = `
-<div class="task hide-taskSettings ${isDone ? "completed-task" : ""}" id="${
+<div class="task task-collapse ${isDone ? "task-complete" : ""}" id="${
     taskId ? taskId : ""
   }" data-app="task">
   <div class="task-info" data-app="taskInfo"tabindex="0">
-  <div class="checkbox ${
-    isDone ? "check-checkbox" : ""
-  }" data-app="taskCheckbox">
+  <div class="checkbox ${isDone ? "check" : ""}" data-app="taskCheckbox">
       <object class="checkbox-icon" data-status="${isDone ? "1" : "0"}" data="${
     isDone ? "../src/icons/checkIcon.svg" : ""
   }" type="text/svg+xml" tabindex="-1"></object>
   </div>
   <span class="task-dueDate ${
-    taskDueDate ? "" : "hide-elem"
+    taskDueDate ? "" : "elem-hide"
   }" data-app="taskDueDate">${taskDueDate ? taskDueDate : ""}</span>
   <div class="task-label">
       <input class="task-nameInput ${
-        taskName ? "hide-elem" : ""
+        taskName ? "elem-hide" : ""
       }" data-app="taskNameInput" type="text" placeholder="What would you like to do?">
       <span class="task-name ${
-        taskName ? "" : "hide-elem"
+        taskName ? "" : "elem-hide"
       }" data-app="taskName">${taskName || "What would you like to do?"}</span>
-      <span class="task-content hide-elem">Inbox</span>
+      <span class="task-content elem-hide">Inbox</span>
   </div>
 </div>
 <div class="task-note">
   <input class="task-textInput ${
-    taskNote ? "hide-elem" : ""
+    taskNote ? "elem-hide" : ""
   }" data-app="taskTextInput" type="text" placeholder="What would you like to keep in mind?"tabindex="-1">
-  <span class="task-text ${taskNote ? "" : "hide-elem"}" data-app="taskText">${
+  <span class="task-text ${taskNote ? "" : "elem-hide"}" data-app="taskText">${
     taskNote || "What would you like to keep in mind?"
   }</span>
 </div>
@@ -111,27 +109,25 @@ export function upperHeaderBtnListHTML() {
 export function headerInfoHTML(headerTitle, headerText, headerIcon) {
   const headerInfo = `<div class="header-info">
   <div class="header-label">
-      <object class="header-icon ${headerIcon ? "" : "hide-elem"}" data="${
+      <object class="header-icon ${headerIcon ? "" : "elem-hide"}" data="${
     headerIcon ? headerIcon : ""
   }"
           type="text/svg+xml" tabindex="-1"></object>
       <span class="header-title">
         ${headerTitle}
       </span>
-      <input class="header-titleInput hide-elem" type="text" placeholder="What is your goal in life?"
-          data-app="headerTitleInput">
       <div class="header-settingsBtn" data-app="headerSettingsBtn">
           <object data="../src/icons/threeDotIcon.svg" type="text/svg+xml" tabindex="-1"></object>
       </div>
   </div>
   <div class="header-note">
       <span class="header-text ${
-        headerText ? "" : "hide-elem"
+        headerText ? "" : "elem-hide"
       }" data-app="headerText">
           ${headerText ? headerText : ""}
       </span>
       <input class="header-textInput ${
-        headerText ? "hide-elem" : ""
+        headerText ? "elem-hide" : ""
       }" type="text" placeholder="What is your goal all about?"
           data-app="headerTextInput">
   </div>

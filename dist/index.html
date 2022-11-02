@@ -17,17 +17,17 @@
     <div class="container">
         <nav class="navMenu">
             <div class="navList" data-app="navBtnList">
-                <button class="navBtn selected-btn" data-app="inboxBtn">
+                <button class="navBtn" data-app="inboxBtn">
                     <div class="navBtn-label">
                         <object class="navBtn-icon" data="../src/icons/inboxIcon.svg" type="text/svg+xml"
                             tabindex="-1"></object>
                         <span class="navBtn-text">Inbox</span>
                     </div>
                     <div class="taskCnt">
-                        <div class="taskCnt-dueTasks hide-cnt" data-app="inboxDueTaskCnt">
+                        <div class="taskCnt-dueTasks taskCnt-hide" data-app="inboxDueTaskCnt">
                             0
                         </div>
-                        <div class="taskCnt-tasks hide-cnt" data-app="inboxTaskCnt">
+                        <div class="taskCnt-tasks taskCnt-hide" data-app="inboxTaskCnt">
                             0
                         </div>
                     </div>
@@ -39,7 +39,7 @@
                         <span class="navBtn-text">Today</span>
                     </div>
                     <div class="taskCnt">
-                        <div class="taskCnt-tasks hide-cnt" data-app="todayTaskCnt">
+                        <div class="taskCnt-tasks taskCnt-hide" data-app="todayTaskCnt">
                             0
                         </div>
                     </div>
@@ -51,10 +51,10 @@
                         <span class="navBtn-text">Upcoming</span>
                     </div>
                     <div class="taskCnt">
-                        <div class="taskCnt-dueTasks hide-cnt" data-app="upcomingDueTaskCnt">
+                        <div class="taskCnt-dueTasks taskCnt-hide" data-app="upcomingDueTaskCnt">
                             0
                         </div>
-                        <div class="taskCnt-tasks hide-cnt" data-app="upcomingTaskCnt">
+                        <div class="taskCnt-tasks taskCnt-hide" data-app="upcomingTaskCnt">
                             0
                         </div>
                     </div>
@@ -68,7 +68,7 @@
                     <object class="accrdArrow" data-app="accrdArrowSettings" data="../src/icons/arrowIcon.svg"
                         tabindex="-1"></object>
                 </button>
-                <div class="accrd accrd--settings hide-accrd" data-app="accrdSettings">
+                <div class="accrd accrd--settings accrd-collapse" data-app="accrdSettings">
                     <button class="accrdBtn" data-app="lightModeBtn" tabindex="-1">
                         <span class="accrdBtn-text">Light Mode</span>
                     </button>
@@ -93,7 +93,7 @@
                     <object class="accrdArrow" data-app="accrdArrowNew" data="../src/icons/arrowIcon.svg"
                         tabindex="-1"></object>
                 </button>
-                <div class="accrd accrd--new hide-accrd" data-app="accrdNew">
+                <div class="accrd accrd--new accrd-collapse" data-app="accrdNew">
                     <button class="accrdBtn" data-app="newGoalBtn" tabindex="-1">
                         <span class="accrdBtn-text">New Goal</span>
                     </button>
@@ -107,8 +107,8 @@
             </div>
         </nav>
         <main class="main" data-app="main" data-content="Inbox" data-goalid="">
-            <div class="overlay hide-overlay display-none" data-app="overlay"></div>
-            <div class="modal modal--dateModal hide-modal display-none" data-app="dateModal">
+            <div class="overlay overlay-fade elem-hide" data-app="overlay"></div>
+            <div class="modal modal--dateModal modal-fade elem-hide" data-app="dateModal">
                 <div class="dateInput">
                     <div class="dateInput-month">
                         <label for="month">Month</label>
@@ -135,7 +135,7 @@
             <div class="addTaskBtn" data-app="newTaskBtn">
                 <object data="../src/icons/plusIcon.svg" type="text/svg+xml" tabindex="-1"></object>
             </div>
-            <div class="header hide-headerSettings" data-app="header">
+            <div class="header header-collapse" data-app="header">
 
             </div>
             <div class="taskList" data-app="taskBtnList">
