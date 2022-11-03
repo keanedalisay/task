@@ -108,7 +108,7 @@
         </nav>
         <main class="main" data-app="main" data-content="Inbox" data-goalid="">
             <div class="overlay overlay-fade elem-hide" data-app="overlay"></div>
-            <div class="modal modal--dateModal modal-fade elem-hide" data-app="dateModal">
+            <div class="modal modal--date modal-fade elem-hide" data-app="dateModal">
                 <div class="dateInput">
                     <div class="dateInput-month">
                         <label for="month">Month</label>
@@ -129,6 +129,17 @@
                     </button>
                     <button class="dateBtn" data-app="cancelDateBtn">
                         <span class="dateBtn-text">Cancel</span>
+                    </button>
+                </div>
+            </div>
+            <div class="modal modal--deleteGoal modal-fade elem-hide" data-app="deleteGoalModal">
+                <span>Are you sure you are done with your goal?</span>
+                <div class="deleteCnfrmBtnList">
+                    <button class="deleteCnfrmBtn" data-app="deleteYesBtn">
+                        <span class="deleteCnfrmBtn-text">Yes</span>
+                    </button>
+                    <button class="deleteCnfrmBtn" data-app="deleteNoBtn">
+                        <span class="deleteCnfrmBtn-text">No</span>
                     </button>
                 </div>
             </div>

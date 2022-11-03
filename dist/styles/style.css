@@ -304,18 +304,18 @@ body::-webkit-scrollbar-thumb:hover {
   transform: translate(-50%, -50%);
   background: var(--white);
   border-radius: 1rem;
-  box-shadow: var(--bkgrnd-shadow);
+  box-shadow: var(--on-select);
   opacity: 1;
   transition: opacity 275ms ease-in-out;
 }
-.modal--dateModal {
+
+.modal--date {
   width: min(100%, 30rem);
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
   align-items: center;
 }
-
 .dateInput {
   display: flex;
   flex-flow: row wrap;
@@ -384,6 +384,49 @@ body::-webkit-scrollbar-thumb:hover {
   background: var(--on-hover);
 }
 .dateBtn-text {
+  font-family: var(--bdy-text-family);
+  font-weight: 400;
+  font-size: var(--fs-14px);
+  color: var(--dusty-gray);
+}
+
+.modal--deleteGoal {
+  width: min(100%, 30rem);
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+}
+.modal--deleteGoal > span {
+  margin: 2rem 0 1rem 0;
+  width: 80%;
+  text-align: center;
+  font-family: var(--hdng-family);
+  font-size: var(--fs-16px);
+  color: var(--mineshaft);
+}
+.deleteCnfrmBtnList {
+  margin: 1rem 0 1rem 0;
+  width: 20rem;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.deleteCnfrmBtn {
+  width: 8rem;
+  height: 4rem;
+  border-radius: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.deleteCnfrmBtn:hover,
+.deleteCnfrmBtn:active,
+.deleteCnfrmBtn:focus {
+  background: var(--on-hover);
+}
+.deleteCnfrmBtn-text {
   font-family: var(--bdy-text-family);
   font-weight: 400;
   font-size: var(--fs-14px);
