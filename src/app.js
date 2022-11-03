@@ -45,6 +45,14 @@ const App = {
     saveDateBtn: document.querySelector("[data-app=saveDateBtn]"),
     cancelDateBtn: document.querySelector("[data-app=cancelDateBtn]"),
   },
+  showOverlay() {
+    App.slctr.overlay.classList.toggle("elem-hide");
+    setTimeout((e) => App.slctr.overlay.classList.toggle("overlay-fade"), 1);
+  },
+  hideOverlay() {
+    App.slctr.overlay.classList.toggle("overlay-fade");
+    setTimeout((e) => App.slctr.overlay.classList.toggle("elem-hide"), 276);
+  },
   toggleAccrd(e, elem) {
     if (e.target) {
       elem.classList.toggle("accrd-collapse");
@@ -60,27 +68,6 @@ const App = {
     const task = e.target.closest(".task");
     task.classList.toggle("task-collapse");
     return;
-  },
-  showOverlay() {
-    App.slctr.overlay.classList.toggle("elem-hide");
-    setTimeout((e) => App.slctr.overlay.classList.toggle("overlay-fade"), 1);
-  },
-  hideOverlay() {
-    App.slctr.overlay.classList.toggle("overlay-fade");
-    setTimeout((e) => App.slctr.overlay.classList.toggle("elem-hide"), 276);
-  },
-  showDateModal(e) {
-    const task = e.target.closest(".task");
-    App.slctr.dateModal.dataset.taskid = task.id;
-    App.showOverlay();
-    App.slctr.dateModal.classList.toggle("elem-hide");
-    setTimeout((e) => App.slctr.dateModal.classList.toggle("modal-fade"), 1);
-  },
-  hideDateModal(e) {
-    App.hideOverlay();
-    App.slctr.dateModal.dataset.taskid = "";
-    App.slctr.dateModal.classList.toggle("modal-fade");
-    setTimeout((e) => App.slctr.dateModal.classList.toggle("elem-hide"), 276);
   },
   createHeaderContent(content, goalTitle, goalText) {
     const header = document.querySelector("[data-app=header]");
@@ -304,13 +291,30 @@ const App = {
       return;
     }
   },
+  showDateModal(e) {
+    const task = e.target.closest(".task");
+    App.slctr.dateModal.dataset.taskid = task.id;
+    App.showOverlay();
+    App.slctr.dateModal.classList.toggle("elem-hide");
+    setTimeout((e) => App.slctr.dateModal.classList.toggle("modal-fade"), 1);
+  },
+  hideDateModal(e) {
+    App.hideOverlay();
+    App.slctr.dateModal.dataset.taskid = "";
+    App.slctr.dateModal.classList.toggle("modal-fade");
+    setTimeout((e) => App.slctr.dateModal.classList.toggle("elem-hide"), 276);
+  },
   saveTaskDate() {
     const taskId = App.slctr.dateModal.dataset.taskid;
     const taskBtn = document.getElementById(taskId);
 
-    const year = parseInt(App.slctr.yearInput.value);
+    const year = App.slctr.yearInput.value;
     const month = DateFns.parseMonthInt(App.slctr.monthInput.value);
-    const day = parseInt(App.slctr.dayInput.value);
+    const day = App.slctr.dayInput.value;
+
+    if (year < 0) return;
+    else if (month === undefined) return;
+    else if (day < 0 || day > 32) return;
 
     const main = document.querySelector("main");
     const content = main.dataset.content;

@@ -17,14 +17,13 @@ export class DateFnsTemp {
       "november",
       "december",
     ];
-    for (let i = 0; i <= monthNames.length; i++) {
-      if (monthNames[i] === string.toLowerCase()) return i;
+    for (let monthName = 0; monthName < monthNames.length; monthName++) {
+      if (monthNames[monthName] === string.toLowerCase()) return monthName;
       continue;
     }
   }
   formatDate(year, month, day) {
     let date = new Date(year, month, day);
-    if (isThisYear(date)) return format(date, "MMM. d");
-    return format(date, "MM/dd/yyyy");
+    return format(date, "MMM. d yyy");
   }
 }
