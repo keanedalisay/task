@@ -728,8 +728,8 @@ body::-webkit-scrollbar-thumb:hover {
   .header {
     height: 27rem;
   }
-  .header.hide-headerSettings {
-    height: 20rem;
+  .header.header-collapse {
+    height: 21rem;
   }
   .header-settingsBtn {
     display: none;
