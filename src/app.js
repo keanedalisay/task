@@ -89,10 +89,17 @@ const App = {
     if (content === "Inbox") App.renderInboxTasks(Todo.inbox);
     else App.renderGoalTasks(goal);
   },
-  toggleTaskSettingsEvent(e) {
-    const task = e.target.closest(".task");
-    task.classList.toggle("task-collapse");
-    return;
+  clearCompletedTasks() {
+    const main = document.querySelector("main");
+    const content = main.dataset.content;
+
+    const goalId = main.dataset.goalid;
+    const goal = Todo.getGoal(goalId);
+
+    if (content === "Today" || content === "Upcoming") return;
+    Todo.removeCompletedTasks(content, goalId);
+    if (content === "Inbox") App.renderInboxTasks(Todo.inbox);
+    else App.renderGoalTasks(goal);
   },
   createHeaderContent(content, goalTitle, goalText) {
     App.slctr.header.classList.add("header-collapse");
@@ -218,6 +225,11 @@ const App = {
 
       return;
     }
+  },
+  toggleTaskSettingsEvent(e) {
+    const task = e.target.closest(".task");
+    task.classList.toggle("task-collapse");
+    return;
   },
   createTaskBtn() {
     const main = document.querySelector("main");
@@ -435,6 +447,12 @@ const App = {
       "click",
       "[data-app=toggleCheckAllTasksBtn]",
       App.toggleCheckAllTasks
+    );
+    delegateEvent(
+      App.slctr.header,
+      "click",
+      "[data-app=clrCmpltdTasksBtn]",
+      App.clearCompletedTasks
     );
   },
   bindTaskEvents() {

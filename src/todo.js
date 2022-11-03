@@ -136,6 +136,22 @@ export class TodoTemp {
       this._save();
     }
   }
+  removeCompletedTasks(content, goalId) {
+    if (content === "Inbox") {
+      this.inbox = this.inbox.filter((origTask) => origTask.completed !== true);
+      this._save();
+      return;
+    } else if (content === "Goal") {
+      let newGoal = this.getGoal(goalId);
+      newGoal.tasks = newGoal.tasks.filter(
+        (origTask) => origTask.completed !== true
+      );
+      this.goals = this.goals.map((origGoal) =>
+        origGoal.gId === newGoal.gId ? newGoal : origGoal
+      );
+      this._save();
+    }
+  }
 
   _readGoals() {
     this.goals = JSON.parse(localStorage.getItem("goals") || []);
