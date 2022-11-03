@@ -98,12 +98,26 @@ export class TodoTemp {
       this._save();
     }
   }
+  removeAllTasks(content, goalId) {
+    if (content === "Inbox") {
+      this.inbox = [];
+      this._save();
+      return;
+    } else if (content === "Goal") {
+      let newGoal = this.getGoal(goalId);
+      newGoal.tasks = [];
+      this.goals = this.goals.map((origGoal) =>
+        origGoal.gId === newGoal.gId ? newGoal : origGoal
+      );
+      this._save();
+    }
+  }
 
   _readGoals() {
-    this.goals = JSON.parse(localStorage.getItem("goals") || "[]");
+    this.goals = JSON.parse(localStorage.getItem("goals") || []);
   }
   _readInbox() {
-    this.inbox = JSON.parse(localStorage.getItem("inbox") || "[]");
+    this.inbox = JSON.parse(localStorage.getItem("inbox") || []);
   }
   _save() {
     localStorage.setItem("goals", JSON.stringify(this.goals));

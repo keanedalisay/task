@@ -16,6 +16,7 @@ const App = {
   slctr: {
     overlay: document.querySelector("[data-app=overlay]"),
     dateModal: document.querySelector("[data-app=dateModal]"),
+    header: document.querySelector("[data-app=header]"),
 
     inboxBtn: document.querySelector("[data-app=inboxBtn]"),
     todayBtn: document.querySelector("[data-app=todayBtn]"),
@@ -59,9 +60,21 @@ const App = {
       return;
     }
   },
-  toggleHeaderSettings() {
-    const header = document.querySelector("[data-app=header]");
-    header.classList.toggle("header-collapse");
+  toggleHeaderSettingsEvent() {
+    App.slctr.header.classList.toggle("header-collapse");
+    return;
+  },
+  trashAllTasksEvent() {
+    const main = document.querySelector("main");
+    const content = main.dataset.content;
+
+    const goalId = main.dataset.goalid;
+    const goal = Todo.getGoal(goalId);
+
+    if (content === "Today" || content === "Upcoming") return;
+    Todo.removeAllTasks(content, goalId);
+    if (content === "Inbox") App.renderInboxTasks(Todo.inbox);
+    else App.renderGoalTasks(goal);
     return;
   },
   toggleTaskSettingsEvent(e) {
@@ -70,9 +83,8 @@ const App = {
     return;
   },
   createHeaderContent(content, goalTitle, goalText) {
-    const header = document.querySelector("[data-app=header]");
-    header.classList.add("header-collapse");
-    header.innerHTML = "";
+    App.slctr.header.classList.add("header-collapse");
+    App.slctr.header.innerHTML = "";
     let headerTitle = content;
     let headerText = "";
     let headerIcon = "";
@@ -97,9 +109,12 @@ const App = {
         headerText = goalText;
     }
 
-    insertHTML(header, upperHeaderBtnListHTML());
-    insertHTML(header, headerInfoHTML(headerTitle, headerText, headerIcon));
-    insertHTML(header, bottomHeaderBtnListHTML());
+    insertHTML(App.slctr.header, upperHeaderBtnListHTML());
+    insertHTML(
+      App.slctr.header,
+      headerInfoHTML(headerTitle, headerText, headerIcon)
+    );
+    insertHTML(App.slctr.header, bottomHeaderBtnListHTML());
     return;
   },
   renderContent(content) {
@@ -384,6 +399,26 @@ const App = {
       insertHTML(App.slctr.taskBtnList, taskBtn);
     });
   },
+  bindHeaderEvents() {
+    delegateEvent(
+      App.slctr.header,
+      "click",
+      "[data-app=headerSettingsBtn]",
+      App.toggleHeaderSettingsEvent
+    );
+    delegateEvent(
+      App.slctr.header,
+      "keyup",
+      "[data-app=headerTextInput]",
+      App.saveGoalNoteEvent
+    );
+    delegateEvent(
+      App.slctr.header,
+      "click",
+      "[data-app=trashAllTasksBtn]",
+      App.trashAllTasksEvent
+    );
+  },
   bindTaskEvents() {
     delegateEvent(
       App.slctr.taskBtnList,
@@ -472,19 +507,7 @@ const App = {
     App.slctr.saveDateBtn.addEventListener("click", App.saveTaskDate);
     App.slctr.cancelDateBtn.addEventListener("click", App.hideDateModal);
 
-    delegateEvent(
-      document.querySelector("[data-app=header]"),
-      "click",
-      "[data-app=headerSettingsBtn]",
-      App.toggleHeaderSettings
-    );
-    delegateEvent(
-      document.querySelector("[data-app=header]"),
-      "keyup",
-      "[data-app=headerTextInput]",
-      App.saveGoalNoteEvent
-    );
-
+    App.bindHeaderEvents();
     App.bindTaskEvents();
     App.render();
   },
