@@ -77,6 +77,18 @@ const App = {
     else App.renderGoalTasks(goal);
     return;
   },
+  toggleCheckAllTasks() {
+    const main = document.querySelector("main");
+    const content = main.dataset.content;
+
+    const goalId = main.dataset.goalid;
+    const goal = Todo.getGoal(goalId);
+
+    if (content === "Today" || content === "Upcoming") return;
+    Todo.toggleCompleteAllTasks(content, goalId);
+    if (content === "Inbox") App.renderInboxTasks(Todo.inbox);
+    else App.renderGoalTasks(goal);
+  },
   toggleTaskSettingsEvent(e) {
     const task = e.target.closest(".task");
     task.classList.toggle("task-collapse");
@@ -417,6 +429,12 @@ const App = {
       "click",
       "[data-app=trashAllTasksBtn]",
       App.trashAllTasksEvent
+    );
+    delegateEvent(
+      App.slctr.header,
+      "click",
+      "[data-app=toggleCheckAllTasksBtn]",
+      App.toggleCheckAllTasks
     );
   },
   bindTaskEvents() {

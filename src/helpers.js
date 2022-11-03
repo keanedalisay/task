@@ -145,7 +145,7 @@ export function bottomHeaderBtnListHTML() {
               <span class="headerBtn-text">Trash All</span>
           </div>
       </button>
-      <button class="headerBtn" data-app="mrk/unmrkAllTasksBtn">
+      <button class="headerBtn" data-app="toggleCheckAllTasksBtn">
           <div class="headerBtn-label">
               <span class="headerBtn-text">Mark / Unmark All</span>
           </div>

@@ -82,6 +82,30 @@ export class TodoTemp {
     }
   }
 
+  toggleCompleteAllTasks(content, goalId) {
+    if (content === "Inbox") {
+      this.inbox = this.inbox.map((origTask) => {
+        const status = origTask.completed ? false : true;
+        const newTask = { ...origTask, completed: status };
+        return newTask;
+      });
+      this._save();
+      return;
+    } else if (content === "Goal") {
+      let newGoal = this.getGoal(goalId);
+      newGoal.tasks = newGoal.tasks.map((origTask) => {
+        const status = origTask.completed ? false : true;
+        const newTask = { ...origTask, completed: status };
+        return newTask;
+      });
+      this.goals = this.goals.map((origGoal) =>
+        origGoal.gId === newGoal.gId ? newGoal : origGoal
+      );
+      this._save();
+      return;
+    }
+  }
+
   removeTask(origTaskId, content, goalId) {
     if (content === "Inbox") {
       this.inbox = this.inbox.filter((origTask) => origTask.tId !== origTaskId);
