@@ -271,6 +271,10 @@ const App = {
     App.hideDeleteGoalModal();
   },
   toggleTaskSettingsEvent(e) {
+    const main = document.querySelector("main");
+    const content = main.dataset.content;
+    if (content === "Today" || content === "Upcoming") return;
+
     const task = e.target.closest(".task");
     task.classList.toggle("task-collapse");
     return;
@@ -279,6 +283,8 @@ const App = {
     const main = document.querySelector("main");
     const content = main.dataset.content;
     const goalId = main.dataset.goalid;
+
+    if (content === "Today" || content === "Upcoming") return;
 
     const taskId = TodoTemp.gnrtTaskId();
     const taskBtn = taskBtnHTML(taskId, "", "", "");
@@ -295,6 +301,8 @@ const App = {
     const main = document.querySelector("main");
     const content = main.dataset.content;
     const goalId = main.dataset.goalid;
+
+    if (content === "Today" || content === "Upcoming") return;
 
     let origTask =
       content === "Inbox"
@@ -326,6 +334,8 @@ const App = {
     const content = main.dataset.content;
     const goalId = main.dataset.goalid;
 
+    if (content === "Today" || content === "Upcoming") return;
+
     let origTask =
       content === "Inbox"
         ? Todo.getInboxTask(taskBtn.id)
@@ -354,6 +364,8 @@ const App = {
     const content = main.dataset.content;
     const goalId = main.dataset.goalid;
 
+    if (content === "Today" || content === "Upcoming") return;
+
     let origTask =
       content === "Inbox"
         ? Todo.getInboxTask(taskBtn.id)
@@ -375,6 +387,10 @@ const App = {
     }
   },
   showDateModal(e) {
+    const main = document.querySelector("main");
+    const content = main.dataset.content;
+    if (content === "Today" || content === "Upcoming") return;
+
     const task = e.target.closest(".task");
     App.slctr.dateModal.dataset.taskid = task.id;
     App.showOverlay();
@@ -421,6 +437,8 @@ const App = {
   removeTaskEvent(e) {
     const taskBtn = e.target.closest("[data-app=task]");
     const main = document.querySelector("main");
+    const content = main.dataset.content;
+    if (content === "Today" || content === "Upcoming") return;
 
     Todo.removeTask(taskBtn.id, main.dataset.content, main.dataset.goalid);
     taskBtn.remove();
