@@ -1,7 +1,6 @@
-import { format } from "date-fns";
-import { isThisYear } from "date-fns";
+import { format, isEqual } from "date-fns";
 
-export class DateFnsTemp {
+export class dTemp {
   parseMonthInt(string) {
     const monthNames = [
       "january",
@@ -22,8 +21,20 @@ export class DateFnsTemp {
       continue;
     }
   }
+
   formatDate(year, month, day) {
     let date = new Date(year, month, day);
     return format(date, "MMM. d yyy");
+  }
+
+  isDateNow(taskDate) {
+    let date = new Date();
+    const dateNow = new Date(
+      date.getFullYear(),
+      date.getMonth(),
+      date.getDate()
+    );
+    const result = isEqual(new Date(...taskDate), dateNow);
+    return result;
   }
 }
