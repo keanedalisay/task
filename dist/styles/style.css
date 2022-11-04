@@ -252,7 +252,7 @@ body::-webkit-scrollbar-thumb:hover {
   border-radius: 2rem;
 }
 
-.main {
+main {
   padding: 1rem;
   width: min(60vw, 85rem);
   min-height: 100vh;
@@ -731,7 +731,7 @@ body::-webkit-scrollbar-thumb:hover {
     background: var(--white);
   }
 
-  .main {
+  main {
     width: 100%;
     position: absolute;
     transform: translate(0vw, 0);
