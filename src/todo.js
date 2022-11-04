@@ -161,10 +161,10 @@ export class TodoTemp {
   }
 
   _readGoals() {
-    this.goals = JSON.parse(localStorage.getItem("goals") || []);
+    this.goals = JSON.parse(localStorage.getItem("goals") || "[]");
   }
   _readInbox() {
-    this.inbox = JSON.parse(localStorage.getItem("inbox") || []);
+    this.inbox = JSON.parse(localStorage.getItem("inbox") || "[]");
   }
   _save() {
     localStorage.setItem("goals", JSON.stringify(this.goals));
