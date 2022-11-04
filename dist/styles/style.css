@@ -507,9 +507,8 @@ main {
 .headerBtnList--mobile {
   margin-top: 0;
   margin-bottom: 1rem;
-  width: 15rem;
   display: none;
-  justify-content: space-evenly;
+  justify-content: left;
 }
 .headerBtnFrame {
   display: flex;
