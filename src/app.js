@@ -222,14 +222,14 @@ const App = {
     goalBtnInput.addEventListener("keyup", (e) => {
       if (e.key === "Enter") {
         if (!goalBtnInput.value.trim()) {
-          App.slctr.goalBtnList.removeChild(goal);
+          App.slctr.goalBtnList.removeChild(goalBtn);
           return;
         }
         Todo.createGoal({ name: goalBtnInput.value, id: goalId });
         App.renderGoalBtns(Todo.goals);
         return;
       } else if (e.key === "Escape") {
-        App.slctr.goalList.removeChild(goal);
+        App.slctr.goalBtnList.removeChild(goalBtn);
         return;
       }
     });
