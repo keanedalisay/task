@@ -256,6 +256,17 @@ const App = {
       return;
     }
   },
+  removeGoal() {
+    const main = document.querySelector("main");
+    const goalId = main.dataset.goalid;
+    Todo.removeGoal(goalId);
+    App.renderGoalBtns(Todo.goals);
+
+    const firstGoalBtn = App.slctr.goalBtnList.firstElementChild;
+    firstGoalBtn ? firstGoalBtn.click() : App.slctr.inboxBtn.click();
+
+    App.hideDeleteGoalModal();
+  },
   toggleTaskSettingsEvent(e) {
     const task = e.target.closest(".task");
     task.classList.toggle("task-collapse");
@@ -580,6 +591,7 @@ const App = {
     App.slctr.saveDateBtn.addEventListener("click", App.saveTaskDate);
     App.slctr.cancelDateBtn.addEventListener("click", App.hideDateModal);
 
+    App.slctr.deleteGoalYesBtn.addEventListener("click", App.removeGoal);
     App.slctr.deleteGoalNoBtn.addEventListener(
       "click",
       App.hideDeleteGoalModal

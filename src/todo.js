@@ -106,6 +106,13 @@ export class TodoTemp {
     }
   }
 
+  removeGoal(goalId) {
+    let targetGoal = this.getGoal(goalId);
+    this.goals = this.goals.filter(
+      (origGoal) => origGoal.gId !== targetGoal.gId
+    );
+    this._save();
+  }
   removeTask(origTaskId, content, goalId) {
     if (content === "Inbox") {
       this.inbox = this.inbox.filter((origTask) => origTask.tId !== origTaskId);
