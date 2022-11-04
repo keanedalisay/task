@@ -7,10 +7,10 @@ import {
 } from "./helpers.js";
 
 import { TodoTemp } from "./todo.js";
-import { DateFnsTemp } from "./date.js";
+import { dTemp } from "./date.js";
 
 const Todo = new TodoTemp();
-const DateFns = new DateFnsTemp();
+const d = new dTemp();
 
 const App = {
   slctr: {
@@ -188,6 +188,7 @@ const App = {
 
     App.slctr.taskBtnList.innerHTML = "";
     if (content === "Inbox") App.renderInboxTasks(Todo.inbox);
+    else if (content === "Today") App.renderTodayTasks(Todo.inbox, Todo.goals);
   },
   renderGoalContent(e) {
     const goalBtn = e.target.closest(".goalBtn");
@@ -390,9 +391,9 @@ const App = {
     const taskId = App.slctr.dateModal.dataset.taskid;
     const taskBtn = document.getElementById(taskId);
 
-    const year = App.slctr.yearInput.value;
-    const month = DateFns.parseMonthInt(App.slctr.monthInput.value);
-    const day = App.slctr.dayInput.value;
+    const year = parseInt(App.slctr.yearInput.value);
+    const month = d.parseMonthInt(App.slctr.monthInput.value);
+    const day = parseInt(App.slctr.dayInput.value);
 
     if (year < 0) return;
     else if (month === undefined) return;
@@ -407,7 +408,7 @@ const App = {
         ? Todo.getInboxTask(taskBtn.id)
         : Todo.getGoalTask(main.dataset.goalid, taskBtn.id);
 
-    const date = DateFns.formatDate(year, month, day);
+    const date = [year, month, day];
 
     Todo.updateTask({ ...origTask, tDueDate: date }, content, goalId);
 
@@ -451,6 +452,38 @@ const App = {
       );
       insertHTML(App.slctr.taskBtnList, taskBtn);
     });
+  },
+  renderTodayTasks(inbox, goals) {
+    App.slctr.taskBtnList.innerHTML = "";
+    inbox.forEach((task) => {
+      if (d.isDateNow(task.tDueDate)) {
+        const taskBtn = taskBtnHTML(
+          task.tId,
+          task.tName,
+          task.tNote,
+          task.tDueDate,
+          task.completed,
+          "Inbox"
+        );
+        insertHTML(App.slctr.taskBtnList, taskBtn);
+      }
+    });
+    goals.forEach((goal) => {
+      goal.forEach((task) => {
+        if (d.isDateNow(task.tDueDate)) {
+          const taskBtn = taskBtnHTML(
+            task.tId,
+            task.tName,
+            task.tNote,
+            task.tDueDate,
+            task.completed,
+            goal.gName
+          );
+          insertHTML(App.slctr.taskBtnList, taskBtn);
+        }
+      });
+    });
+    return;
   },
   renderGoalTasks(goal) {
     App.slctr.taskBtnList.innerHTML = "";

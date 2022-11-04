@@ -1,3 +1,6 @@
+import { dTemp } from "./date.js";
+const d = new dTemp();
+
 export function delegateEvent(elem, event, slctr, func) {
   elem.addEventListener(event, (e) => {
     if (e.target.matches(slctr)) func(e);
@@ -40,7 +43,14 @@ export function goalBtnHTML(goalId, goalName) {
   return goalBtn;
 }
 
-export function taskBtnHTML(taskId, taskName, taskNote, taskDueDate, isDone) {
+export function taskBtnHTML(
+  taskId,
+  taskName,
+  taskNote,
+  taskDueDate,
+  isDone,
+  content
+) {
   const taskBtn = `
 <div class="task task-collapse ${isDone ? "task-complete" : ""}" id="${
     taskId ? taskId : ""
@@ -51,9 +61,14 @@ export function taskBtnHTML(taskId, taskName, taskNote, taskDueDate, isDone) {
     isDone ? "../src/icons/checkIcon.svg" : ""
   }" type="text/svg+xml" tabindex="-1"></object>
   </div>
+  <object class="task-today ${
+    d.isDateNow(taskDueDate) ? "" : "elem-hide"
+  }" data="../src/icons/starIcon.svg" type="text/svg+xml" tabindex="-1"></object>
   <span class="task-dueDate ${
     taskDueDate ? "" : "elem-hide"
-  }" data-app="taskDueDate">${taskDueDate ? taskDueDate : ""}</span>
+  }" data-app="taskDueDate">${
+    taskDueDate ? d.formatDate(...taskDueDate) : ""
+  }</span>
   <div class="task-label">
       <input class="task-nameInput ${
         taskName ? "elem-hide" : ""
@@ -61,7 +76,9 @@ export function taskBtnHTML(taskId, taskName, taskNote, taskDueDate, isDone) {
       <span class="task-name ${
         taskName ? "" : "elem-hide"
       }" data-app="taskName">${taskName || "What would you like to do?"}</span>
-      <span class="task-content elem-hide">Inbox</span>
+      <span class="task-content ${content ? "" : "elem-hide"}">${
+    content ? content : ""
+  }</span>
   </div>
 </div>
 <div class="task-note">
