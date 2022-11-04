@@ -632,12 +632,13 @@ body::-webkit-scrollbar-thumb:hover {
 }
 .task-info {
   height: 5rem;
-  display: flex;
-  flex-flow: row nowrap;
+  display: grid;
+  grid-auto-flow: column;
+  justify-content: left;
   align-items: center;
 }
 .task-label {
-  width: min(50%, 30rem);
+  width: auto;
   display: flex;
   flex-flow: column nowrap;
   overflow-y: hidden;
@@ -646,13 +647,12 @@ body::-webkit-scrollbar-thumb:hover {
   height: 0rem;
 }
 .task-nameInput {
-  max-width: 60rem;
+  width: min(50vw, 59rem);
   height: 4rem;
   font-family: var(--bdy-text-family);
   font-size: var(--fs-16px);
 }
 .task-name {
-  width: auto;
   height: 2rem;
   font-family: var(--bdy-text-family);
   font-size: var(--fs-16px);
@@ -669,9 +669,12 @@ body::-webkit-scrollbar-thumb:hover {
   justify-content: center;
   align-items: center;
 }
-.task-nameInput:focus,
-.task-textInput:focus {
+.task-nameInput:focus {
   background: var(--mercury);
+  outline: none;
+}
+.task-textInput:focus {
+  box-shadow: var(--on-select);
   outline: none;
 }
 .task-textInput,
