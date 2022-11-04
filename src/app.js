@@ -15,8 +15,6 @@ const DateFns = new DateFnsTemp();
 const App = {
   slctr: {
     overlay: document.querySelector("[data-app=overlay]"),
-    dateModal: document.querySelector("[data-app=dateModal]"),
-    deleteGoalModal: document.querySelector("[data-app=deleteGoalModal]"),
     header: document.querySelector("[data-app=header]"),
 
     inboxBtn: document.querySelector("[data-app=inboxBtn]"),
@@ -24,38 +22,39 @@ const App = {
     upcomingBtn: document.querySelector("[data-app=upcomingBtn]"),
 
     settingsBtn: document.querySelector("[data-app=settingsBtn]"),
-
-    newBtn: document.querySelector("[data-app=newBtn]"),
-    newGoalBtn: document.querySelector("[data-app=newGoalBtn]"),
-    newTaskBtns: document.querySelectorAll("[data-app=newTaskBtn]"),
-
     accrdSettings: document.querySelector("[data-app=accrdSettings]"),
     accrdSettingsBtns: document.querySelectorAll(
       "[data-app=accrdSettings] > .accrdBtn"
     ),
+
+    newBtn: document.querySelector("[data-app=newBtn]"),
     accrdNew: document.querySelector("[data-app=accrdNew]"),
     accrdNewBtns: document.querySelectorAll("[data-app=accrdNew] > .accrdBtn"),
+    newGoalBtn: document.querySelector("[data-app=newGoalBtn]"),
+    newTaskBtns: document.querySelectorAll("[data-app=newTaskBtn]"),
 
     navBtnList: document.querySelector("[data-app=navBtnList]"),
     goalBtnList: document.querySelector("[data-app=goalBtnList]"),
     taskBtnList: document.querySelector("[data-app=taskBtnList]"),
 
+    dateModal: document.querySelector("[data-app=dateModal]"),
     monthInput: document.querySelector("[data-app=monthInput]"),
     dayInput: document.querySelector("[data-app=dayInput]"),
     yearInput: document.querySelector("[data-app=yearInput]"),
-
     saveDateBtn: document.querySelector("[data-app=saveDateBtn]"),
     cancelDateBtn: document.querySelector("[data-app=cancelDateBtn]"),
+
+    deleteGoalModal: document.querySelector("[data-app=deleteGoalModal]"),
     deleteGoalYesBtn: document.querySelector("[data-app=deleteGoalYesBtn]"),
     deleteGoalNoBtn: document.querySelector("[data-app=deleteGoalNoBtn]"),
   },
   showOverlay() {
     App.slctr.overlay.classList.toggle("elem-hide");
-    setTimeout((e) => App.slctr.overlay.classList.toggle("overlay-fade"), 1);
+    setTimeout(() => App.slctr.overlay.classList.toggle("overlay-fade"), 1);
   },
   hideOverlay() {
     App.slctr.overlay.classList.toggle("overlay-fade");
-    setTimeout((e) => App.slctr.overlay.classList.toggle("elem-hide"), 276);
+    setTimeout(() => App.slctr.overlay.classList.toggle("elem-hide"), 276);
   },
   hideModal() {
     App.hideOverlay();
@@ -366,13 +365,13 @@ const App = {
     App.slctr.dateModal.dataset.taskid = task.id;
     App.showOverlay();
     App.slctr.dateModal.classList.toggle("elem-hide");
-    setTimeout((e) => App.slctr.dateModal.classList.toggle("modal-fade"), 1);
+    setTimeout(() => App.slctr.dateModal.classList.toggle("modal-fade"), 1);
   },
   hideDateModal(e) {
     App.hideOverlay();
     App.slctr.dateModal.dataset.taskid = "";
     App.slctr.dateModal.classList.toggle("modal-fade");
-    setTimeout((e) => App.slctr.dateModal.classList.toggle("elem-hide"), 276);
+    setTimeout(() => App.slctr.dateModal.classList.toggle("elem-hide"), 276);
   },
   saveTaskDate() {
     const taskId = App.slctr.dateModal.dataset.taskid;
