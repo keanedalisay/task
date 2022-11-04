@@ -469,7 +469,7 @@ const App = {
       }
     });
     goals.forEach((goal) => {
-      goal.forEach((task) => {
+      goal.tasks.forEach((task) => {
         if (d.isDateNow(task.tDueDate)) {
           const taskBtn = taskBtnHTML(
             task.tId,
