@@ -68,6 +68,8 @@ const App = {
   toggleAccrd(e, elem) {
     if (e.target) {
       elem.classList.toggle("accrd-collapse");
+      const accrdArrow = e.target.querySelector("[data-app=accrdArrow]");
+      accrdArrow.classList.toggle("accrdArrow-flip");
       return;
     }
   },

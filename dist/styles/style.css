@@ -131,6 +131,7 @@ body::-webkit-scrollbar-thumb:hover {
   height: 2rem;
   transform: rotate(90deg);
   pointer-events: none;
+  transition: transform 275ms ease-in-out;
 }
 .accrd {
   display: flex;
@@ -769,7 +770,9 @@ body::-webkit-scrollbar-thumb:hover {
 }
 .accrd-collapse {
   height: 0;
-  transition: height 275ms ease-in-out;
+}
+.accrdArrow-flip {
+  transform: rotate(-90deg);
 }
 
 .header-collapse {
