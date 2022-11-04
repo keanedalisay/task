@@ -158,12 +158,12 @@ const App = {
         headerText = goalText;
     }
 
-    insertHTML(App.slctr.header, upperHeaderBtnListHTML());
+    insertHTML(App.slctr.header, upperHeaderBtnListHTML(content));
     insertHTML(
       App.slctr.header,
-      headerInfoHTML(headerTitle, headerText, headerIcon)
+      headerInfoHTML(headerTitle, headerText, headerIcon, content)
     );
-    insertHTML(App.slctr.header, bottomHeaderBtnListHTML());
+    insertHTML(App.slctr.header, bottomHeaderBtnListHTML(content));
     return;
   },
   renderContent(content) {
