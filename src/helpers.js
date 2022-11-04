@@ -156,6 +156,13 @@ export function bottomHeaderBtnListHTML() {
           </div>
       </button>
   </div>
+  <div class="headerBtnFrame">
+    <button class="headerBtn" data-app="deleteGoalBtn">
+      <div class="headerBtn-label">
+          <span class="headerBtn-text">Delete Goal</span>
+      </div>
+    </button>
+  </div>
 </div>`;
   return headerBtnList;
 }

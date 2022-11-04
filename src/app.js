@@ -16,6 +16,7 @@ const App = {
   slctr: {
     overlay: document.querySelector("[data-app=overlay]"),
     dateModal: document.querySelector("[data-app=dateModal]"),
+    deleteGoalModal: document.querySelector("[data-app=deleteGoalModal]"),
     header: document.querySelector("[data-app=header]"),
 
     inboxBtn: document.querySelector("[data-app=inboxBtn]"),
@@ -45,6 +46,8 @@ const App = {
 
     saveDateBtn: document.querySelector("[data-app=saveDateBtn]"),
     cancelDateBtn: document.querySelector("[data-app=cancelDateBtn]"),
+    deleteGoalYesBtn: document.querySelector("[data-app=deleteGoalYesBtn]"),
+    deleteGoalNoBtn: document.querySelector("[data-app=deleteGoalNoBtn]"),
   },
   showOverlay() {
     App.slctr.overlay.classList.toggle("elem-hide");
@@ -53,6 +56,15 @@ const App = {
   hideOverlay() {
     App.slctr.overlay.classList.toggle("overlay-fade");
     setTimeout((e) => App.slctr.overlay.classList.toggle("elem-hide"), 276);
+  },
+  hideModal() {
+    App.hideOverlay();
+    const modals = document.querySelectorAll(".modal");
+    modals.forEach((modal) => {
+      modal.classList.add("modal-fade");
+      setTimeout(() => modal.classList.add("elem-hide"), 276);
+    });
+    return;
   },
   toggleAccrd(e, elem) {
     if (e.target) {
@@ -100,6 +112,25 @@ const App = {
     Todo.removeCompletedTasks(content, goalId);
     if (content === "Inbox") App.renderInboxTasks(Todo.inbox);
     else App.renderGoalTasks(goal);
+  },
+  showDeleteGoalModal() {
+    App.showOverlay();
+    App.slctr.deleteGoalModal.classList.toggle("elem-hide");
+    setTimeout(
+      () => App.slctr.deleteGoalModal.classList.toggle("modal-fade"),
+      1
+    );
+    return;
+  },
+  hideDeleteGoalModal() {
+    App.hideOverlay();
+    App.slctr.deleteGoalModal.dataset.taskid = "";
+    App.slctr.deleteGoalModal.classList.toggle("modal-fade");
+    setTimeout(
+      () => App.slctr.deleteGoalModal.classList.toggle("elem-hide"),
+      276
+    );
+    return;
   },
   createHeaderContent(content, goalTitle, goalText) {
     App.slctr.header.classList.add("header-collapse");
@@ -454,6 +485,12 @@ const App = {
       "[data-app=clrCmpltdTasksBtn]",
       App.clearCompletedTasks
     );
+    delegateEvent(
+      App.slctr.header,
+      "click",
+      "[data-app=deleteGoalBtn]",
+      App.showDeleteGoalModal
+    );
   },
   bindTaskEvents() {
     delegateEvent(
@@ -539,9 +576,15 @@ const App = {
       newTaskBtn.addEventListener("click", App.createTaskBtn);
     });
 
-    App.slctr.overlay.addEventListener("click", App.hideDateModal);
+    App.slctr.overlay.addEventListener("click", App.hideModal);
+
     App.slctr.saveDateBtn.addEventListener("click", App.saveTaskDate);
     App.slctr.cancelDateBtn.addEventListener("click", App.hideDateModal);
+
+    App.slctr.deleteGoalNoBtn.addEventListener(
+      "click",
+      App.hideDeleteGoalModal
+    );
 
     App.bindHeaderEvents();
     App.bindTaskEvents();
