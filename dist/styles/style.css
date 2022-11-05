@@ -722,7 +722,7 @@ main {
 
 @media screen and (max-width: 700px) {
   body {
-    overflow-x: hidden;
+    overflow-y: hidden;
   }
 
   .navMenu {
@@ -731,13 +731,11 @@ main {
   }
 
   main {
+    margin-left: 100vw;
     width: 100%;
     position: absolute;
-    transform: translate(0vw, 0);
-  }
-
-  .addTaskBtn {
-    display: flex;
+    transition: margin-left 275ms ease-in-out;
+    overflow: auto;
   }
 
   .accrd--new {
@@ -761,12 +759,23 @@ main {
   }
 }
 
+.body-showScroll {
+  overflow-y: auto;
+}
+.main-slideRight {
+  margin-left: 0;
+}
+.addTaskBtn-show {
+  display: flex;
+}
+
 .overlay-fade {
   opacity: 0;
 }
 .modal-fade {
   opacity: 0;
 }
+
 .accrd-collapse {
   height: 0;
 }

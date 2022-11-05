@@ -80,6 +80,11 @@ const App = {
       return;
     }
   },
+  toggleMain() {
+    document.body.classList.toggle("body-showScroll");
+    document.querySelector(".addTaskBtn").classList.toggle("addTaskBtn-show");
+    App.slctr.main.classList.toggle("main-slideRight");
+  },
   toggleHeaderSettings() {
     App.slctr.header.classList.toggle("header-collapse");
     return;
@@ -191,7 +196,11 @@ const App = {
     App.slctr.main.dataset.content = content;
     App.createHeaderContent(content);
 
+    const vwWidth = document.documentElement.clientWidth;
+    if (vwWidth < 700) App.toggleMain();
+
     App.slctr.taskBtnList.innerHTML = "";
+
     if (content === "Inbox") App.renderInboxTasks(Todo.inbox);
     else if (content === "Today") App.renderTodayTasks(Todo.inbox, Todo.goals);
     else if (content === "Upcoming")
@@ -217,6 +226,9 @@ const App = {
 
     const goal = Todo.getGoal(goalBtn.id);
     App.createHeaderContent("Goal", goal.gName, goal.gNote);
+
+    const vwWidth = document.documentElement.clientWidth;
+    if (vwWidth < 700) App.toggleMain();
 
     App.slctr.taskBtnList.innerHTML = "";
     App.renderGoalTasks(goal);
@@ -641,6 +653,12 @@ const App = {
     return;
   },
   bindHeaderEvents() {
+    delegateEvent(
+      App.slctr.header,
+      "click",
+      "[data-app=closeMainBtn]",
+      App.toggleMain
+    );
     delegateEvent(
       App.slctr.header,
       "click",
