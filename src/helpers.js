@@ -64,6 +64,9 @@ export function taskBtnHTML(
   <object class="task-today ${
     d.isDateNow(taskDueDate) ? "" : "elem-hide"
   }" data="../src/icons/starIcon.svg" type="text/svg+xml" tabindex="-1"></object>
+  <object class="task-pastDue ${
+    d.isPastDue(taskDueDate) ? "" : "elem-hide"
+  }" data="../src/icons/flagIcon.svg" type="text/svg+xml" tabindex="-1"></object>
   <span class="task-dueDate ${
     taskDueDate ? "" : "elem-hide"
   }" data-app="taskDueDate">${

@@ -189,6 +189,8 @@ const App = {
     App.slctr.taskBtnList.innerHTML = "";
     if (content === "Inbox") App.renderInboxTasks(Todo.inbox);
     else if (content === "Today") App.renderTodayTasks(Todo.inbox, Todo.goals);
+    else if (content === "Upcoming")
+      App.renderUpcomingTasks(Todo.inbox, Todo.goals);
   },
   renderGoalContent(e) {
     const goalBtn = e.target.closest(".goalBtn");
@@ -489,6 +491,38 @@ const App = {
     goals.forEach((goal) => {
       goal.tasks.forEach((task) => {
         if (d.isDateNow(task.tDueDate)) {
+          const taskBtn = taskBtnHTML(
+            task.tId,
+            task.tName,
+            task.tNote,
+            task.tDueDate,
+            task.completed,
+            goal.gName
+          );
+          insertHTML(App.slctr.taskBtnList, taskBtn);
+        }
+      });
+    });
+    return;
+  },
+  renderUpcomingTasks(inbox, goals) {
+    App.slctr.taskBtnList.innerHTML = "";
+    inbox.forEach((task) => {
+      if (d.isPastDue(task.tDueDate) || d.isNotDue(task.tDueDate)) {
+        const taskBtn = taskBtnHTML(
+          task.tId,
+          task.tName,
+          task.tNote,
+          task.tDueDate,
+          task.completed,
+          "Inbox"
+        );
+        insertHTML(App.slctr.taskBtnList, taskBtn);
+      }
+    });
+    goals.forEach((goal) => {
+      goal.tasks.forEach((task) => {
+        if (d.isPastDue(task.tDueDate) || d.isNotDue(task.tDueDate)) {
           const taskBtn = taskBtnHTML(
             task.tId,
             task.tName,
