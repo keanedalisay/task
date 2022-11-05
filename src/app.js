@@ -459,6 +459,7 @@ const App = {
   renderInboxTasks(inbox) {
     App.slctr.taskBtnList.innerHTML = "";
     if (inbox.length === 0) return;
+    inbox.sort(d.sortDatesToBefore);
     inbox.forEach((task) => {
       const taskBtn = taskBtnHTML(
         task.tId,
@@ -528,6 +529,7 @@ const App = {
   renderGoalTasks(goal) {
     App.slctr.taskBtnList.innerHTML = "";
     if (goal.tasks.length === 0) return;
+    goal.tasks.sort(d.sortDatesToBefore);
     goal.tasks.forEach((task) => {
       const taskBtn = taskBtnHTML(
         task.tId,
