@@ -1,4 +1,4 @@
-import { format, isBefore, isEqual } from "date-fns";
+import { format, isAfter, isBefore, isEqual } from "date-fns";
 
 export class dTemp {
   static getDateNow() {
@@ -42,8 +42,13 @@ export class dTemp {
     return result;
   }
 
-  isNotPastDue(taskDate) {
+  isPastDue(taskDate) {
     const result = isBefore(new Date(...taskDate), dTemp.getDateNow());
+    return result;
+  }
+
+  isNotDue(taskDate) {
+    const result = isAfter(new Date(...taskDate), dTemp.getDateNow());
     return result;
   }
 }
