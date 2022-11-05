@@ -1,16 +1,6 @@
 import { format, isAfter, isBefore, isEqual } from "date-fns";
 
 export class dTemp {
-  static getDateNow() {
-    let date = new Date();
-    const dateNow = new Date(
-      date.getFullYear(),
-      date.getMonth(),
-      date.getDate()
-    );
-    return dateNow;
-  }
-
   parseMonthInt(string) {
     const monthNames = [
       "january",
@@ -38,17 +28,35 @@ export class dTemp {
   }
 
   isDateNow(taskDate) {
-    const result = isEqual(new Date(...taskDate), dTemp.getDateNow());
+    const result = isEqual(new Date(...taskDate), this._getDateNow());
     return result;
   }
 
   isPastDue(taskDate) {
-    const result = isBefore(new Date(...taskDate), dTemp.getDateNow());
+    const result = isBefore(new Date(...taskDate), this._getDateNow());
     return result;
   }
 
   isNotDue(taskDate) {
-    const result = isAfter(new Date(...taskDate), dTemp.getDateNow());
+    const result = isAfter(new Date(...taskDate), this._getDateNow());
     return result;
+  }
+
+  sortDatesToBefore(currentTask, nextTask) {
+    const taskDateOne = currentTask.tDueDate;
+    const taskDateTwo = nextTask.tDueDate;
+    const result = isBefore(new Date(...taskDateOne), new Date(...taskDateTwo));
+    if (result) return -1;
+    else return 1;
+  }
+
+  _getDateNow() {
+    let date = new Date();
+    const dateNow = new Date(
+      date.getFullYear(),
+      date.getMonth(),
+      date.getDate()
+    );
+    return dateNow;
   }
 }

@@ -507,7 +507,16 @@ const App = {
   },
   renderUpcomingTasks(inbox, goals) {
     App.slctr.taskBtnList.innerHTML = "";
-    inbox.forEach((task) => {
+    const tasks = [...inbox];
+    goals.forEach((goal) => {
+      goal.tasks.forEach((task) => {
+        tasks.push(task);
+      });
+    });
+
+    tasks.sort(d.sortDatesToBefore);
+
+    tasks.forEach((task) => {
       if (d.isPastDue(task.tDueDate) || d.isNotDue(task.tDueDate)) {
         const taskBtn = taskBtnHTML(
           task.tId,
@@ -520,21 +529,7 @@ const App = {
         insertHTML(App.slctr.taskBtnList, taskBtn);
       }
     });
-    goals.forEach((goal) => {
-      goal.tasks.forEach((task) => {
-        if (d.isPastDue(task.tDueDate) || d.isNotDue(task.tDueDate)) {
-          const taskBtn = taskBtnHTML(
-            task.tId,
-            task.tName,
-            task.tNote,
-            task.tDueDate,
-            task.completed,
-            goal.gName
-          );
-          insertHTML(App.slctr.taskBtnList, taskBtn);
-        }
-      });
-    });
+
     return;
   },
   renderGoalTasks(goal) {
