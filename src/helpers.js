@@ -23,6 +23,11 @@ export function getDueTaskCount(tasks) {
 }
 
 export function setTabIndex(elements) {
+  if (!elements.length) {
+    const tabIndex = parseInt(elements.getAttribute("tabindex"));
+    elements.setAttribute("tabindex", tabIndex ? 0 : -1);
+    return;
+  }
   elements.forEach((elem) => {
     const tabIndex = parseInt(elem.getAttribute("tabindex"));
     elem.setAttribute("tabindex", tabIndex ? 0 : -1);
@@ -144,7 +149,7 @@ export function headerInfoHTML(headerTitle, headerText, headerIcon, content) {
       </span>
       <div class="header-settingsBtn ${
         headerTitle === "Inbox" || content === "Goal" ? "" : "elem-hide"
-      }" data-app="headerSettingsBtn">
+      }" data-app="headerSettingsBtn" tabindex="0">
           <object data="../src/icons/threeDotIcon.svg" type="text/svg+xml" tabindex="-1"></object>
       </div>
   </div>
@@ -165,10 +170,10 @@ export function headerInfoHTML(headerTitle, headerText, headerIcon, content) {
 
 export function lowerHeaderHTML(content) {
   const headerBtnList = `<div class="headerBtnList">
-  <div class="headerBtnFrame">
+  <div class="headerBtnFrame" data-app="leftHeaderBtnFrame">
       <button class="headerBtn ${
         content === "Inbox" || content === "Goal" ? "" : "elem-hide"
-      }" data-app="trashAllTasksBtn">
+      }" data-app="trashAllTasksBtn" tabindex="-1">
           <div class="headerBtn-label">
               <object class="headerBtn-icon" data="../src/icons/trashIcon.svg" type="text/svg+xml"
                   tabindex="-1"></object>
@@ -177,23 +182,23 @@ export function lowerHeaderHTML(content) {
       </button>
       <button class="headerBtn ${
         content === "Inbox" || content === "Goal" ? "" : "elem-hide"
-      }" data-app="toggleCheckAllTasksBtn">
+      }" data-app="toggleCheckAllTasksBtn" tabindex="-1">
           <div class="headerBtn-label">
               <span class="headerBtn-text">Mark / Unmark All</span>
           </div>
       </button>
       <button class="headerBtn ${
         content === "Inbox" || content === "Goal" ? "" : "elem-hide"
-      }" data-app="clrCmpltdTasksBtn">
+      }" data-app="clrCmpltdTasksBtn" tabindex="-1">
           <div class="headerBtn-label">
               <span class="headerBtn-text">Clear Complete</span>
           </div>
       </button>
   </div>
-  <div class="headerBtnFrame">
+  <div class="headerBtnFrame" data-app="rightHeaderBtnFrame">
     <button class="headerBtn ${
       content === "Goal" ? "" : "elem-hide"
-    }" data-app="deleteGoalBtn">
+    }" data-app="deleteGoalBtn" tabindex="-1">
       <div class="headerBtn-label">
           <span class="headerBtn-text">Delete Goal</span>
       </div>
