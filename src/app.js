@@ -458,6 +458,7 @@ const App = {
       .forEach((goalBtn) =>
         goalBtn.addEventListener("click", App.renderGoalContent)
       );
+    return;
   },
   renderInboxTasks(inbox) {
     App.slctr.taskBtnList.innerHTML = "";
@@ -471,11 +472,18 @@ const App = {
         task.completed
       );
       insertHTML(App.slctr.taskBtnList, taskBtn);
+      return;
     });
   },
   renderTodayTasks(inbox, goals) {
     App.slctr.taskBtnList.innerHTML = "";
-    inbox.forEach((task) => {
+    const tasks = [...inbox];
+    goals.forEach((goal) => {
+      goal.tasks.forEach((task) => {
+        tasks.push(task);
+      });
+    });
+    tasks.forEach((task) => {
       if (d.isDateNow(task.tDueDate)) {
         const taskBtn = taskBtnHTML(
           task.tId,
@@ -486,22 +494,8 @@ const App = {
           task.content
         );
         insertHTML(App.slctr.taskBtnList, taskBtn);
+        return;
       }
-    });
-    goals.forEach((goal) => {
-      goal.tasks.forEach((task) => {
-        if (d.isDateNow(task.tDueDate)) {
-          const taskBtn = taskBtnHTML(
-            task.tId,
-            task.tName,
-            task.tNote,
-            task.tDueDate,
-            task.completed,
-            task.content
-          );
-          insertHTML(App.slctr.taskBtnList, taskBtn);
-        }
-      });
     });
     return;
   },
@@ -528,6 +522,7 @@ const App = {
           task.content
         );
         insertHTML(App.slctr.taskBtnList, taskBtn);
+        return;
       }
     });
 
@@ -545,7 +540,9 @@ const App = {
         task.completed
       );
       insertHTML(App.slctr.taskBtnList, taskBtn);
+      return;
     });
+    return;
   },
   bindHeaderEvents() {
     delegateEvent(
