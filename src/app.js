@@ -23,6 +23,8 @@ const App = {
     todayTaskCnt: document.querySelector("[data-app=todayTaskCnt]"),
 
     upcomingBtn: document.querySelector("[data-app=upcomingBtn]"),
+    upcomingDueTaskCnt: document.querySelector("[data-app=upcomingDueTaskCnt]"),
+    upcomingTaskCnt: document.querySelector("[data-app=upcomingTaskCnt]"),
 
     settingsBtn: document.querySelector("[data-app=settingsBtn]"),
     accrdSettings: document.querySelector("[data-app=accrdSettings]"),
@@ -572,6 +574,36 @@ const App = {
 
     return;
   },
+  renderUpcomingTaskCount() {
+    let tasks = [...Todo.inbox];
+    Todo.goals.forEach((goal) => {
+      goal.tasks.forEach((task) => {
+        tasks.push(task);
+      });
+    });
+    tasks = tasks.filter((task) => {
+      if (!task.tDueDate) return false;
+      return d.isPastDue(task.tDueDate) || d.isNotDue(task.tDueDate);
+    });
+
+    if (tasks.length === 0) {
+      App.slctr.upcomingTaskCnt.classList.add("taskCnt-hide");
+      App.slctr.upcomingDueTaskCnt.classList.add("taskCnt-hide");
+    }
+
+    App.slctr.upcomingTaskCnt.classList.remove("taskCnt-hide");
+    App.slctr.upcomingTaskCnt.textContent = tasks.length;
+
+    if (getDueTaskCount(tasks)) {
+      App.slctr.upcomingDueTaskCnt.classList.remove("taskCnt-hide");
+      App.slctr.upcomingDueTaskCnt.textContent = getDueTaskCount(tasks);
+      return;
+    }
+
+    App.slctr.upcomingDueTaskCnt.classList.add("taskCnt-hide");
+
+    return;
+  },
   renderGoalTasks(goal) {
     App.slctr.taskBtnList.innerHTML = "";
     if (goal.tasks.length === 0) return;
@@ -686,6 +718,7 @@ const App = {
   render() {
     App.renderInboxTaskCount(Todo.inbox);
     App.renderTodayTaskCount();
+    App.renderUpcomingTaskCount();
     App.renderGoalBtns(Todo.goals);
   },
   init() {
