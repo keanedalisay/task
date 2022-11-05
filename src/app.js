@@ -20,6 +20,8 @@ const App = {
     inboxTaskCnt: document.querySelector("[data-app=inboxTaskCnt]"),
 
     todayBtn: document.querySelector("[data-app=todayBtn]"),
+    todayTaskCnt: document.querySelector("[data-app=todayTaskCnt]"),
+
     upcomingBtn: document.querySelector("[data-app=upcomingBtn]"),
 
     settingsBtn: document.querySelector("[data-app=settingsBtn]"),
@@ -523,6 +525,24 @@ const App = {
     });
     return;
   },
+  renderTodayTaskCount() {
+    let tasks = [...Todo.inbox];
+    Todo.goals.forEach((goal) => {
+      goal.tasks.forEach((task) => {
+        tasks.push(task);
+      });
+    });
+    tasks = tasks.filter((task) => d.isDateNow(task.tDueDate));
+
+    if (tasks.length === 0) {
+      App.slctr.todayTaskCnt.classList.add("taskCnt-hide");
+    }
+
+    App.slctr.todayTaskCnt.classList.remove("taskCnt-hide");
+    App.slctr.todayTaskCnt.textContent = tasks.length;
+
+    return;
+  },
   renderUpcomingTasks(inbox, goals) {
     App.slctr.taskBtnList.innerHTML = "";
     const tasks = [...inbox];
@@ -665,6 +685,7 @@ const App = {
   },
   render() {
     App.renderInboxTaskCount(Todo.inbox);
+    App.renderTodayTaskCount();
     App.renderGoalBtns(Todo.goals);
   },
   init() {
