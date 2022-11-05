@@ -49,7 +49,7 @@ export function taskBtnHTML(
   taskNote,
   taskDueDate,
   isDone,
-  content
+  taskContent
 ) {
   const taskBtn = `
 <div class="task task-collapse ${isDone ? "task-complete" : ""}" id="${
@@ -79,8 +79,8 @@ export function taskBtnHTML(
       <span class="task-name ${
         taskName ? "" : "elem-hide"
       }" data-app="taskName">${taskName || "What would you like to do?"}</span>
-      <span class="task-content ${content ? "" : "elem-hide"}">${
-    content ? content : ""
+      <span class="task-content ${taskContent ? "" : "elem-hide"}">${
+    taskContent ? taskContent : ""
   }</span>
   </div>
 </div>

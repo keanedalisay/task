@@ -483,7 +483,7 @@ const App = {
           task.tNote,
           task.tDueDate,
           task.completed,
-          "Inbox"
+          task.content
         );
         insertHTML(App.slctr.taskBtnList, taskBtn);
       }
@@ -497,7 +497,7 @@ const App = {
             task.tNote,
             task.tDueDate,
             task.completed,
-            goal.gName
+            task.content
           );
           insertHTML(App.slctr.taskBtnList, taskBtn);
         }
@@ -517,6 +517,7 @@ const App = {
     tasks.sort(d.sortDatesToBefore);
 
     tasks.forEach((task) => {
+      if (!task.tDueDate) return;
       if (d.isPastDue(task.tDueDate) || d.isNotDue(task.tDueDate)) {
         const taskBtn = taskBtnHTML(
           task.tId,
@@ -524,7 +525,7 @@ const App = {
           task.tNote,
           task.tDueDate,
           task.completed,
-          "Inbox"
+          task.content
         );
         insertHTML(App.slctr.taskBtnList, taskBtn);
       }

@@ -41,11 +41,13 @@ export class TodoTemp {
       completed: false,
     };
     if (content === "Inbox") {
+      task.content = "Inbox";
       this.inbox.push(task);
       this._save();
       return;
     } else if (content === "Goal") {
       const newGoal = this.getGoal(goalId);
+      task.content = newGoal.gName;
       newGoal.tasks.push(task);
       this.goals = this.goals.map((origGoal) =>
         origGoal.gId === newGoal.gId ? newGoal : origGoal
