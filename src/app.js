@@ -320,9 +320,18 @@ const App = {
     const content = App.slctr.main.dataset.content;
     if (content === "Today" || content === "Upcoming") return;
 
-    const task = e.target.closest(".task");
-    task.classList.toggle("task-collapse");
-    return;
+    if (e.which === 1 || e.key === "Enter" || e.key === " ") {
+      const task = e.target.closest("[data-app=task]");
+      const taskNoteInput = task.querySelector("[data-app=taskTextInput]");
+      const taskBtns = task.querySelectorAll(
+        "[data-app=taskBtnFrame] > .taskBtn"
+      );
+
+      task.classList.toggle("task-collapse");
+      setTabIndex(taskNoteInput);
+      setTabIndex(taskBtns);
+      return;
+    }
   },
   createTaskBtn() {
     const content = App.slctr.main.dataset.content;
@@ -346,31 +355,32 @@ const App = {
     const content = App.slctr.main.dataset.content;
     const goalId = App.slctr.main.dataset.goalid;
 
-    if (content === "Today" || content === "Upcoming") return;
-
     let origTask =
       content === "Inbox"
         ? Todo.getInboxTask(taskBtn.id)
         : Todo.getGoalTask(goalId, taskBtn.id);
 
-    let status = parseInt(checkboxIcon.dataset.status) ? false : true;
+    if (content === "Today" || content === "Upcoming") return;
 
-    Todo.updateTask(
-      {
-        ...origTask,
-        completed: status,
-      },
-      content,
-      goalId
-    );
+    if (e.which === 1 || e.key === "Enter" || e.key === " ") {
+      let status = parseInt(checkboxIcon.dataset.status) ? false : true;
+      Todo.updateTask(
+        {
+          ...origTask,
+          completed: status,
+        },
+        content,
+        goalId
+      );
 
-    App.moveProgressBar(goalId);
+      App.moveProgressBar(goalId);
 
-    content === "Inbox"
-      ? App.renderInboxTasks(Todo.inbox)
-      : App.renderGoalTasks(Todo.getGoal(goalId));
+      content === "Inbox"
+        ? App.renderInboxTasks(Todo.inbox)
+        : App.renderGoalTasks(Todo.getGoal(goalId));
 
-    return;
+      return;
+    }
   },
   saveTaskName(e) {
     const taskBtn = e.target.closest("[data-app=task]");
@@ -721,6 +731,12 @@ const App = {
     );
     delegateEvent(
       App.slctr.taskBtnList,
+      "keyup",
+      "[data-app=taskInfo]",
+      App.toggleTaskSettings
+    );
+    delegateEvent(
+      App.slctr.taskBtnList,
       "click",
       "[data-app=taskDueDate]",
       App.toggleTaskSettings
@@ -740,6 +756,12 @@ const App = {
     delegateEvent(
       App.slctr.taskBtnList,
       "click",
+      "[data-app=taskCheckbox]",
+      App.toggleCheckTask
+    );
+    delegateEvent(
+      App.slctr.taskBtnList,
+      "keyup",
       "[data-app=taskCheckbox]",
       App.toggleCheckTask
     );

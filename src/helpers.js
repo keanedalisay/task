@@ -65,7 +65,9 @@ export function taskBtnHTML(
     taskId ? taskId : ""
   }" data-app="task">
   <div class="task-info" data-app="taskInfo"tabindex="0">
-  <div class="checkbox ${isDone ? "check" : ""}" data-app="taskCheckbox">
+  <div class="checkbox ${
+    isDone ? "check" : ""
+  }" data-app="taskCheckbox" tabindex="0">
       <object class="checkbox-icon" data-status="${isDone ? "1" : "0"}" data="${
     isDone ? "../src/icons/checkIcon.svg" : ""
   }" type="text/svg+xml" tabindex="-1"></object>
@@ -96,12 +98,12 @@ export function taskBtnHTML(
 <div class="task-note">
   <input class="task-textInput ${
     taskNote ? "elem-hide" : ""
-  }" data-app="taskTextInput" type="text" placeholder="What would you like to keep in mind?"tabindex="-1">
+  }" data-app="taskTextInput" type="text" placeholder="What would you like to keep in mind?" tabindex="-1">
   <span class="task-text ${taskNote ? "" : "elem-hide"}" data-app="taskText">${
     taskNote || "What would you like to keep in mind?"
   }</span>
 </div>
-<div class="task-btnFrame">
+<div class="task-btnFrame" data-app="taskBtnFrame">
   <button class="taskBtn" data-app="setTaskDateBtn" tabindex="-1">
       <div class="taskBtn-label">
           <object class="taskBtn-icon" data="../src/icons/dateIcon.svg" type="text/svg+xml"
