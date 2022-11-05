@@ -276,6 +276,24 @@ const App = {
 
     App.hideDeleteGoalModal();
   },
+  moveProgressBar(goalId) {
+    if (!goalId) return;
+    const goalBtn = document.getElementById(goalId);
+    const goalProgIntrvl = goalBtn.querySelector(
+      "[data-app=goalProgressInterval]"
+    );
+
+    const goal = Todo.getGoal(goalId);
+    const taskCount = goal.tasks.length;
+    const completedTaskCount = goal.tasks.filter(
+      (task) => task.completed
+    ).length;
+
+    const percntForEachTask = 100 / taskCount;
+    const percntToMove = percntForEachTask * completedTaskCount;
+    goalProgIntrvl.style.marginRight = `${percntToMove}%`;
+    return;
+  },
   toggleTaskSettings(e) {
     const content = App.slctr.main.dataset.content;
     if (content === "Today" || content === "Upcoming") return;
@@ -295,6 +313,8 @@ const App = {
     insertHTML(App.slctr.taskBtnList, taskBtn);
 
     Todo.createTask({ name: "", id: taskId }, content, goalId);
+
+    App.moveProgressBar(goalId);
     App.render();
 
     return;
@@ -323,6 +343,8 @@ const App = {
       content,
       goalId
     );
+
+    App.moveProgressBar(goalId);
 
     content === "Inbox"
       ? App.renderInboxTasks(Todo.inbox)
@@ -441,14 +463,13 @@ const App = {
   removeTask(e) {
     const taskBtn = e.target.closest("[data-app=task]");
     const content = App.slctr.main.dataset.content;
+    const goalId = App.slctr.main.dataset.goalid;
     if (content === "Today" || content === "Upcoming") return;
 
-    Todo.removeTask(
-      taskBtn.id,
-      App.slctr.main.dataset.content,
-      App.slctr.main.dataset.goalid
-    );
+    Todo.removeTask(taskBtn.id, content, goalId);
     taskBtn.remove();
+
+    App.moveProgressBar(goalId);
     App.render();
     return;
   },
@@ -459,6 +480,7 @@ const App = {
     goals.forEach((goal) => {
       const goalBtn = goalBtnHTML(goal.gId, goal.gName);
       insertHTML(App.slctr.goalBtnList, goalBtn);
+      App.moveProgressBar(goal.gId);
     });
     document
       .querySelectorAll(".goalBtn")

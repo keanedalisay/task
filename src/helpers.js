@@ -38,8 +38,8 @@ export function setTabIndex(elements) {
 export function goalBtnHTML(goalId, goalName) {
   const goalBtn = `
   <button class="goalBtn" id="${goalId ? goalId : ""}" data-app="goalBtn">
-    <div class="goalProgressBar">
-        <div class="goalProgressBar-interval">
+    <div class="goalProgressBar" data-app="goalProgressBar">
+        <div class="goalProgressBar-interval" data-app="goalProgressInterval">
         </div>
     </div>
     <input class="goalBtn-input ${
