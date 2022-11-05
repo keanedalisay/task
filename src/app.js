@@ -85,9 +85,19 @@ const App = {
     document.querySelector(".addTaskBtn").classList.toggle("addTaskBtn-show");
     App.slctr.main.classList.toggle("main-slideRight");
   },
-  toggleHeaderSettings() {
-    App.slctr.header.classList.toggle("header-collapse");
-    return;
+  toggleHeaderSettings(e) {
+    const leftHeaderBtns = document.querySelectorAll(
+      "[data-app=leftHeaderBtnFrame] > .headerBtn"
+    );
+    const rightHeaderBtns = document.querySelector(
+      "[data-app=rightHeaderBtnFrame] > .headerBtn"
+    );
+    if (e.which === 1 || e.key === "Enter" || e.key === " ") {
+      App.slctr.header.classList.toggle("header-collapse");
+      setTabIndex(leftHeaderBtns);
+      setTabIndex(rightHeaderBtns);
+      return;
+    }
   },
   trashAllTasks() {
     const content = App.slctr.main.dataset.content;
@@ -662,6 +672,12 @@ const App = {
     delegateEvent(
       App.slctr.header,
       "click",
+      "[data-app=headerSettingsBtn]",
+      App.toggleHeaderSettings
+    );
+    delegateEvent(
+      App.slctr.header,
+      "keyup",
       "[data-app=headerSettingsBtn]",
       App.toggleHeaderSettings
     );
