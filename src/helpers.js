@@ -13,11 +13,6 @@ export function insertHTML(elem, childHtml) {
   return;
 }
 
-export function insertElem(elem, childElem) {
-  elem.insertAdjacentElement("beforeend", childElem);
-  return;
-}
-
 export function getDueTaskCount(tasks) {
   let dueTaskCount = 0;
   tasks.forEach((task) => {
