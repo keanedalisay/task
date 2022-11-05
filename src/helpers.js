@@ -18,6 +18,15 @@ export function insertElem(elem, childElem) {
   return;
 }
 
+export function getDueTaskCount(tasks) {
+  let dueTaskCount = 0;
+  tasks.forEach((task) => {
+    if (d.isPastDue(task.tDueDate)) dueTaskCount++;
+    return;
+  });
+  return dueTaskCount;
+}
+
 export function setTabIndex(elements) {
   elements.forEach((elem) => {
     const tabIndex = parseInt(elem.getAttribute("tabindex"));

@@ -1,6 +1,7 @@
 import { delegateEvent, insertHTML } from "./helpers.js";
 import { setTabIndex, goalBtnHTML, taskBtnHTML } from "./helpers.js";
 import { upperHeaderHTML, headerInfoHTML, lowerHeaderHTML } from "./helpers.js";
+import { getDueTaskCount } from "./helpers.js";
 
 import { TodoTemp } from "./todo.js";
 import { dTemp } from "./date.js";
@@ -15,6 +16,9 @@ const App = {
     header: document.querySelector("[data-app=header]"),
 
     inboxBtn: document.querySelector("[data-app=inboxBtn]"),
+    inboxDueTaskCnt: document.querySelector("[data-app=inboxDueTaskCnt]"),
+    inboxTaskCnt: document.querySelector("[data-app=inboxTaskCnt]"),
+
     todayBtn: document.querySelector("[data-app=todayBtn]"),
     upcomingBtn: document.querySelector("[data-app=upcomingBtn]"),
 
@@ -287,6 +291,7 @@ const App = {
     insertHTML(App.slctr.taskBtnList, taskBtn);
 
     Todo.createTask({ name: "", id: taskId }, content, goalId);
+    App.render();
 
     return;
   },
@@ -426,6 +431,7 @@ const App = {
       : App.renderGoalTasks(Todo.getGoal(goalId));
 
     App.hideDateModal();
+    App.render();
     return;
   },
   removeTask(e) {
@@ -439,6 +445,7 @@ const App = {
       App.slctr.main.dataset.goalid
     );
     taskBtn.remove();
+    App.render();
     return;
   },
 
@@ -471,6 +478,25 @@ const App = {
       insertHTML(App.slctr.taskBtnList, taskBtn);
       return;
     });
+    return;
+  },
+  renderInboxTaskCount(inbox) {
+    if (inbox.length === 0) {
+      App.slctr.inboxTaskCnt.classList.add("taskCnt-hide");
+      App.slctr.inboxDueTaskCnt.classList.add("taskCnt-hide");
+    }
+
+    App.slctr.inboxTaskCnt.classList.remove("taskCnt-hide");
+    App.slctr.inboxTaskCnt.textContent = inbox.length;
+
+    if (getDueTaskCount(inbox)) {
+      App.slctr.inboxDueTaskCnt.classList.remove("taskCnt-hide");
+      App.slctr.inboxDueTaskCnt.textContent = getDueTaskCount(inbox);
+      return;
+    }
+
+    App.slctr.inboxDueTaskCnt.classList.add("taskCnt-hide");
+
     return;
   },
   renderTodayTasks(inbox, goals) {
@@ -638,6 +664,7 @@ const App = {
     );
   },
   render() {
+    App.renderInboxTaskCount(Todo.inbox);
     App.renderGoalBtns(Todo.goals);
   },
   init() {
