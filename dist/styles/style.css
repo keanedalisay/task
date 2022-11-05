@@ -500,7 +500,7 @@ main {
 .headerBtnList {
   margin-top: 3rem;
   display: flex;
-  flex-flow: row nowrap;
+  flex-flow: row wrap;
   justify-content: space-between;
   align-items: center;
 }
@@ -663,6 +663,7 @@ main {
   font-weight: 700;
   font-size: var(--fs-12px);
   color: var(--silver);
+  white-space: nowrap;
 }
 .task-note {
   display: flex;
@@ -756,6 +757,9 @@ main {
   }
   .headerBtnList--mobile {
     display: flex;
+  }
+  .headerBtnFrame {
+    width: 100%;
   }
 }
 
