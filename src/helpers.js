@@ -114,7 +114,7 @@ export function taskBtnHTML(
   return taskBtn;
 }
 
-export function upperHeaderBtnListHTML(content) {
+export function upperHeaderHTML(content) {
   const headerBtnListMobile = `<div class="headerBtnList headerBtnList--mobile">
   <div class="headerBtn headerBtn--closeMainBtn" data-app="closeMainBtn">
       <object data="../src/icons/arrowIcon.svg" type="text/svg+xml" tabindex="-1"></object>
@@ -159,7 +159,7 @@ export function headerInfoHTML(headerTitle, headerText, headerIcon, content) {
   return headerInfo;
 }
 
-export function bottomHeaderBtnListHTML(content) {
+export function lowerHeaderHTML(content) {
   const headerBtnList = `<div class="headerBtnList">
   <div class="headerBtnFrame">
       <button class="headerBtn ${

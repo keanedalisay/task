@@ -1,10 +1,6 @@
-import { delegateEvent, insertHTML, insertElem } from "./helpers.js";
+import { delegateEvent, insertHTML } from "./helpers.js";
 import { setTabIndex, goalBtnHTML, taskBtnHTML } from "./helpers.js";
-import {
-  upperHeaderBtnListHTML,
-  headerInfoHTML,
-  bottomHeaderBtnListHTML,
-} from "./helpers.js";
+import { upperHeaderHTML, headerInfoHTML, lowerHeaderHTML } from "./helpers.js";
 
 import { TodoTemp } from "./todo.js";
 import { dTemp } from "./date.js";
@@ -15,6 +11,7 @@ const d = new dTemp();
 const App = {
   slctr: {
     overlay: document.querySelector("[data-app=overlay]"),
+    main: document.querySelector("main"),
     header: document.querySelector("[data-app=header]"),
 
     inboxBtn: document.querySelector("[data-app=inboxBtn]"),
@@ -51,10 +48,12 @@ const App = {
   showOverlay() {
     App.slctr.overlay.classList.toggle("elem-hide");
     setTimeout(() => App.slctr.overlay.classList.toggle("overlay-fade"), 1);
+    return;
   },
   hideOverlay() {
     App.slctr.overlay.classList.toggle("overlay-fade");
     setTimeout(() => App.slctr.overlay.classList.toggle("elem-hide"), 276);
+    return;
   },
   hideModal() {
     App.hideOverlay();
@@ -73,15 +72,14 @@ const App = {
       return;
     }
   },
-  toggleHeaderSettingsEvent() {
+  toggleHeaderSettings() {
     App.slctr.header.classList.toggle("header-collapse");
     return;
   },
-  trashAllTasksEvent() {
-    const main = document.querySelector("main");
-    const content = main.dataset.content;
+  trashAllTasks() {
+    const content = App.slctr.main.dataset.content;
 
-    const goalId = main.dataset.goalid;
+    const goalId = App.slctr.main.dataset.goalid;
     const goal = Todo.getGoal(goalId);
 
     if (content === "Today" || content === "Upcoming") return;
@@ -91,28 +89,28 @@ const App = {
     return;
   },
   toggleCheckAllTasks() {
-    const main = document.querySelector("main");
-    const content = main.dataset.content;
+    const content = App.slctr.main.dataset.content;
 
-    const goalId = main.dataset.goalid;
+    const goalId = App.slctr.main.dataset.goalid;
     const goal = Todo.getGoal(goalId);
 
     if (content === "Today" || content === "Upcoming") return;
     Todo.toggleCompleteAllTasks(content, goalId);
     if (content === "Inbox") App.renderInboxTasks(Todo.inbox);
     else App.renderGoalTasks(goal);
+    return;
   },
   clearCompletedTasks() {
-    const main = document.querySelector("main");
-    const content = main.dataset.content;
+    const content = App.slctr.main.dataset.content;
 
-    const goalId = main.dataset.goalid;
+    const goalId = App.slctr.main.dataset.goalid;
     const goal = Todo.getGoal(goalId);
 
     if (content === "Today" || content === "Upcoming") return;
     Todo.removeCompletedTasks(content, goalId);
     if (content === "Inbox") App.renderInboxTasks(Todo.inbox);
     else App.renderGoalTasks(goal);
+    return;
   },
   showDeleteGoalModal() {
     App.showOverlay();
@@ -160,12 +158,12 @@ const App = {
         headerText = goalText;
     }
 
-    insertHTML(App.slctr.header, upperHeaderBtnListHTML(content));
+    insertHTML(App.slctr.header, upperHeaderHTML(content));
     insertHTML(
       App.slctr.header,
       headerInfoHTML(headerTitle, headerText, headerIcon, content)
     );
-    insertHTML(App.slctr.header, bottomHeaderBtnListHTML(content));
+    insertHTML(App.slctr.header, lowerHeaderHTML(content));
     return;
   },
   renderContent(content) {
@@ -182,8 +180,7 @@ const App = {
     const goalBtns = document.querySelectorAll(".goalBtn");
     goalBtns.forEach((goalBtn) => goalBtn.classList.remove("button-select"));
 
-    const main = document.querySelector("main");
-    main.dataset.content = content;
+    App.slctr.main.dataset.content = content;
     App.createHeaderContent(content);
 
     App.slctr.taskBtnList.innerHTML = "";
@@ -191,6 +188,8 @@ const App = {
     else if (content === "Today") App.renderTodayTasks(Todo.inbox, Todo.goals);
     else if (content === "Upcoming")
       App.renderUpcomingTasks(Todo.inbox, Todo.goals);
+
+    return;
   },
   renderGoalContent(e) {
     const goalBtn = e.target.closest(".goalBtn");
@@ -205,9 +204,8 @@ const App = {
       if (gBtn !== goalBtn) gBtn.classList.remove("button-select");
     });
 
-    const main = document.querySelector("main");
-    main.dataset.content = "Goal";
-    main.dataset.goalid = goalBtn.id;
+    App.slctr.main.dataset.content = "Goal";
+    App.slctr.main.dataset.goalid = goalBtn.id;
 
     const goal = Todo.getGoal(goalBtn.id);
     App.createHeaderContent("Goal", goal.gName, goal.gNote);
@@ -240,15 +238,14 @@ const App = {
     });
     return;
   },
-  saveGoalNoteEvent(e) {
-    const main = document.querySelector("main");
+  saveGoalNote(e) {
     const headerNote = document.querySelector("[data-app=headerText]");
     const headerNoteInput = document.querySelector(
       "[data-app=headerTextInput]"
     );
     const headerNoteValue = headerNoteInput.value;
 
-    let origGoal = Todo.getGoal(main.dataset.goalid);
+    let origGoal = Todo.getGoal(App.slctr.main.dataset.goalid);
 
     if (e.key === "Enter") {
       if (!headerNoteValue.trim()) return;
@@ -262,8 +259,7 @@ const App = {
     }
   },
   removeGoal() {
-    const main = document.querySelector("main");
-    const goalId = main.dataset.goalid;
+    const goalId = App.slctr.main.dataset.goalid;
     Todo.removeGoal(goalId);
     App.renderGoalBtns(Todo.goals);
 
@@ -272,9 +268,8 @@ const App = {
 
     App.hideDeleteGoalModal();
   },
-  toggleTaskSettingsEvent(e) {
-    const main = document.querySelector("main");
-    const content = main.dataset.content;
+  toggleTaskSettings(e) {
+    const content = App.slctr.main.dataset.content;
     if (content === "Today" || content === "Upcoming") return;
 
     const task = e.target.closest(".task");
@@ -282,9 +277,8 @@ const App = {
     return;
   },
   createTaskBtn() {
-    const main = document.querySelector("main");
-    const content = main.dataset.content;
-    const goalId = main.dataset.goalid;
+    const content = App.slctr.main.dataset.content;
+    const goalId = App.slctr.main.dataset.goalid;
 
     if (content === "Today" || content === "Upcoming") return;
 
@@ -296,13 +290,12 @@ const App = {
 
     return;
   },
-  checkTaskEvent(e) {
+  toggleCheckTask(e) {
     const taskBtn = e.target.closest("[data-app=task]");
     const checkboxIcon = taskBtn.querySelector(".checkbox-icon");
 
-    const main = document.querySelector("main");
-    const content = main.dataset.content;
-    const goalId = main.dataset.goalid;
+    const content = App.slctr.main.dataset.content;
+    const goalId = App.slctr.main.dataset.goalid;
 
     if (content === "Today" || content === "Upcoming") return;
 
@@ -328,13 +321,12 @@ const App = {
 
     return;
   },
-  saveTaskNameEvent(e) {
+  saveTaskName(e) {
     const taskBtn = e.target.closest("[data-app=task]");
     const taskNameInput = taskBtn.querySelector("[data-app=taskNameInput]");
 
-    const main = document.querySelector("main");
-    const content = main.dataset.content;
-    const goalId = main.dataset.goalid;
+    const content = App.slctr.main.dataset.content;
+    const goalId = App.slctr.main.dataset.goalid;
 
     if (content === "Today" || content === "Upcoming") return;
 
@@ -358,13 +350,12 @@ const App = {
       return;
     }
   },
-  saveTaskNoteEvent(e) {
+  saveTaskNote(e) {
     const taskBtn = e.target.closest("[data-app=task]");
     const taskNoteInput = taskBtn.querySelector("[data-app=taskTextInput]");
 
-    const main = document.querySelector("main");
-    const content = main.dataset.content;
-    const goalId = main.dataset.goalid;
+    const content = App.slctr.main.dataset.content;
+    const goalId = App.slctr.main.dataset.goalid;
 
     if (content === "Today" || content === "Upcoming") return;
 
@@ -389,8 +380,7 @@ const App = {
     }
   },
   showDateModal(e) {
-    const main = document.querySelector("main");
-    const content = main.dataset.content;
+    const content = App.slctr.main.dataset.content;
     if (content === "Today" || content === "Upcoming") return;
 
     const task = e.target.closest(".task");
@@ -398,12 +388,14 @@ const App = {
     App.showOverlay();
     App.slctr.dateModal.classList.toggle("elem-hide");
     setTimeout(() => App.slctr.dateModal.classList.toggle("modal-fade"), 1);
+    return;
   },
-  hideDateModal(e) {
+  hideDateModal() {
     App.hideOverlay();
     App.slctr.dateModal.dataset.taskid = "";
     App.slctr.dateModal.classList.toggle("modal-fade");
     setTimeout(() => App.slctr.dateModal.classList.toggle("elem-hide"), 276);
+    return;
   },
   saveTaskDate() {
     const taskId = App.slctr.dateModal.dataset.taskid;
@@ -417,14 +409,13 @@ const App = {
     else if (month === undefined) return;
     else if (day < 0 || day > 32) return;
 
-    const main = document.querySelector("main");
-    const content = main.dataset.content;
-    const goalId = main.dataset.goalid;
+    const content = App.slctr.main.dataset.content;
+    const goalId = App.slctr.main.dataset.goalid;
 
     let origTask =
       content === "Inbox"
         ? Todo.getInboxTask(taskBtn.id)
-        : Todo.getGoalTask(main.dataset.goalid, taskBtn.id);
+        : Todo.getGoalTask(App.slctr.main.dataset.goalid, taskBtn.id);
 
     const date = [year, month, day];
 
@@ -435,15 +426,20 @@ const App = {
       : App.renderGoalTasks(Todo.getGoal(goalId));
 
     App.hideDateModal();
+    return;
   },
-  removeTaskEvent(e) {
+  removeTask(e) {
     const taskBtn = e.target.closest("[data-app=task]");
-    const main = document.querySelector("main");
-    const content = main.dataset.content;
+    const content = App.slctr.main.dataset.content;
     if (content === "Today" || content === "Upcoming") return;
 
-    Todo.removeTask(taskBtn.id, main.dataset.content, main.dataset.goalid);
+    Todo.removeTask(
+      taskBtn.id,
+      App.slctr.main.dataset.content,
+      App.slctr.main.dataset.goalid
+    );
     taskBtn.remove();
+    return;
   },
 
   renderGoalBtns(goals) {
@@ -474,6 +470,7 @@ const App = {
       insertHTML(App.slctr.taskBtnList, taskBtn);
       return;
     });
+    return;
   },
   renderTodayTasks(inbox, goals) {
     App.slctr.taskBtnList.innerHTML = "";
@@ -549,19 +546,19 @@ const App = {
       App.slctr.header,
       "click",
       "[data-app=headerSettingsBtn]",
-      App.toggleHeaderSettingsEvent
+      App.toggleHeaderSettings
     );
     delegateEvent(
       App.slctr.header,
       "keyup",
       "[data-app=headerTextInput]",
-      App.saveGoalNoteEvent
+      App.saveGoalNote
     );
     delegateEvent(
       App.slctr.header,
       "click",
       "[data-app=trashAllTasksBtn]",
-      App.trashAllTasksEvent
+      App.trashAllTasks
     );
     delegateEvent(
       App.slctr.header,
@@ -587,49 +584,49 @@ const App = {
       App.slctr.taskBtnList,
       "click",
       "[data-app=taskInfo]",
-      App.toggleTaskSettingsEvent
+      App.toggleTaskSettings
     );
     delegateEvent(
       App.slctr.taskBtnList,
       "click",
       "[data-app=taskDueDate]",
-      App.toggleTaskSettingsEvent
+      App.toggleTaskSettings
     );
     delegateEvent(
       App.slctr.taskBtnList,
       "click",
       "[data-app=taskName]",
-      App.toggleTaskSettingsEvent
+      App.toggleTaskSettings
     );
     delegateEvent(
       App.slctr.taskBtnList,
       "click",
       "[data-app=taskContent]",
-      App.toggleTaskSettingsEvent
+      App.toggleTaskSettings
     );
     delegateEvent(
       App.slctr.taskBtnList,
       "click",
       "[data-app=taskCheckbox]",
-      App.checkTaskEvent
+      App.toggleCheckTask
     );
     delegateEvent(
       App.slctr.taskBtnList,
       "keyup",
       "[data-app=taskNameInput]",
-      App.saveTaskNameEvent
+      App.saveTaskName
     );
     delegateEvent(
       App.slctr.taskBtnList,
       "keyup",
       "[data-app=taskTextInput]",
-      App.saveTaskNoteEvent
+      App.saveTaskNote
     );
     delegateEvent(
       App.slctr.taskBtnList,
       "click",
       "[data-app=trashTaskBtn]",
-      App.removeTaskEvent
+      App.removeTask
     );
     delegateEvent(
       App.slctr.taskBtnList,
@@ -642,6 +639,8 @@ const App = {
     App.renderGoalBtns(Todo.goals);
   },
   init() {
+    App.slctr.overlay.addEventListener("click", App.hideModal);
+
     App.slctr.inboxBtn.addEventListener("click", (e) =>
       App.renderContent("Inbox")
     );
@@ -665,8 +664,6 @@ const App = {
     App.slctr.newTaskBtns.forEach((newTaskBtn) => {
       newTaskBtn.addEventListener("click", App.createTaskBtn);
     });
-
-    App.slctr.overlay.addEventListener("click", App.hideModal);
 
     App.slctr.saveDateBtn.addEventListener("click", App.saveTaskDate);
     App.slctr.cancelDateBtn.addEventListener("click", App.hideDateModal);
