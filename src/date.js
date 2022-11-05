@@ -2,6 +2,7 @@ import { format, isBefore, isEqual } from "date-fns";
 
 export class dTemp {
   static getDateNow() {
+    let date = new Date();
     const dateNow = new Date(
       date.getFullYear(),
       date.getMonth(),
