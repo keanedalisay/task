@@ -313,8 +313,6 @@ const App = {
     insertHTML(App.slctr.taskBtnList, taskBtn);
 
     Todo.createTask({ name: "", id: taskId }, content, goalId);
-
-    App.moveProgressBar(goalId);
     App.render();
 
     return;
@@ -469,7 +467,6 @@ const App = {
     Todo.removeTask(taskBtn.id, content, goalId);
     taskBtn.remove();
 
-    App.moveProgressBar(goalId);
     App.render();
     return;
   },
