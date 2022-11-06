@@ -18,6 +18,7 @@
   --fs-14px: 1.4rem;
   --fs-16px: 1.6rem;
   --fs-40px: 4rem;
+  --fs-60px: 6rem;
 }
 
 *,
@@ -260,6 +261,76 @@ main {
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
+}
+
+.splshScrn {
+  padding: 1rem;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--white);
+}
+.splshScrn-label {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-items: center;
+}
+.splshScrn-title {
+  margin: 1rem;
+  font-size: var(--fs-60px);
+  font-family: var(--hdng-family);
+  font-weight: 700;
+}
+.splshScrn-frame {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+.splshScrn-icon {
+  margin: 1rem;
+  width: 18rem;
+  height: 18rem;
+}
+.splshScrn-icon--check {
+  width: 8rem;
+  height: 8rem;
+  position: absolute;
+  top: 6rem;
+  left: 4rem;
+}
+.splshScrn-animObj {
+  width: 1.5rem;
+  height: 0.5rem;
+  position: absolute;
+  background: var(--mercury);
+  border-radius: 5rem;
+}
+.splshScrn-animObj--one {
+  top: 8rem;
+  left: 5rem;
+  transform: rotate(50deg);
+}
+.splshScrn-animObj--two {
+  top: 8rem;
+  left: 12rem;
+  transform: rotate(-50deg);
+}
+.splshScrn-animObj--three {
+  top: 14rem;
+  left: 5rem;
+  transform: rotate(-50deg);
+}
+.splshScrn-animObj--four {
+  top: 14rem;
+  left: 12rem;
+  transform: rotate(50deg);
 }
 
 .addTaskBtn {
