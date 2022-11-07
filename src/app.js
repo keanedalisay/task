@@ -534,14 +534,15 @@ const App = {
       insertHTML(App.slctr.taskBtnList, taskBtn);
       return;
     });
+    App.render();
     return;
   },
   renderInboxTaskCount(inbox) {
     if (inbox.length === 0) {
       App.slctr.inboxTaskCnt.classList.add("taskCnt-hide");
       App.slctr.inboxDueTaskCnt.classList.add("taskCnt-hide");
+      return;
     }
-
     App.slctr.inboxTaskCnt.classList.remove("taskCnt-hide");
     App.slctr.inboxTaskCnt.textContent = inbox.length;
 
@@ -550,7 +551,6 @@ const App = {
       App.slctr.inboxDueTaskCnt.textContent = getDueTaskCount(inbox);
       return;
     }
-
     App.slctr.inboxDueTaskCnt.classList.add("taskCnt-hide");
 
     return;
@@ -577,6 +577,7 @@ const App = {
         return;
       }
     });
+    App.render();
     return;
   },
   renderTodayTaskCount() {
@@ -587,14 +588,13 @@ const App = {
       });
     });
     tasks = tasks.filter((task) => d.isDateNow(task.tDueDate));
-
     if (tasks.length === 0) {
       App.slctr.todayTaskCnt.classList.add("taskCnt-hide");
+      return;
     }
 
     App.slctr.todayTaskCnt.classList.remove("taskCnt-hide");
     App.slctr.todayTaskCnt.textContent = tasks.length;
-
     return;
   },
   renderUpcomingTasks(inbox, goals) {
@@ -623,7 +623,7 @@ const App = {
         return;
       }
     });
-
+    App.render();
     return;
   },
   renderUpcomingTaskCount() {
@@ -635,14 +635,14 @@ const App = {
     });
     tasks = tasks.filter((task) => {
       if (!task.tDueDate) return false;
-      return d.isPastDue(task.tDueDate) || d.isNotDue(task.tDueDate);
+      else return d.isPastDue(task.tDueDate) || d.isNotDue(task.tDueDate);
     });
 
     if (tasks.length === 0) {
       App.slctr.upcomingTaskCnt.classList.add("taskCnt-hide");
       App.slctr.upcomingDueTaskCnt.classList.add("taskCnt-hide");
+      return;
     }
-
     App.slctr.upcomingTaskCnt.classList.remove("taskCnt-hide");
     App.slctr.upcomingTaskCnt.textContent = tasks.length;
 
@@ -651,9 +651,7 @@ const App = {
       App.slctr.upcomingDueTaskCnt.textContent = getDueTaskCount(tasks);
       return;
     }
-
     App.slctr.upcomingDueTaskCnt.classList.add("taskCnt-hide");
-
     return;
   },
   renderGoalTasks(goal) {
