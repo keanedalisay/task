@@ -11,6 +11,7 @@ const d = new dTemp();
 
 const App = {
   slctr: {
+    introSplshScrn: document.querySelector("[data-app=introSplshScrn]"),
     overlay: document.querySelector("[data-app=overlay]"),
     main: document.querySelector("main"),
     header: document.querySelector("[data-app=header]"),
@@ -797,6 +798,9 @@ const App = {
     App.renderGoalBtns(Todo.goals);
   },
   init() {
+    setTimeout(() => {
+      App.slctr.introSplshScrn.classList.add("elem-hide");
+    }, 7500);
     App.slctr.overlay.addEventListener("click", App.hideModal);
 
     App.slctr.inboxBtn.addEventListener("click", (e) =>
