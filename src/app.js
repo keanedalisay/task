@@ -510,9 +510,9 @@ const App = {
     const month = d.parseMonthInt(App.slctr.monthInput.value);
     const day = parseInt(App.slctr.dayInput.value);
 
-    if (year < 0) return;
-    else if (month === undefined) return;
-    else if (day < 0 || day > 32) return;
+    if (year < 0 || !year) return;
+    else if (!month) return;
+    else if (!day || day < 0 || day > 32) return;
 
     const content = App.slctr.main.dataset.content;
     const goalId = App.slctr.main.dataset.goalid;
