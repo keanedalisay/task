@@ -696,8 +696,8 @@ const App = {
     });
     tasks.sort(d.sortDatesToBefore);
     tasks = tasks.filter((task) => {
-      if (!task.tDueDate) return;
-      d.isPastDue(task.tDueDate) || d.isNotDue(task.tDueDate);
+      if (!task.tDueDate) return false;
+      else return d.isPastDue(task.tDueDate) || d.isNotDue(task.tDueDate);
     });
     if (tasks.length === 0) {
       insertHTML(
