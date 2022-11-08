@@ -129,7 +129,10 @@ const App = {
     const goal = Todo.getGoal(goalId);
 
     if (content === "Today" || content === "Upcoming") return;
+
     Todo.removeAllTasks(content, goalId);
+    App.render();
+
     if (content === "Inbox") App.renderInboxTasks(Todo.inbox);
     else App.renderGoalTasks(goal);
     return;
@@ -141,7 +144,9 @@ const App = {
     const goal = Todo.getGoal(goalId);
 
     if (content === "Today" || content === "Upcoming") return;
+
     Todo.toggleCompleteAllTasks(content, goalId);
+
     if (content === "Inbox") App.renderInboxTasks(Todo.inbox);
     else App.renderGoalTasks(goal);
     return;
@@ -153,7 +158,10 @@ const App = {
     const goal = Todo.getGoal(goalId);
 
     if (content === "Today" || content === "Upcoming") return;
+
     Todo.removeCompletedTasks(content, goalId);
+    App.render();
+
     if (content === "Inbox") App.renderInboxTasks(Todo.inbox);
     else App.renderGoalTasks(goal);
     return;
