@@ -8,6 +8,25 @@
   --dodger-blue: #3bb4ff;
   --sunset-orange: #ff4a4a;
 
+  --main-bkgrd: var(--white);
+  --sec-bkgrd: var(--wild-sand);
+  --scrollbar-bkgrd: var(--mercury);
+
+  --default-text: var(--mineshaft);
+  --default-sec-text: var(--dusty-gray);
+
+  --goal-prog-border: var(--dusty-gray);
+  --goal-prog-intrvl-bkgrd: var(--wild-sand);
+
+  --task-content-text: var(--silver);
+  --task-due-date-text: var(--dusty-gray);
+  --task-checkbox-border: var(--dusty-gray);
+  --task-complete-bkgrd: var(--wild-sand);
+
+  --input-focus-bkgrd: var(--mercury);
+  --input-focus-shadow: 0rem 0rem 0.5rem #3333334f;
+  --button-select: var(--mercury);
+
   --on-hover: #3bb4ff43;
   --on-select: 0rem 0rem 0.5rem #3333334f;
 
@@ -19,6 +38,33 @@
   --fs-16px: 1.6rem;
   --fs-40px: 4rem;
   --fs-60px: 6rem;
+}
+:root[data-dark="true"] {
+  --trout: #4b5263;
+  --comet: #565d6f;
+  --shuttle-gray: #646b7b;
+
+  --main-bkgrd: var(--trout);
+  --sec-bkgrd: var(--comet);
+  --scrollbar-bkgrd: var(--mercury);
+
+  --default-text: var(--wild-sand);
+  --default-sec-text: var(--silver);
+
+  --goal-prog-border: var(--silver);
+  --goal-prog-intrvl-bkgrd: var(--sec-bkgrd);
+
+  --task-content-text: var(--silver);
+  --task-due-date-text: var(--dusty-gray);
+  --task-checkbox-border: var(--silver);
+  --task-complete-bkgrd: var(--shuttle-gray);
+
+  --input-focus-bkgrd: var(--comet);
+  --input-focus-shadow: 0rem 0rem 0.5rem #3333334f;
+  --button-select: var(--shuttle-gray);
+
+  --on-hover: #3bb4ff69;
+  --on-select: 0rem 0rem 0.5rem #3333334f;
 }
 
 *,
@@ -35,16 +81,23 @@ html {
   font-size: 10px;
 }
 body {
+  background: var(--main-bkgrd);
   overflow-x: hidden;
 }
 body::-webkit-scrollbar {
   width: 1rem;
 }
 body::-webkit-scrollbar-thumb {
-  background: var(--mercury);
+  background: var(--scrollbar-bkgrd);
 }
 body::-webkit-scrollbar-thumb:hover {
   background: var(--on-hover);
+}
+input::placeholder {
+  color: var(--default-sec-text);
+}
+input::-moz-placeholder {
+  color: var(--default-sec-text);
 }
 .container {
   display: grid;
@@ -54,7 +107,7 @@ body::-webkit-scrollbar-thumb:hover {
 .navMenu {
   width: min(40vw, 27.5rem);
   height: 100vh;
-  background: var(--wild-sand);
+  background: var(--sec-bkgrd);
   display: flex;
   flex-flow: column nowrap;
   justify-content: flex-start;
@@ -68,7 +121,7 @@ body::-webkit-scrollbar-thumb:hover {
   width: 0.5rem;
 }
 .navMenu::-webkit-scrollbar-thumb {
-  background: var(--mercury);
+  background: var(--scrollbar-bkgrd);
 }
 .navMenu::-webkit-scrollbar-thumb:hover {
   background: var(--on-hover);
@@ -89,7 +142,7 @@ body::-webkit-scrollbar-thumb:hover {
   flex-flow: row nowrap;
   justify-content: space-between;
   align-items: center;
-  color: var(--mineshaft);
+  color: var(--default-text);
 }
 .navBtn:hover,
 .navBtn:focus,
@@ -178,7 +231,7 @@ body::-webkit-scrollbar-thumb:hover {
   font-family: var(--hdng-family);
   font-weight: 700;
   font-size: var(--fs-16px);
-  color: var(--dusty-gray);
+  color: var(--default-sec-text);
 }
 .taskCnt-dueTasks {
   background: var(--mercury);
@@ -209,7 +262,7 @@ body::-webkit-scrollbar-thumb:hover {
   font-family: var(--hdng-family);
   font-weight: 700;
   font-size: var(--fs-16px);
-  color: var(--mineshaft);
+  color: var(--default-text);
 }
 .goalBtn:hover,
 .goalBtn:focus,
@@ -222,10 +275,10 @@ body::-webkit-scrollbar-thumb:hover {
   padding: 0.5rem 0rem;
   font-family: var(--hdng-family);
   font-size: var(--fs-16px);
-  color: var(--mineshaft);
+  color: var(--default-text);
 }
 .goalBtn-input:focus {
-  background: var(--mercury);
+  background: var(--input-focus-bkgrd);
   outline: none;
 }
 .goalBtn-label {
@@ -239,7 +292,7 @@ body::-webkit-scrollbar-thumb:hover {
   width: 2rem;
   height: 2rem;
   background: var(--dodger-blue);
-  border: 0.25rem solid var(--dusty-gray);
+  border: 0.25rem solid var(--goal-prog-border);
   border-radius: 2rem;
   display: flex;
   justify-content: center;
@@ -249,7 +302,7 @@ body::-webkit-scrollbar-thumb:hover {
 .goalProgressBar-interval {
   width: 1.4rem;
   height: 1.4rem;
-  background: var(--wild-sand);
+  background: var(--goal-prog-intrvl-bkgrd);
   border-radius: 2rem;
 }
 
@@ -257,7 +310,7 @@ main {
   padding: 1rem;
   width: min(60vw, 85rem);
   min-height: 100vh;
-  background: var(--white);
+  background: var(--main-bkgrd);
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
@@ -273,7 +326,7 @@ main {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: var(--white);
+  background: var(--main-bkgrd);
   animation: fade-out 5s ease-in-out 3.5s;
 }
 .splshScrn-label {
@@ -288,6 +341,7 @@ main {
   font-size: var(--fs-60px);
   font-family: var(--hdng-family);
   font-weight: 700;
+  color: var(--default-text);
 }
 .splshScrn-frame {
   display: flex;
@@ -367,7 +421,7 @@ main {
   right: 0;
   bottom: 0;
   left: 0;
-  background: var(--wild-sand);
+  background: var(--sec-bkgrd);
   opacity: 50%;
   transition: opacity 275ms ease-in-out;
 }
@@ -379,7 +433,7 @@ main {
   position: fixed;
   top: 50%;
   left: 50%;
-  background: var(--white);
+  background: var(--main-bkgrd);
   border-radius: 1rem;
   box-shadow: var(--on-select);
   opacity: 1;
@@ -415,7 +469,7 @@ main {
   margin: 0.5rem 0rem;
   font-family: var(--hdng-family);
   font-size: var(--fs-16px);
-  color: var(--mineshaft);
+  color: var(--default-text);
 }
 .dateInput-month > input,
 .dateInput-day > input,
@@ -426,7 +480,7 @@ main {
   font-family: var(--bdy-text-family);
   font-size: var(--fs-16px);
   text-align: center;
-  color: var(--mineshaft);
+  color: var(--default-text);
 }
 .dateInput-month > input,
 .dateInput-year > input {
@@ -438,7 +492,7 @@ main {
 .dateInput-month > input:focus,
 .dateInput-day > input:focus,
 .dateInput-year > input:focus {
-  box-shadow: var(--on-select);
+  box-shadow: var(--input-focus-shadow);
   outline: none;
 }
 .dateBtnList,
@@ -471,7 +525,7 @@ main {
   font-family: var(--bdy-text-family);
   font-weight: 400;
   font-size: var(--fs-14px);
-  color: var(--dusty-gray);
+  color: var(--default-sec-text);
 }
 
 .modal--deleteGoal > span {
@@ -480,7 +534,7 @@ main {
   font-family: var(--hdng-family);
   font-size: var(--fs-16px);
   text-align: center;
-  color: var(--mineshaft);
+  color: var(--default-text);
 }
 .deleteCnfrmBtnList {
   margin: 1rem 0 1rem 0;
@@ -502,7 +556,7 @@ main {
   width: 0.5rem;
 }
 .header::-webkit-scrollbar-thumb {
-  background: var(--mercury);
+  background: var(--scrollbar-bkgrd);
 }
 .header::-webkit-scrollbar-thumb:hover {
   background: var(--on-hover);
@@ -533,7 +587,7 @@ main {
   max-width: 58rem;
   font-family: var(--hdng-family);
   font-size: var(--fs-40px);
-  color: var(--mineshaft);
+  color: var(--default-text);
 }
 .header-textInput {
   padding: 0.5rem 0rem;
@@ -544,10 +598,10 @@ main {
   width: min(100%, 62rem);
   font-family: var(--bdy-text-family);
   font-size: var(--fs-16px);
-  color: var(--mineshaft);
+  color: var(--default-text);
 }
 .header-textInput:focus {
-  box-shadow: var(--on-select);
+  box-shadow: var(--input-focus-shadow);
   outline: none;
 }
 .header-note {
@@ -616,6 +670,14 @@ main {
 .headerBtn:active {
   background: var(--on-hover);
 }
+.headerBtn--settingsBtn:hover,
+.headerBtn--settingsBtn:focus,
+.headerBtn--settingsBtn:active,
+.headerBtn--closeMainBtn:hover,
+.headerBtn--closeMainBtn:focus,
+.headerBtn--closeMainBtn:active {
+  background: var(--silver);
+}
 .headerBtn-label {
   width: 7rem;
   display: flex;
@@ -632,7 +694,7 @@ main {
   font-family: var(--bdy-text-family);
   font-size: var(--fs-12px);
   font-weight: normal;
-  color: var(--dusty-gray);
+  color: var(--default-sec-text);
 }
 
 .taskList {
@@ -660,7 +722,7 @@ main {
   width: 0.5rem;
 }
 .task::-webkit-scrollbar-thumb {
-  background: var(--mercury);
+  background: var(--scrollbar-bkgrd);
 }
 .task::-webkit-scrollbar-thumb:hover {
   background: var(--on-hover);
@@ -681,7 +743,7 @@ main {
 .checkbox-icon {
   width: 2.5rem;
   height: 2.5rem;
-  border: 0.4rem solid var(--dusty-gray);
+  border: 0.4rem solid var(--task-checkbox-border);
   border-radius: 0.8rem;
   pointer-events: none;
 }
@@ -695,7 +757,7 @@ main {
   align-items: center;
   font-family: var(--hdng-family);
   font-size: var(--fs-12px);
-  color: var(--dusty-gray);
+  color: var(--task-due-date-text);
   white-space: nowrap;
 }
 .task-today,
@@ -727,18 +789,20 @@ main {
   height: 4rem;
   font-family: var(--bdy-text-family);
   font-size: var(--fs-16px);
+  color: var(--default-text);
 }
 .task-name {
   height: 2rem;
   font-family: var(--bdy-text-family);
   font-size: var(--fs-16px);
   white-space: nowrap;
+  color: var(--default-text);
 }
 .task-content {
   font-family: var(--bdy-text-family);
   font-weight: 700;
   font-size: var(--fs-12px);
-  color: var(--silver);
+  color: var(--task-content-text);
   white-space: nowrap;
 }
 .task-note {
@@ -747,11 +811,11 @@ main {
   align-items: center;
 }
 .task-nameInput:focus {
-  background: var(--mercury);
+  background: var(--input-focus-bkgrd);
   outline: none;
 }
 .task-textInput:focus {
-  box-shadow: var(--on-select);
+  box-shadow: var(--input-focus-shadow);
   outline: none;
 }
 .task-textInput,
@@ -760,7 +824,7 @@ main {
   width: 90%;
   font-family: var(--bdy-text-family);
   font-size: var(--fs-14px);
-  color: var(--dusty-gray);
+  color: var(--default-text);
 }
 .task-btnFrame {
   display: flex;
@@ -794,7 +858,7 @@ main {
   font-family: var(--bdy-text-family);
   font-size: var(--fs-12px);
   font-weight: normal;
-  color: var(--dusty-gray);
+  color: var(--default-sec-text);
 }
 
 @media screen and (max-width: 700px) {
@@ -804,7 +868,7 @@ main {
 
   .navMenu {
     width: 100%;
-    background: var(--white);
+    background: var(--main-bkgrd);
   }
 
   main {
@@ -865,12 +929,12 @@ main {
 
 .header-collapse {
   height: 12rem;
-  box-shadow: 0rem 0rem 0rem var(--white);
+  box-shadow: 0rem 0rem 0rem var(--main-bkgrd);
   overflow: hidden;
 }
 .task-collapse {
   height: 5rem;
-  box-shadow: 0rem 0rem 0rem var(--white);
+  box-shadow: none;
   overflow: hidden;
 }
 
@@ -880,7 +944,7 @@ main {
 }
 
 .task-complete {
-  background: var(--wild-sand);
+  background: var(--task-complete-bkgrd);
 }
 .checkbox.check > .checkbox-icon {
   background: var(--dodger-blue);
@@ -889,7 +953,7 @@ main {
 }
 
 .button-select {
-  background: var(--mercury);
+  background: var(--button-select);
 }
 
 @keyframes fade-in {
