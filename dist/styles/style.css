@@ -335,14 +335,14 @@ main {
   justify-content: center;
   align-items: center;
   background: var(--main-bkgrd);
-  animation: fade-out 5s ease-in-out 3.5s;
+  animation: fade-out 2s ease-in-out 2.5s;
 }
 .splshScrn-label {
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
   align-items: center;
-  animation: fade-in 2.5s ease-in-out;
+  animation: fade-in 1.5s ease-in-out;
 }
 .splshScrn-title {
   margin: 1rem;
@@ -368,7 +368,7 @@ main {
   position: absolute;
   top: 6rem;
   left: 4rem;
-  animation: popupCheck 3s ease-in-out;
+  animation: popupCheck 1.7s ease-in-out;
 }
 .splshScrn-animObj {
   width: 1.5rem;
@@ -377,7 +377,7 @@ main {
   background: var(--mercury);
   border-radius: 5rem;
   opacity: 0;
-  animation: popupObj 3.5s ease-in-out;
+  animation: popupObj 2s ease-in-out;
 }
 .splshScrn-animObj--one {
   top: 8rem;

@@ -883,7 +883,7 @@ const App = {
   init() {
     setTimeout(() => {
       App.slctr.introSplshScrn.classList.add("elem-hide");
-    }, 7500);
+    }, 4200);
 
     App.slctr.overlay.addEventListener("click", App.hideModal);
 
