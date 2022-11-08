@@ -63,7 +63,7 @@
   --task-checkbox-border: var(--silver);
   --task-complete-bkgrd: var(--shuttle-gray);
 
-  --input-focus-bkgrd: var(--comet);
+  --input-focus-bkgrd: var(--shuttle-gray);
   --input-focus-shadow: 0rem 0rem 0.5rem #3333334f;
   --button-select: var(--shuttle-gray);
 
