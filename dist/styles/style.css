@@ -33,6 +33,9 @@
   --hdng-family: "SF Pro Display", "SF Pro Text", Helvetica, sans-serif;
   --bdy-text-family: "SF Pro Text", Helvetica, sans-serif;
 
+  --fwght-400: 400;
+  --fwght-700: 700;
+
   --fs-12px: 1.2rem;
   --fs-14px: 1.4rem;
   --fs-16px: 1.6rem;
@@ -65,6 +68,9 @@
 
   --on-hover: #3bb4ff69;
   --on-select: 0rem 0rem 0.5rem #3333334f;
+
+  --fwght-400: 350;
+  --fwght-700: 650;
 }
 
 *,
@@ -165,7 +171,7 @@ input::-moz-placeholder {
 .navBtn-text,
 .accrdBtn-text {
   font-family: var(--hdng-family);
-  font-weight: 700;
+  font-weight: var(--fwght-700);
   font-size: var(--fs-16px);
 }
 .navBtn-label--upcoming {
@@ -586,6 +592,7 @@ main {
   margin: 0 0.5rem;
   max-width: 58rem;
   font-family: var(--hdng-family);
+  font-weight: var(--fwght-700);
   font-size: var(--fs-40px);
   color: var(--default-text);
 }
@@ -800,7 +807,7 @@ main {
 }
 .task-content {
   font-family: var(--bdy-text-family);
-  font-weight: 700;
+  font-weight: var(--fwght-700);
   font-size: var(--fs-12px);
   color: var(--task-content-text);
   white-space: nowrap;
