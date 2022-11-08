@@ -143,10 +143,10 @@ const App = {
   showDeleteGoalModal() {
     App.showOverlay();
     App.slctr.deleteGoalModal.classList.toggle("elem-hide");
-    setTimeout(
-      () => App.slctr.deleteGoalModal.classList.toggle("modal-fade"),
-      1
-    );
+    setTimeout(() => {
+      App.slctr.deleteGoalModal.classList.toggle("modal-fade");
+      App.slctr.deleteGoalYesBtn.focus();
+    }, 1);
     return;
   },
   hideDeleteGoalModal() {
@@ -459,7 +459,10 @@ const App = {
     App.slctr.dateModal.dataset.taskid = task.id;
     App.showOverlay();
     App.slctr.dateModal.classList.toggle("elem-hide");
-    setTimeout(() => App.slctr.dateModal.classList.toggle("modal-fade"), 1);
+    setTimeout(() => {
+      App.slctr.dateModal.classList.toggle("modal-fade");
+      App.slctr.monthInput.focus();
+    }, 1);
     return;
   },
   hideDateModal() {
