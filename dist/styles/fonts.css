@@ -3,6 +3,15 @@
 @font-face {
   font-family: "SF Pro Display";
   font-style: normal;
+  font-weight: 600;
+  src: local(""), url("../fonts/sf-pro-display/SF-Pro-Display-Medium.otf"),
+    url("../fonts/sf-pro-display/SF-Pro-Display-Medium.woff"),
+    url("../fonts/sf-pro-display/SF-Pro-Display-Medium.ttf");
+}
+
+@font-face {
+  font-family: "SF Pro Display";
+  font-style: normal;
   font-weight: 700;
   src: url("../fonts/sf-pro-display/SF-Pro-Display-Bold.eot");
   src: local(""), url("../fonts/sf-pro-display/SF-Pro-Display-Bold.eot?#iefix"),
