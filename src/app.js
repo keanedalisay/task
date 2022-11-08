@@ -13,6 +13,7 @@ const App = {
   slctr: {
     introSplshScrn: document.querySelector("[data-app=introSplshScrn]"),
     overlay: document.querySelector("[data-app=overlay]"),
+    html: document.querySelector("html"),
     main: document.querySelector("main"),
     header: document.querySelector("[data-app=header]"),
 
@@ -92,12 +93,18 @@ const App = {
   },
 
   toggleLightMode() {
-    const html = document.querySelector("html");
-    html.dataset.dark = "false";
+    App.slctr.html.dataset.dark = "false";
+    const accrdArrow = document.querySelectorAll("[data-app=accrdArrow]");
+    accrdArrow.forEach((arrow) =>
+      arrow.setAttribute("data", "../src/icons/arrowIcon.svg")
+    );
   },
   toggleDarkMode() {
-    const html = document.querySelector("html");
-    html.dataset.dark = "true";
+    App.slctr.html.dataset.dark = "true";
+    const accrdArrow = document.querySelectorAll("[data-app=accrdArrow]");
+    accrdArrow.forEach((arrow) =>
+      arrow.setAttribute("data", "../src/icons/arrowIcon-dark.svg")
+    );
   },
 
   toggleHeaderSettings(e) {
