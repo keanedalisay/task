@@ -32,6 +32,8 @@ const App = {
     accrdSettingsBtns: document.querySelectorAll(
       "[data-app=accrdSettings] > .accrdBtn"
     ),
+    lightModeBtn: document.querySelector("[data-app=lightModeBtn]"),
+    darkModeBtn: document.querySelector("[data-app=darkModeBtn]"),
 
     newBtn: document.querySelector("[data-app=newBtn]"),
     accrdNew: document.querySelector("[data-app=accrdNew]"),
@@ -87,6 +89,15 @@ const App = {
     document.body.classList.toggle("body-showScroll");
     document.querySelector(".addTaskBtn").classList.toggle("addTaskBtn-show");
     App.slctr.main.classList.toggle("main-slideRight");
+  },
+
+  toggleLightMode() {
+    const html = document.querySelector("html");
+    html.dataset.dark = "false";
+  },
+  toggleDarkMode() {
+    const html = document.querySelector("html");
+    html.dataset.dark = "true";
   },
 
   toggleHeaderSettings(e) {
@@ -837,6 +848,9 @@ const App = {
       App.toggleAccrd(e, App.slctr.accrdSettings);
       setTabIndex(App.slctr.accrdSettingsBtns);
     });
+    App.slctr.lightModeBtn.addEventListener("click", App.toggleLightMode);
+    App.slctr.darkModeBtn.addEventListener("click", App.toggleDarkMode);
+
     App.slctr.newBtn.addEventListener("click", (e) => {
       App.toggleAccrd(e, App.slctr.accrdNew);
       setTabIndex(App.slctr.accrdNewBtns);
