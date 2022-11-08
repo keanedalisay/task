@@ -2,6 +2,7 @@ import { delegateEvent, insertHTML } from "./helpers.js";
 import { setTabIndex, goalBtnHTML, taskBtnHTML } from "./helpers.js";
 import { upperHeaderHTML, headerInfoHTML, lowerHeaderHTML } from "./helpers.js";
 import { getDueTaskCount } from "./helpers.js";
+import { noTaskHTML } from "./helpers.js";
 
 import { TodoTemp } from "./todo.js";
 import { dTemp } from "./date.js";
@@ -346,11 +347,14 @@ const App = {
   createTaskBtn() {
     const content = App.slctr.main.dataset.content;
     const goalId = App.slctr.main.dataset.goalid;
+    const noTask = document.querySelector("[data-app=noTask]");
 
     if (content === "Today" || content === "Upcoming") return;
 
     const taskId = TodoTemp.gnrtTaskId();
     const taskBtn = taskBtnHTML(taskId, "", "", "");
+
+    if (noTask) noTask.remove();
     insertHTML(App.slctr.taskBtnList, taskBtn);
 
     Todo.createTask({ name: "", id: taskId }, content, goalId);
@@ -524,6 +528,7 @@ const App = {
   },
 
   removeTask(e) {
+    const taskBtnList = App.slctr.taskBtnList;
     const taskBtn = e.target.closest("[data-app=task]");
     const content = App.slctr.main.dataset.content;
     const goalId = App.slctr.main.dataset.goalid;
@@ -531,6 +536,15 @@ const App = {
 
     Todo.removeTask(taskBtn.id, content, goalId);
     taskBtn.remove();
+
+    if (taskBtnList.children.length === 0) {
+      insertHTML(
+        taskBtnList,
+        noTaskHTML(
+          "You have no tasks at your disposal. Are you inclined to add one?"
+        )
+      );
+    }
 
     App.render();
     return;
@@ -553,7 +567,15 @@ const App = {
   },
   renderGoalTasks(goal) {
     App.slctr.taskBtnList.innerHTML = "";
-    if (goal.tasks.length === 0) return;
+    if (goal.tasks.length === 0) {
+      insertHTML(
+        App.slctr.taskBtnList,
+        noTaskHTML(
+          "Want to reach your goal? Add tasks now and you'll reach it in no time."
+        )
+      );
+      return;
+    }
     goal.tasks.sort(d.sortDatesToBefore);
     goal.tasks.forEach((task) => {
       const taskBtn = taskBtnHTML(
@@ -571,7 +593,15 @@ const App = {
 
   renderInboxTasks(inbox) {
     App.slctr.taskBtnList.innerHTML = "";
-    if (inbox.length === 0) return;
+    if (inbox.length === 0) {
+      insertHTML(
+        App.slctr.taskBtnList,
+        noTaskHTML(
+          "Nothing on your inbox. Better start adding tasks for you to do!"
+        )
+      );
+      return;
+    }
     inbox.sort(d.sortDatesToBefore);
     inbox.forEach((task) => {
       const taskBtn = taskBtnHTML(
@@ -608,25 +638,32 @@ const App = {
 
   renderTodayTasks(inbox, goals) {
     App.slctr.taskBtnList.innerHTML = "";
-    const tasks = [...inbox];
+    let tasks = [...inbox];
     goals.forEach((goal) => {
       goal.tasks.forEach((task) => {
         tasks.push(task);
       });
     });
+    tasks = tasks.filter((task) => d.isDateNow(task.tDueDate));
+    if (tasks.length === 0) {
+      insertHTML(
+        App.slctr.taskBtnList,
+        noTaskHTML("No tasks for you today. Horray!")
+      );
+      return;
+    }
+
     tasks.forEach((task) => {
-      if (d.isDateNow(task.tDueDate)) {
-        const taskBtn = taskBtnHTML(
-          task.tId,
-          task.tName,
-          task.tNote,
-          task.tDueDate,
-          task.completed,
-          task.content
-        );
-        insertHTML(App.slctr.taskBtnList, taskBtn);
-        return;
-      }
+      const taskBtn = taskBtnHTML(
+        task.tId,
+        task.tName,
+        task.tNote,
+        task.tDueDate,
+        task.completed,
+        task.content
+      );
+      insertHTML(App.slctr.taskBtnList, taskBtn);
+      return;
     });
     App.render();
     return;
@@ -651,29 +688,38 @@ const App = {
 
   renderUpcomingTasks(inbox, goals) {
     App.slctr.taskBtnList.innerHTML = "";
-    const tasks = [...inbox];
+    let tasks = [...inbox];
     goals.forEach((goal) => {
       goal.tasks.forEach((task) => {
         tasks.push(task);
       });
     });
-
     tasks.sort(d.sortDatesToBefore);
+    tasks = tasks.filter((task) => {
+      if (!task.tDueDate) return;
+      d.isPastDue(task.tDueDate) || d.isNotDue(task.tDueDate);
+    });
+    if (tasks.length === 0) {
+      insertHTML(
+        App.slctr.taskBtnList,
+        noTaskHTML(
+          "You have no upcoming tasks. Is that a good thing or a bad one?"
+        )
+      );
+      return;
+    }
 
     tasks.forEach((task) => {
-      if (!task.tDueDate) return;
-      if (d.isPastDue(task.tDueDate) || d.isNotDue(task.tDueDate)) {
-        const taskBtn = taskBtnHTML(
-          task.tId,
-          task.tName,
-          task.tNote,
-          task.tDueDate,
-          task.completed,
-          task.content
-        );
-        insertHTML(App.slctr.taskBtnList, taskBtn);
-        return;
-      }
+      const taskBtn = taskBtnHTML(
+        task.tId,
+        task.tName,
+        task.tNote,
+        task.tDueDate,
+        task.completed,
+        task.content
+      );
+      insertHTML(App.slctr.taskBtnList, taskBtn);
+      return;
     });
     App.render();
     return;

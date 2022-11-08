@@ -39,6 +39,7 @@
   --fs-12px: 1.2rem;
   --fs-14px: 1.4rem;
   --fs-16px: 1.6rem;
+  --fs-25px: 2.5rem;
   --fs-40px: 4rem;
   --fs-60px: 6rem;
 }
@@ -712,6 +713,32 @@ main {
   flex-flow: column nowrap;
   align-items: center;
 }
+
+.noTask {
+  width: 100%;
+  height: 30rem;
+  background: var(--sec-bkgrd);
+  border-radius: 2rem;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-items: center;
+}
+.noTask-img {
+  margin: 0.5rem;
+  width: 15rem;
+  height: 15rem;
+}
+.noTask-text {
+  margin: 0.5rem;
+  padding: 1rem;
+  font-family: var(--hdng-family);
+  font-size: var(--fs-25px);
+  font-weight: var(--fwght-700);
+  color: var(--default-text);
+  text-align: center;
+}
+
 .task {
   margin: 0.5rem 0;
   width: 100%;

@@ -209,3 +209,13 @@ export function lowerHeaderHTML(content) {
 </div>`;
   return headerBtnList;
 }
+
+export function noTaskHTML(noTaskText) {
+  const noTask = `<div class="noTask" data-app="noTask">
+  <img class="noTask-img" src="../src/icons/taskIcon.png" alt="Task app logo">
+  <span class="noTask-text">${
+    noTaskText ? noTaskText : "Whoops... looks like an error occured."
+  }</span>
+</div>`;
+  return noTask;
+}
