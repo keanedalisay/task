@@ -50,7 +50,7 @@
 
   --main-bkgrd: var(--trout);
   --sec-bkgrd: var(--comet);
-  --scrollbar-bkgrd: var(--mercury);
+  --scrollbar-bkgrd: var(--silver);
 
   --default-text: var(--wild-sand);
   --default-sec-text: var(--silver);
@@ -93,6 +93,7 @@ body {
 }
 body::-webkit-scrollbar {
   width: 1rem;
+  background: var(--main-bkgrd);
 }
 body::-webkit-scrollbar-thumb {
   background: var(--scrollbar-bkgrd);
