@@ -54,6 +54,7 @@ const App = {
     deleteGoalYesBtn: document.querySelector("[data-app=deleteGoalYesBtn]"),
     deleteGoalNoBtn: document.querySelector("[data-app=deleteGoalNoBtn]"),
   },
+
   showOverlay() {
     App.slctr.overlay.classList.toggle("elem-hide");
     setTimeout(() => App.slctr.overlay.classList.toggle("overlay-fade"), 1);
@@ -73,6 +74,7 @@ const App = {
     });
     return;
   },
+
   toggleAccrd(e, elem) {
     if (e.target) {
       elem.classList.toggle("accrd-collapse");
@@ -86,6 +88,7 @@ const App = {
     document.querySelector(".addTaskBtn").classList.toggle("addTaskBtn-show");
     App.slctr.main.classList.toggle("main-slideRight");
   },
+
   toggleHeaderSettings(e) {
     const leftHeaderBtns = document.querySelectorAll(
       "[data-app=leftHeaderBtnFrame] > .headerBtn"
@@ -136,6 +139,7 @@ const App = {
     else App.renderGoalTasks(goal);
     return;
   },
+
   showDeleteGoalModal() {
     App.showOverlay();
     App.slctr.deleteGoalModal.classList.toggle("elem-hide");
@@ -155,6 +159,7 @@ const App = {
     );
     return;
   },
+
   createHeaderContent(content, goalTitle, goalText) {
     App.slctr.header.classList.add("header-collapse");
     App.slctr.header.innerHTML = "";
@@ -190,6 +195,7 @@ const App = {
     insertHTML(App.slctr.header, lowerHeaderHTML(content));
     return;
   },
+
   renderContent(content) {
     content === "Inbox"
       ? App.slctr.inboxBtn.classList.add("button-select")
@@ -207,8 +213,8 @@ const App = {
     App.slctr.main.dataset.content = content;
     App.createHeaderContent(content);
 
-    const vwWidth = document.documentElement.clientWidth;
-    if (vwWidth < 700) App.toggleMain();
+    const vw = document.documentElement.clientWidth;
+    if (vw < 700) App.toggleMain();
 
     App.slctr.taskBtnList.innerHTML = "";
 
@@ -238,13 +244,14 @@ const App = {
     const goal = Todo.getGoal(goalBtn.id);
     App.createHeaderContent("Goal", goal.gName, goal.gNote);
 
-    const vwWidth = document.documentElement.clientWidth;
-    if (vwWidth < 700) App.toggleMain();
+    const vw = document.documentElement.clientWidth;
+    if (vw < 700) App.toggleMain();
 
     App.slctr.taskBtnList.innerHTML = "";
     App.renderGoalTasks(goal);
     return;
   },
+
   createGoalBtn() {
     const goalId = TodoTemp.gnrtGoalId();
     let goalBtn = goalBtnHTML(goalId, "");
@@ -299,7 +306,7 @@ const App = {
 
     App.hideDeleteGoalModal();
   },
-  moveProgressBar(goalId) {
+  moveGoalProgBar(goalId) {
     if (!goalId) return;
     const goalBtn = document.getElementById(goalId);
     const goalProgIntrvl = goalBtn.querySelector(
@@ -317,23 +324,7 @@ const App = {
     goalProgIntrvl.style.marginRight = `${percntToMove}%`;
     return;
   },
-  toggleTaskSettings(e) {
-    const content = App.slctr.main.dataset.content;
-    if (content === "Today" || content === "Upcoming") return;
 
-    if (e.which === 1 || e.key === "Enter" || e.key === " ") {
-      const task = e.target.closest("[data-app=task]");
-      const taskNoteInput = task.querySelector("[data-app=taskTextInput]");
-      const taskBtns = task.querySelectorAll(
-        "[data-app=taskBtnFrame] > .taskBtn"
-      );
-
-      task.classList.toggle("task-collapse");
-      setTabIndex(taskNoteInput);
-      setTabIndex(taskBtns);
-      return;
-    }
-  },
   createTaskBtn() {
     const content = App.slctr.main.dataset.content;
     const goalId = App.slctr.main.dataset.goalid;
@@ -356,12 +347,12 @@ const App = {
     const content = App.slctr.main.dataset.content;
     const goalId = App.slctr.main.dataset.goalid;
 
+    if (content === "Today" || content === "Upcoming") return;
+
     let origTask =
       content === "Inbox"
         ? Todo.getInboxTask(taskBtn.id)
         : Todo.getGoalTask(goalId, taskBtn.id);
-
-    if (content === "Today" || content === "Upcoming") return;
 
     if (e.which === 1 || e.key === "Enter" || e.key === " ") {
       let status = parseInt(checkboxIcon.dataset.status) ? false : true;
@@ -374,7 +365,7 @@ const App = {
         goalId
       );
 
-      App.moveProgressBar(goalId);
+      App.moveGoalProgBar(goalId);
 
       content === "Inbox"
         ? App.renderInboxTasks(Todo.inbox)
@@ -412,6 +403,24 @@ const App = {
       return;
     }
   },
+
+  toggleTaskSettings(e) {
+    const content = App.slctr.main.dataset.content;
+    if (content === "Today" || content === "Upcoming") return;
+
+    if (e.which === 1 || e.key === "Enter" || e.key === " ") {
+      const task = e.target.closest("[data-app=task]");
+      const taskNoteInput = task.querySelector("[data-app=taskTextInput]");
+      const taskBtns = task.querySelectorAll(
+        "[data-app=taskBtnFrame] > .taskBtn"
+      );
+
+      task.classList.toggle("task-collapse");
+      setTabIndex(taskNoteInput);
+      setTabIndex(taskBtns);
+      return;
+    }
+  },
   saveTaskNote(e) {
     const taskBtn = e.target.closest("[data-app=task]");
     const taskNoteInput = taskBtn.querySelector("[data-app=taskTextInput]");
@@ -441,6 +450,7 @@ const App = {
       return;
     }
   },
+
   showDateModal(e) {
     const content = App.slctr.main.dataset.content;
     if (content === "Today" || content === "Upcoming") return;
@@ -491,6 +501,7 @@ const App = {
     App.render();
     return;
   },
+
   removeTask(e) {
     const taskBtn = e.target.closest("[data-app=task]");
     const content = App.slctr.main.dataset.content;
@@ -510,7 +521,7 @@ const App = {
     goals.forEach((goal) => {
       const goalBtn = goalBtnHTML(goal.gId, goal.gName);
       insertHTML(App.slctr.goalBtnList, goalBtn);
-      App.moveProgressBar(goal.gId);
+      App.moveGoalProgBar(goal.gId);
     });
     document
       .querySelectorAll(".goalBtn")
@@ -519,6 +530,24 @@ const App = {
       );
     return;
   },
+  renderGoalTasks(goal) {
+    App.slctr.taskBtnList.innerHTML = "";
+    if (goal.tasks.length === 0) return;
+    goal.tasks.sort(d.sortDatesToBefore);
+    goal.tasks.forEach((task) => {
+      const taskBtn = taskBtnHTML(
+        task.tId,
+        task.tName,
+        task.tNote,
+        task.tDueDate,
+        task.completed
+      );
+      insertHTML(App.slctr.taskBtnList, taskBtn);
+      return;
+    });
+    return;
+  },
+
   renderInboxTasks(inbox) {
     App.slctr.taskBtnList.innerHTML = "";
     if (inbox.length === 0) return;
@@ -555,6 +584,7 @@ const App = {
 
     return;
   },
+
   renderTodayTasks(inbox, goals) {
     App.slctr.taskBtnList.innerHTML = "";
     const tasks = [...inbox];
@@ -597,6 +627,7 @@ const App = {
     App.slctr.todayTaskCnt.textContent = tasks.length;
     return;
   },
+
   renderUpcomingTasks(inbox, goals) {
     App.slctr.taskBtnList.innerHTML = "";
     const tasks = [...inbox];
@@ -654,23 +685,7 @@ const App = {
     App.slctr.upcomingDueTaskCnt.classList.add("taskCnt-hide");
     return;
   },
-  renderGoalTasks(goal) {
-    App.slctr.taskBtnList.innerHTML = "";
-    if (goal.tasks.length === 0) return;
-    goal.tasks.sort(d.sortDatesToBefore);
-    goal.tasks.forEach((task) => {
-      const taskBtn = taskBtnHTML(
-        task.tId,
-        task.tName,
-        task.tNote,
-        task.tDueDate,
-        task.completed
-      );
-      insertHTML(App.slctr.taskBtnList, taskBtn);
-      return;
-    });
-    return;
-  },
+
   bindHeaderEvents() {
     delegateEvent(
       App.slctr.header,
@@ -678,6 +693,7 @@ const App = {
       "[data-app=closeMainBtn]",
       App.toggleMain
     );
+
     delegateEvent(
       App.slctr.header,
       "click",
@@ -690,12 +706,14 @@ const App = {
       "[data-app=headerSettingsBtn]",
       App.toggleHeaderSettings
     );
+
     delegateEvent(
       App.slctr.header,
       "keyup",
       "[data-app=headerTextInput]",
       App.saveGoalNote
     );
+
     delegateEvent(
       App.slctr.header,
       "click",
@@ -714,6 +732,7 @@ const App = {
       "[data-app=clrCmpltdTasksBtn]",
       App.clearCompletedTasks
     );
+
     delegateEvent(
       App.slctr.header,
       "click",
@@ -721,6 +740,7 @@ const App = {
       App.showDeleteGoalModal
     );
   },
+
   bindTaskEvents() {
     delegateEvent(
       App.slctr.taskBtnList,
@@ -752,6 +772,7 @@ const App = {
       "[data-app=taskContent]",
       App.toggleTaskSettings
     );
+
     delegateEvent(
       App.slctr.taskBtnList,
       "click",
@@ -764,6 +785,7 @@ const App = {
       "[data-app=taskCheckbox]",
       App.toggleCheckTask
     );
+
     delegateEvent(
       App.slctr.taskBtnList,
       "keyup",
@@ -782,6 +804,7 @@ const App = {
       "[data-app=trashTaskBtn]",
       App.removeTask
     );
+
     delegateEvent(
       App.slctr.taskBtnList,
       "click",
@@ -789,16 +812,12 @@ const App = {
       App.showDateModal
     );
   },
-  render() {
-    App.renderInboxTaskCount(Todo.inbox);
-    App.renderTodayTaskCount();
-    App.renderUpcomingTaskCount();
-    App.renderGoalBtns(Todo.goals);
-  },
+
   init() {
     setTimeout(() => {
       App.slctr.introSplshScrn.classList.add("elem-hide");
     }, 7500);
+
     App.slctr.overlay.addEventListener("click", App.hideModal);
 
     App.slctr.inboxBtn.addEventListener("click", (e) =>
@@ -837,6 +856,13 @@ const App = {
     App.bindHeaderEvents();
     App.bindTaskEvents();
     App.render();
+  },
+
+  render() {
+    App.renderInboxTaskCount(Todo.inbox);
+    App.renderTodayTaskCount();
+    App.renderUpcomingTaskCount();
+    App.renderGoalBtns(Todo.goals);
   },
 };
 
