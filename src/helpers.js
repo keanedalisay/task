@@ -219,3 +219,25 @@ export function noTaskHTML(noTaskText) {
 </div>`;
   return noTask;
 }
+
+export class LastVisitTemp {
+  constructor() {
+    this.data = this._read();
+    this.propExists = (prop) => this.data.hasOwnProperty(prop);
+  }
+
+  getData(prop) {
+    return this.data[`${prop}`];
+  }
+  updateData(prop, value) {
+    this.data[`${prop}`] = value;
+    this._save();
+  }
+
+  _read() {
+    return JSON.parse(localStorage.getItem("data") || "{}");
+  }
+  _save() {
+    localStorage.setItem("data", JSON.stringify(this.data));
+  }
+}

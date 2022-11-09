@@ -5,9 +5,11 @@ import { getDueTaskCount } from "./helpers.js";
 import { noTaskHTML } from "./helpers.js";
 
 import { TodoTemp } from "./todo.js";
+import { LastVisitTemp } from "./helpers.js";
 import { dTemp } from "./date.js";
 
 const Todo = new TodoTemp();
+const LastVisit = new LastVisitTemp();
 const d = new dTemp();
 
 const App = {
@@ -99,6 +101,9 @@ const App = {
     accrdArrow.forEach((arrow) =>
       arrow.setAttribute("data", "../src/icons/arrowIcon.svg")
     );
+
+    LastVisit.updateData("isDark", false);
+    return;
   },
   toggleDarkMode() {
     App.slctr.html.dataset.dark = "true";
@@ -106,6 +111,9 @@ const App = {
     accrdArrow.forEach((arrow) =>
       arrow.setAttribute("data", "../src/icons/arrowIcon-dark.svg")
     );
+
+    LastVisit.updateData("isDark", true);
+    return;
   },
 
   toggleHeaderSettings(e) {
@@ -250,6 +258,8 @@ const App = {
     else if (content === "Upcoming")
       App.renderUpcomingTasks(Todo.inbox, Todo.goals);
 
+    LastVisit.updateData("content", content);
+    LastVisit.updateData("goalId", "");
     return;
   },
   renderGoalContent(e) {
@@ -276,6 +286,10 @@ const App = {
 
     App.slctr.taskBtnList.innerHTML = "";
     App.renderGoalTasks(goal);
+
+    LastVisit.updateData("content", "Goal");
+    LastVisit.updateData("goalId", goal.gId);
+
     return;
   },
 
@@ -622,7 +636,7 @@ const App = {
       insertHTML(App.slctr.taskBtnList, taskBtn);
       return;
     });
-    App.render();
+    App.renderInboxTaskCount(Todo.inbox);
     return;
   },
   renderInboxTaskCount(inbox) {
@@ -673,7 +687,7 @@ const App = {
       insertHTML(App.slctr.taskBtnList, taskBtn);
       return;
     });
-    App.render();
+    App.renderTodayTaskCount();
     return;
   },
   renderTodayTaskCount() {
@@ -729,7 +743,7 @@ const App = {
       insertHTML(App.slctr.taskBtnList, taskBtn);
       return;
     });
-    App.render();
+    App.renderUpcomingTaskCount();
     return;
   },
   renderUpcomingTaskCount() {
@@ -758,6 +772,29 @@ const App = {
       return;
     }
     App.slctr.upcomingDueTaskCnt.classList.add("taskCnt-hide");
+    return;
+  },
+
+  renderLastVisit() {
+    const content = LastVisit.getData("content");
+    const isDark = LastVisit.getData("isDark");
+    const goalId = LastVisit.getData("goalId");
+
+    isDark ? App.toggleDarkMode() : App.toggleLightMode();
+
+    if (goalId) {
+      const goalBtns = document.querySelectorAll(".goalBtn");
+      goalBtns.forEach((goalBtn) => {
+        if (goalBtn.id === goalId) {
+          goalBtn.click();
+          return;
+        }
+        return;
+      });
+      return;
+    }
+
+    content ? App.renderContent(content) : App.renderContent("Inbox");
     return;
   },
 
@@ -941,6 +978,7 @@ const App = {
     App.renderTodayTaskCount();
     App.renderUpcomingTaskCount();
     App.renderGoalBtns(Todo.goals);
+    App.renderLastVisit();
   },
 };
 
