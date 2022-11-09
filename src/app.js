@@ -99,7 +99,7 @@ const App = {
     App.slctr.html.dataset.dark = "false";
     const accrdArrow = document.querySelectorAll("[data-app=accrdArrow]");
     accrdArrow.forEach((arrow) =>
-      arrow.setAttribute("data", "../src/icons/arrowIcon.svg")
+      arrow.setAttribute("data", "icons/arrowIcon.svg")
     );
 
     LastVisit.updateData("isDark", false);
@@ -109,7 +109,7 @@ const App = {
     App.slctr.html.dataset.dark = "true";
     const accrdArrow = document.querySelectorAll("[data-app=accrdArrow]");
     accrdArrow.forEach((arrow) =>
-      arrow.setAttribute("data", "../src/icons/arrowIcon-dark.svg")
+      arrow.setAttribute("data", "icons/arrowIcon-dark.svg")
     );
 
     LastVisit.updateData("isDark", true);
@@ -206,16 +206,16 @@ const App = {
       case "Inbox":
         headerText =
           "This is where your independent tasks are stored. Feel free to add as many as you like!";
-        headerIcon = "../src/icons/inboxIcon.svg";
+        headerIcon = "icons/inboxIcon.svg";
         break;
       case "Today":
         headerText = "All tasks for you to complete today, have a great day!";
-        headerIcon = "../src/icons/starIcon.svg";
+        headerIcon = "icons/starIcon.svg";
         break;
       case "Upcoming":
         headerText =
           "Upcoming tasks for you to do, including those that are overdue. You can do this!";
-        headerIcon = "../src/icons/upcomingIcon.svg";
+        headerIcon = "icons/upcomingIcon.svg";
         break;
       case "Goal":
         headerTitle = goalTitle;

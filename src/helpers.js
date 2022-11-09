@@ -69,15 +69,15 @@ export function taskBtnHTML(
     isDone ? "check" : ""
   }" data-app="taskCheckbox" tabindex="0">
       <object class="checkbox-icon" data-status="${isDone ? "1" : "0"}" data="${
-    isDone ? "../src/icons/checkIcon.svg" : ""
-  }" type="text/svg+xml" tabindex="-1"></object>
+    isDone ? "icons/checkIcon.svg" : ""
+  }" type="text/svg+xml" tabindex="-1">Task Check Icon</object>
   </div>
   <object class="task-today ${
     d.isDateNow(taskDueDate) ? "" : "elem-hide"
-  }" data="../src/icons/starIcon.svg" type="text/svg+xml" tabindex="-1"></object>
+  }" data="icons/starIcon.svg" type="text/svg+xml" tabindex="-1">Task Today Icon</object>
   <object class="task-pastDue ${
     d.isPastDue(taskDueDate) ? "" : "elem-hide"
-  }" data="../src/icons/flagIcon.svg" type="text/svg+xml" tabindex="-1"></object>
+  }" data="icons/flagIcon.svg" type="text/svg+xml" tabindex="-1">Task Overdue Icon</object>
   <span class="task-dueDate ${
     taskDueDate ? "" : "elem-hide"
   }" data-app="taskDueDate">${
@@ -106,15 +106,15 @@ export function taskBtnHTML(
 <div class="task-btnFrame" data-app="taskBtnFrame">
   <button class="taskBtn" data-app="setTaskDateBtn" tabindex="-1">
       <div class="taskBtn-label">
-          <object class="taskBtn-icon" data="../src/icons/dateIcon.svg" type="text/svg+xml"
-              tabindex="-1"></object>
+          <object class="taskBtn-icon" data="icons/dateIcon.svg" type="text/svg+xml"
+              tabindex="-1">Conf. Date Icon</object>
           <span class="taskBtn-text">Date</span>
       </div>
   </button>
   <button class="taskBtn" data-app="trashTaskBtn" tabindex="-1">
       <div class="taskBtn-label">
-          <object class="taskBtn-icon" data="../src/icons/trashIcon.svg" type="text/svg+xml"
-              tabindex="-1"></object>
+          <object class="taskBtn-icon" data="icons/trashIcon.svg" type="text/svg+xml"
+              tabindex="-1">Delete Task Icon</object>
           <span class="taskBtn-text">Trash</span>
       </div>
   </button>
@@ -128,12 +128,12 @@ export function taskBtnHTML(
 export function upperHeaderHTML(content) {
   const headerBtnListMobile = `<div class="headerBtnList headerBtnList--mobile">
   <div class="headerBtn headerBtn--closeMainBtn" data-app="closeMainBtn">
-      <object data="../src/icons/arrowIcon.svg" type="text/svg+xml" tabindex="-1"></object>
+      <object data="icons/arrowIcon.svg" type="text/svg+xml" tabindex="-1">Close Main Icon</object>
   </div>
   <div class="headerBtn headerBtn--settingsBtn ${
     content === "Inbox" || content === "Goal" ? "" : "elem-hide"
   }" data-app="headerSettingsBtn">
-      <object data="../src/icons/threeDotIcon.svg" type="text/svg+xml" tabindex="-1"></object>
+      <object data="icons/threeDotIcon.svg" type="text/svg+xml" tabindex="-1">Header Settings Icon</object>
   </div>
 </div>`;
   return headerBtnListMobile;
@@ -152,7 +152,7 @@ export function headerInfoHTML(headerTitle, headerText, headerIcon, content) {
       <div class="header-settingsBtn ${
         headerTitle === "Inbox" || content === "Goal" ? "" : "elem-hide"
       }" data-app="headerSettingsBtn" tabindex="0">
-          <object data="../src/icons/threeDotIcon.svg" type="text/svg+xml" tabindex="-1"></object>
+          <object data="icons/threeDotIcon.svg" type="text/svg+xml" tabindex="-1">Header Settings Icon</object>
       </div>
   </div>
   <div class="header-note">
@@ -177,8 +177,8 @@ export function lowerHeaderHTML(content) {
         content === "Inbox" || content === "Goal" ? "" : "elem-hide"
       }" data-app="trashAllTasksBtn" tabindex="-1">
           <div class="headerBtn-label">
-              <object class="headerBtn-icon" data="../src/icons/trashIcon.svg" type="text/svg+xml"
-                  tabindex="-1"></object>
+              <object class="headerBtn-icon" data="icons/trashIcon.svg" type="text/svg+xml"
+                  tabindex="-1">Trash All Tasks Icon</object>
               <span class="headerBtn-text">Trash All</span>
           </div>
       </button>
@@ -212,7 +212,7 @@ export function lowerHeaderHTML(content) {
 
 export function noTaskHTML(noTaskText) {
   const noTask = `<div class="noTask" data-app="noTask">
-  <img class="noTask-img" src="../src/icons/taskIcon.png" alt="Task app logo">
+  <img class="noTask-img" src="icons/taskIcon.png" alt="Task app logo">
   <span class="noTask-text">${
     noTaskText ? noTaskText : "Whoops... looks like an error occured."
   }</span>
