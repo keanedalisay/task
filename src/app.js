@@ -971,6 +971,7 @@ const App = {
     App.bindHeaderEvents();
     App.bindTaskEvents();
     App.render();
+    App.renderLastVisit();
   },
 
   render() {
@@ -978,7 +979,6 @@ const App = {
     App.renderTodayTaskCount();
     App.renderUpcomingTaskCount();
     App.renderGoalBtns(Todo.goals);
-    App.renderLastVisit();
   },
 };
 
