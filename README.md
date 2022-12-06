@@ -2,47 +2,23 @@
 
 A simple task management app made with passion.
 
-## Features :
+## Features
 
-- Ablity to create goals and add tasks to them.
+✍️ Ablity to create goals and add tasks to them.
 
-- Ability to add tasks to your inbox.
+💼 Ability to add tasks to your inbox.
 
-  > On mobile devices, there will be a floating plus button for you to add tasks.
+🎯 Ability to see a circular progress bar for your goals.
 
-- Ability to see the progress of your goals
+⚙️ You can access the settings of your inbox, goals, and tasks for more options.
 
-  > There should be a circle next to the goal name on the nav bar.
+✂️ Delete, clear complete, set dates, enough options for you to do things.
 
-- Other than your goals and inbox, today and upcoming tabs exist.
+✅ App saves your last visit and preferences.
 
-  > You cannot add tasks on these tabs. I intentionally made them read-only.
+🕐 A task count can be seen on the inbox, today and upcoming tabs.
 
-- You can access the settings of your inbox and goals.
-
-  > There's a button you can press to remove all completed tasks.
-
-  > You can find the delete goal button there.
-
-- You can access the settings of all your tasks.
-
-  > You can find the delete task button there.
-
-  > A date button can be found to set your task due.
-
-### Extras :
-
-- App saves your last visit.
-
-  > Stores your theme preference and last visited tab.
-
-- A task count can be seen on the inbox, today and upcoming tabs.
-
-  > Tasks that are overdue will be counted.
-
-- Mobile responsive, always.
-
-- Web app is hosted through Google Firebase (first time, like it already).
+🔥 Hosted through Google Firebase.
 
 ## Looking to manage your tasks?
 
